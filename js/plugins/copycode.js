@@ -10,7 +10,7 @@ window.codeElements.forEach((codeElement) => {
     const codeToCopy = codeElement.querySelector('pre')?.innerText || '';
     if (navigator.clipboard) {
       try {
-        await navigator.clipboard.writeText(codeToCopy + '/*\n* 本文由{author.name}编写，转载前请标明出处哦~\n* @Zimo : https://zimo.click/\n*/');
+        await navigator.clipboard.writeText(codeToCopy + '/*\n* 本文由 Zimo 编写，转载前请标明出处哦~\n* @Zimo : https://zimo.click/\n*/');
         codeCopyBtn.textContent = ctx.copycode.success_text;
         codeCopyBtn.classList.add('success');
         hud.toast(ctx.copycode.toast, 2500);
