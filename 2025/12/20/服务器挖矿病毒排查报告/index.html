@@ -1,0 +1,1566 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>服务器挖矿病毒排查报告 - Zimo's Blogs</title>
+
+  
+    <meta name="description" content="两台麒麟服务器终端安全排查分析报告   四川大学网络空间安全学院 网络靶场中心 2025年12月            O版 供验收      版本 版本说明 编制 审核 批准    文档说明           文档名称 两台麒麟服务器终端安全排查分析报告   文档管理编号    保密级别 商密 文档版本号 V1.0   制作人 陈泽瑞、刘英祺 制作日期 2025年12月19日   复审人 何俊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务器挖矿病毒排查报告">
+<meta property="og:url" content="https://www.zimo.click/2025/12/20/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E6%8E%92%E6%9F%A5%E6%8A%A5%E5%91%8A/">
+<meta property="og:site_name" content="Zimo&#39;s Blogs">
+<meta property="og:description" content="两台麒麟服务器终端安全排查分析报告   四川大学网络空间安全学院 网络靶场中心 2025年12月            O版 供验收      版本 版本说明 编制 审核 批准    文档说明           文档名称 两台麒麟服务器终端安全排查分析报告   文档管理编号    保密级别 商密 文档版本号 V1.0   制作人 陈泽瑞、刘英祺 制作日期 2025年12月19日   复审人 何俊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+<meta property="article:published_time" content="2025-12-20T11:35:41.000Z">
+<meta property="article:modified_time" content="2025-12-20T11:35:41.000Z">
+<meta property="article:author" content="Zimo">
+<meta property="article:tag" content="应急响应">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+  
+  
+  
+  <meta name="keywords" content="应急响应">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"},"dateCreated":"2025-12-20T19:35:41+08:00","dateModified":"2025-12-20T19:35:41+08:00","datePublished":"2025-12-20T19:35:41+08:00","description":"","headline":"服务器挖矿病毒排查报告","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.zimo.click/2025/12/20/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E6%8E%92%E6%9F%A5%E6%8A%A5%E5%91%8A/"},"publisher":{"@type":"Organization","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg","logo":{"@type":"ImageObject","url":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"}},"url":"https://www.zimo.click/2025/12/20/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E6%8E%92%E6%9F%A5%E6%8A%A5%E5%91%8A/","keywords":"应急响应","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Zimo's Blogs</div><div class="sub cap">Loading...</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/04/22/FastJson/"><span class="title">FastJson</span></a><a class="item title" href="/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"><span class="title">Java内存马</span></a><a class="item title" href="/2026/04/04/ClassLoader/"><span class="title">ClassLoader</span></a><a class="item title" href="/2026/03/31/JAVA%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88/"><span class="title">Java安全漫谈学习笔记</span></a><a class="item title" href="/2026/03/29/CVE-2025-55182/"><span class="title">CVE-2025-55182</span></a><a class="item title" href="/2026/03/29/CAP/"><span class="title">CAP</span></a><a class="item title" href="/2026/03/29/Forgotten/"><span class="title">Forgotten</span></a><a class="item title" href="/2026/03/29/HTTP/"><span class="title">HTTP</span></a><a class="item title" href="/2026/03/29/LakeCTF25-26/"><span class="title">LakeCTF 25-26</span></a><a class="item title" href="/2026/03/29/LilacCTF-2026/"><span class="title">LilacCTF 2026</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94/">应急响应</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-12-20T11:35:41.000Z">2025-12-20</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-12-20T11:35:41.000Z">2025-12-20</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>服务器挖矿病毒排查报告</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p><strong>两台麒麟服务器终端安全排查分析报告</strong></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image1.png" style="width:2.17292in;height:2.13472in" alt="微信图片_20251030194131_401_474" />
+
+<p><strong>四川大学网络空间安全学院</strong></p>
+<p><strong>网络靶场中心</strong></p>
+<p><strong>2025年12月</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">O版</td>
+<td align="center">供验收</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center"><strong>版本</strong></td>
+<td align="center"><strong>版本说明</strong></td>
+<td align="center"><strong>编制</strong></td>
+<td align="center"><strong>审核</strong></td>
+<td align="center"><strong>批准</strong></td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>文档说明</strong></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 24%" />
+<col style="width: 23%" />
+<col style="width: 29%" />
+</colgroup>
+<tbody>
+<tr>
+<td>文档名称</td>
+<td colspan="3" style="text-align: center;">两台麒麟服务器终端安全排查分析报告</td>
+</tr>
+<tr>
+<td>文档管理编号</td>
+<td colspan="3" style="text-align: center;"></td>
+</tr>
+<tr>
+<td>保密级别</td>
+<td style="text-align: center;">商密</td>
+<td style="text-align: center;">文档版本号</td>
+<td style="text-align: center;">V1.0</td>
+</tr>
+<tr>
+<td>制作人</td>
+<td style="text-align: center;">陈泽瑞、刘英祺</td>
+<td style="text-align: center;">制作日期</td>
+<td style="text-align: center;">2025年12月19日</td>
+</tr>
+<tr>
+<td>复审人</td>
+<td style="text-align: center;">何俊江</td>
+<td style="text-align: center;">复审日期</td>
+<td style="text-align: center;">2025年12月20日</td>
+</tr>
+<tr>
+<td>扩散范围</td>
+<td colspan="3" style="text-align: center;">限相关机构</td>
+</tr>
+</tbody>
+</table>
+
+<ul>
+<li><strong>适用范围</strong></li>
+</ul>
+<p>本次终端安全排查是经授权，由四川大学靶场中心（以下简称“靶场中心”）对2台麒麟服务器终端进行的安全排查，根据评估结果所提交的技术报告，用于对终端的安全状况做出安全评估和加固建议，仅限于内部人员传阅。</p>
+<ul>
+<li><strong>版本变更记录</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>修改日期</td>
+<td>版本</td>
+<td>说明</td>
+<td>修改人</td>
+</tr>
+<tr>
+<td>2025年12月19日</td>
+<td>V1.0</td>
+<td>初版</td>
+<td>陈泽瑞、刘英祺</td>
+</tr>
+<tr>
+<td>2025年12月20日</td>
+<td>V1.0</td>
+<td>正式版</td>
+<td>何俊江</td>
+</tr>
+</tbody></table>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><p><a href="#%E4%B8%80%E4%BA%8B%E4%BB%B6%E6%A6%82%E8%BF%B0">一、事件概述 <a href="#%E4%B8%80%E4%BA%8B%E4%BB%B6%E6%A6%82%E8%BF%B0">4</a></a></p>
+<p><a href="#_Toc212810964">二、分析排查 5</a>6</p>
+<p><a href="#_Toc212811003">三、样本分析 6</a>4</p>
+<p><a href="#_Toc212811003">四、处置建议 6</a>5</p>
+<h1 id="一、事件概述"><a href="#一、事件概述" class="headerlink" title="一、事件概述"></a>一、事件概述</h1><h2 id="事件基本信息‌"><a href="#事件基本信息‌" class="headerlink" title="事件基本信息‌"></a>事件基本信息‌</h2><p>事件：两台麒麟服务器，受害时间为9月14日，受害IP为118.123.172.211，外联的矿池地址136.*.*.53，于 2025 年 12 月进行系统排查。</p>
+<p>‌</p>
+<h2 id="事件表现‌"><a href="#事件表现‌" class="headerlink" title="事件表现‌"></a>事件表现‌</h2><p>针对两台受感染服务器开展应急处置，现已查明木马文件路径与持久化手段。经样本分析确认，该病毒关联矿池为 136.244.89.53 与 randomx.xmrig.com。目前，两台终端的挖矿病毒及其残余项已清理完毕，系统恢复正常运行。</p>
+<h1 id="二、分析排查"><a href="#二、分析排查" class="headerlink" title="二、分析排查"></a>二、分析排查</h1><h2 id="终端1："><a href="#终端1：" class="headerlink" title="终端1："></a>终端1：</h2><p>Static hostname: localhost.localdomain</p>
+<p>Icon name: computer-server</p>
+<p>Chassis: server</p>
+<p>Machine ID: e87da6afc253440893b7ad75cd3f29f4</p>
+<p>Boot ID: eb5b0229ec304caf98cbb9588f296124</p>
+<p>Operating System: Kylin Linux Advanced Server V10 (Sword)</p>
+<p>Kernel: Linux 4.19.90-25.26.v2101.ky10.aarch64</p>
+<p>Architecture: arm64</p>
+<p>排查时间：2025-12-19</p>
+<h3 id="挖矿病毒排查"><a href="#挖矿病毒排查" class="headerlink" title="挖矿病毒排查"></a>挖矿病毒排查</h3><p>查看计划任务</p>
+<p>发现存在计划任务 mysql。</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image2.png" style="width:5.77222in;height:0.97398in" alt="descript" />
+
+<p>存在 libprocesshider.so：</p>
+<p>用 IDA 进行分析得到：读数据段（rodata）中提取到了关键变量process_to_filter的</p>
+<p>值。内存地址0xFA8，十六进制数据：2e 73 68 00，ASCIl 解码：.sh。</p>
+<p>也就是说，.sh 用 <a target="_blank" rel="noopener" href="https://libprocesshider.so/">libprocesshider.so</a> 隐藏 .sh 进程并附加到 ld.so.preload 上，尝试用busybox 删除后发现报错；</p>
+<p><img src="/images/服务器挖矿病毒排查报告/media/image3.png" style="width:5.54167in;height:2.81366in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image4.png" style="width:5.77222in;height:1.05824in" alt="descript" /></p>
+<h3 id=""><a href="#" class="headerlink" title=""></a><img src="/images/服务器挖矿病毒排查报告/media/image5.png" style="width:5.77222in;height:0.25383in" alt="descript" /></h3><p>发现 &#x2F;etc&#x2F;ld.so.preload 持续存在，用 audit 监控 ld.so.preload 文件创建情况并查看日志：</p>
+<p>sudo auditctl -w &#x2F;etc -p wa -k file_creation</p>
+<p>sudo ausearch -k file_creation -i</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image6.png" style="width:5.77222in;height:4.37893in" alt="descript" />
+
+<p>发现&#x2F;etc&#x2F;ld.so.preload是由 &#x2F;etc&#x2F;.sftp&#x2F;.sh（PID &#x3D; 4115） 创建，尝试寻找父进程：</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image7.png" style="width:5.77222in;height:3.56226in" alt="descript" />
+
+<p>发现被 cron.d 计划任务创建：</p>
+<p>排查具体计划任务：</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image8.png" style="width:5.53889in;height:0.70359in" alt="descript" />
+
+<p>发现恶意命令 &#x2F;sbin&#x2F;httpss：</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image9.png" style="width:5.53889in;height:1.06014in" alt="descript" />
+
+<p>会执行 &#x2F;etc&#x2F;.sftp&#x2F;.sphp 和 &#x2F;sbin&#x2F;https其中：</p>
+<p>1.&#x2F;sbin&#x2F;https 是恶意挖矿文件，微步云沙箱排查结果：</p>
+<p><a target="_blank" rel="noopener" href="https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44">https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44</a></p>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image10.png" style="width:5.30556in;height:3.01339in" alt="descript" /></blockquote>
+<p>2.&#x2F;etc&#x2F;.sftp&#x2F;.sphp 会执行 &#x2F;etc&#x2F;.sftp&#x2F;php</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image11.png" style="width:5.77222in;height:1.45545in" alt="descript" />
+
+<p>&#x2F;etc&#x2F;.sftp&#x2F;php 会执行 &#x2F;etc&#x2F;.sftp&#x2F;.sh</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image12.png" style="width:5.77222in;height:0.71756in" alt="descript" />
+
+<p>&#x2F;etc&#x2F;.sftp&#x2F;.sh 中存在 libprocesshider.so：用 <a target="_blank" rel="noopener" href="https://libprocesshider.so/">libprocesshider.so</a> 隐藏 .sh 进程并附加到 ld.so.preload 上（并不可改 +ia），并执行 &#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;mysql</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image13.png" style="width:5.62639in;height:2.68918in" alt="descript" />
+
+<p>&#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;mysql 执行 .&#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;.sh</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image14.png" style="width:5.77222in;height:0.87362in" alt="descript" />
+
+<p>该 &#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;.sh 与 &#x2F;sbin&#x2F;https 均为恶意挖矿文件且均相同（最新报告中名字均为https）</p>
+<p>微步云沙箱排查结果：</p>
+<p><a target="_blank" rel="noopener" href="https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44">https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44</a></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image15.png" style="width:5.77222in;height:3.29197in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image16.png" style="width:5.77222in;height:2.79865in" alt="descript" />
+
+<p>发现矿池地址1：<a target="_blank" rel="noopener" href="http://randomx.xmrig.com:443/">http://randomx.xmrig.com:443</a></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image17.png" style="width:5.77222in;height:3.70326in" alt="descript" />
+
+<p>矿池地址2：<a target="_blank" rel="noopener" href="http://136.244.89.53/">http://136.244.89.53:80/</a></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image18.png" style="width:5.77222in;height:6.09567in" alt="descript" />
+
+<h3 id="系统基线排查"><a href="#系统基线排查" class="headerlink" title="系统基线排查"></a>系统基线排查</h3><p><strong>文件排查</strong></p>
+<ul>
+<li>敏感目录文件分析</li>
+</ul>
+<p>ls –alt &#x2F;tmp&#x2F;</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image19.png" style="width:5.77222in;height:3.94375in" alt="descript" />
+
+<p>分析敏感目录文件，未发现异常。</p>
+<ul>
+<li>查看开机自启动项</li>
+</ul>
+<p>ls -alt &#x2F;etc&#x2F;init.d&#x2F;</p>
+<p>ls -alt &#x2F;etc&#x2F;rc.local</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image20.png" style="width:5.77083in;height:1.20331in" alt="descript" />
+
+<p>查看开机自启动项，均无任何异常。</p>
+<ul>
+<li>查看可疑文件创建修改时间、访问时间</li>
+</ul>
+<p>stat &#x2F;etc&#x2F;passwd</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image21.png" style="width:5.77083in;height:1.67188in" alt="descript" />
+
+<p>未发现可疑文件。</p>
+<ul>
+<li>查找特殊权限的文件</li>
+</ul>
+<p>find &#x2F; -perm 777 | more</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image22.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<p>经核查，权限为777的文件未发现异常。</p>
+<ul>
+<li>查找隐藏的文件</li>
+</ul>
+<p>ls -ar | grep “^\“</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image23.png" style="width:5.77083in;height:1.04688in" alt="descript" />
+
+<p>筛选当前目录下隐藏文件，未发现异常文件。</p>
+<p>进程排查</p>
+<p>top</p>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image24.png" style="width:5.53889in;height:4.15417in" alt="descript" /></blockquote>
+<p>执行top命令监控系统进程，系统负载、资源占用及进程状态均无异常。</p>
+<p><strong>系统信息排查</strong></p>
+<ul>
+<li>计划任务</li>
+</ul>
+<p>crontab -l 查看当前用户</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image25.png" style="width:5.77083in;height:1.25521in" alt="descript" />
+
+<p>执行crontab -l查看当前用户计划任务，存在一条每日 22:10 执行的python3脚本任务，无异常计划任务。</p>
+<p>crontab -e</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image26.png" style="width:5.77083in;height:0.84896in" alt="descript" />
+
+<p>执行crontab -e编辑当前用户计划任务，配置了一条每日 22:10 执行的 Python 脚本任务，任务配置无异常。</p>
+<p>ls &#x2F;etc&#x2F;cron* 查看系统级计划任务</p>
+<p>cat mysql</p>
+<p>cat &#x2F;etc&#x2F;cron.d&#x2F;mysql</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image27.png" style="width:5.77083in;height:1.51563in" alt="descript" />
+
+<p>查看系统级计划任务并查看文件，无异常。</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image28.png" style="width:5.77083in;height:0.99479in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image29.png" style="width:5.77083in;height:0.38021in" alt="descript" />
+
+<p>查看文件，两个任务均符合常规配置，无异常内容。</p>
+<p>atq 查看一次性计划任务</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image30.png" style="width:5.77083in;height:0.93229in" alt="descript" />
+
+<p>执行atq命令查看一次性计划任务，结果显示当前无已配置的一次性计划任务。</p>
+<ul>
+<li>查看系统用户登录信息</li>
+</ul>
+<p>lastlog 查看系统用户登录信息</p>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image31.png" style="width:5.53889in;height:4.15417in" alt="descript" /></blockquote>
+<p>执行lastlog命令查看系统用户登录信息，仅root、kylin等少数用户有登录记录，其余系统用户均无登录记录，无异常登录情况。</p>
+<p>last 显示最近登录信息</p>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image32.png" style="width:5.54167in;height:3.92708in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image33.png" style="width:5.54167in;height:3.66669in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image34.png" style="width:5.54167in;height:3.65625in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image35.png" style="width:5.54167in;height:3.57292in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image36.png" style="width:5.54167in;height:3.6875in" alt="descript" /></blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image37.png" style="width:5.54167in;height:3.67708in" alt="descript" />
+
+<p>执行last命令查看最近登录信息，无异常登录行为。</p>
+<p>sudo lastb查看登录失败尝试</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image38.png" style="width:5.77083in;height:1.31771in" alt="descript" />
+
+<p>查看登录失败尝试，经核查无大规模暴力破解类异常尝试。</p>
+<ul>
+<li>查看环境变量</li>
+</ul>
+<p>echo $PATH</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image39.png" style="width:5.77083in;height:1.06771in" alt="descript" />
+
+<p>查看环境变量，经核查仅包括系统标准路径，无异常路径配置。</p>
+<ul>
+<li>查看ssh目录</li>
+</ul>
+<p>ls -l &#x2F;etc&#x2F;ssh&#x2F;</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image40.png" style="width:5.77083in;height:2.08854in" alt="descript" />
+
+<p>查看 SSH 目录，均符合 SSH 服务的安全规范，无异常文件或权限配置。</p>
+<ul>
+<li>动态链接库检查</li>
+</ul>
+<p>cat &#x2F;etc&#x2F;ld.so.preload</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image41.png" style="width:5.77083in;height:0.94271in" alt="descript" />
+
+<p>检查动态链接库，该文件中存在&#x2F;usr&#x2F;local&#x2F;lib&#x2F;libprocesshider.so，需进一步排查是否为恶意工具。</p>
+<ul>
+<li>系统配置环境检查</li>
+</ul>
+<p>cat &#x2F;etc&#x2F;sysctl.conf</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image42.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<p>查看系统配置，经核查无异常配置项。</p>
+<ul>
+<li>查看系统服务启动状态</li>
+</ul>
+<p>systemctl list-unit-files | grep enable</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image43.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image44.png" style="width:5.77083in;height:3.95313in" alt="descript" />
+
+<p>查看系统服务启动状态，经核查，当前启用的服务均为系统基础服务及银河麒麟系统相关服务，无异常启用的恶意服务。</p>
+<p><strong>后门检查</strong></p>
+<ul>
+<li>检查socket 单元</li>
+</ul>
+<p>systemctl list-units –type&#x3D;socket</p>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image45.png" style="width:5.54167in;height:3.02083in" alt="descript" /></blockquote>
+<p>检查 socket 单元，符合正常运行的配置规范，无未知或恶意 socket。</p>
+<ul>
+<li>检查系统计划任务配置</li>
+</ul>
+<blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image46.png" style="width:5.54167in;height:2.17708in" alt="descript" /></blockquote>
+<p>检查系统计划任务配置，当前文件无实际配置的计划任务，状态正常。</p>
+<ul>
+<li>查找具有SUID权限的可疑文件</li>
+</ul>
+<p>find &#x2F; –perm u&#x3D;s –type f 2&gt;&#x2F;dev&#x2F;null</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image47.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<p>查找具有 SUID 权限的文件，结果显示的文件均为系统默认的合法程序，无可疑 SUID 文件。</p>
+<p><strong>日志排查</strong></p>
+<p>查看日志</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image48.png" style="width:5.54167in;height:0.73341in" alt="descript" />
+
+<p>进入 Nginx 日志目录，查看目录下包含access.log、error.log及对应压缩包文件，执行cat命令查看日志文件，无异常操作。</p>
+<h3 id="设备处置"><a href="#设备处置" class="headerlink" title="设备处置"></a>设备处置</h3><p>删除恶意计划任务</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image49.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image50.png" style="width:5.77083in;height:0.4103in" alt="descript" />
+
+<p>删除计划任务指向的相关恶意文件</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image51.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image52.png" style="width:5.77083in;height:2.85822in" alt="descript" />
+
+<h2 id="终端2："><a href="#终端2：" class="headerlink" title="终端2："></a>终端2：</h2><p>Static hostname: localhost.localdomain</p>
+<p>Icon name: computer-server</p>
+<p>Chassis: server</p>
+<p>Machine ID: d452f037172247549639a4cc726639a0</p>
+<p>Boot ID: d03e4803918844e1abe71285abe04a49</p>
+<p>Operating System: Kylin Linux Advanced Server V10 (Sword)</p>
+<p>Kernel: Linux 4.19.90-24.4.v2101.ky10.aarch64</p>
+<p>Architecture: arm64</p>
+<p>排查时间：2025-12-19</p>
+<h3 id="挖矿病毒排查-1"><a href="#挖矿病毒排查-1" class="headerlink" title="挖矿病毒排查"></a>挖矿病毒排查</h3><p>按照终端1思路排查终端2，查看 &#x2F;etc&#x2F;cron.d&#x2F;mysql</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image53.png" style="width:5.77083in;height:0.57393in" alt="descript" />
+
+<p>同样存在 <a target="_blank" rel="noopener" href="https://libproccesshider.so/">libproccesshider.so</a> 隐藏进程，但无法找到恶意 &#x2F;usr&#x2F;bin&#x2F;.sftp&#x2F;.sphp</p>
+<p>同样路径排查 &#x2F;sbin&#x2F;https 和 &#x2F;sbin&#x2F;httpss 均无发现。</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image54.png" style="width:5.80211in;height:0.83855in" alt="descript" />
+
+<p>排查 &#x2F;usr&#x2F;lib&#x2F;mysql 发现存在恶意挖矿文件，与终端一相同。</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image55.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>微步云沙箱排查结果：</p>
+<p><a target="_blank" rel="noopener" href="https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44">https://s.threatbook.com/report/file/3a58409712ac214785208f072472903342223c9a857071076fb3f293debdbb44</a></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image15.png" style="width:5.77222in;height:3.29197in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image16.png" style="width:5.77222in;height:2.79865in" alt="descript" />
+
+<p>发现矿池地址：<a target="_blank" rel="noopener" href="http://randomx.xmrig.com:443/">http://randomx.xmrig.com:443</a></p>
+<img src="/images/服务器挖矿病毒排查报告/media/image17.png" style="width:5.77222in;height:3.70326in" alt="descript" />
+
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><h3 id="系统基线排查-1"><a href="#系统基线排查-1" class="headerlink" title="系统基线排查"></a>系统基线排查</h3><p><strong>文件排查</strong></p>
+<ul>
+<li>敏感目录文件分析</li>
+</ul>
+<blockquote>
+<p>ls –alt &#x2F;tmp&#x2F;</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image56.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>分析敏感目录文件，两台主机均未发现异常。</p>
+</blockquote>
+<ul>
+<li>查看开机自启动项</li>
+</ul>
+<blockquote>
+<p>ls -alt &#x2F;etc&#x2F;init.d&#x2F;</p>
+<p>ls -alt &#x2F;etc&#x2F;rc.local</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image57.png" style="width:5.53889in;height:1.96947in" alt="descript" />
+
+<blockquote>
+<p>查看开机自启动项，均无任何异常。</p>
+</blockquote>
+<ul>
+<li>寻找可疑文件</li>
+</ul>
+<blockquote>
+<p>同上</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image55.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<blockquote>
+<p>发现有木马文件sh</p>
+</blockquote>
+<ul>
+<li>查找特殊权限的文件</li>
+</ul>
+<blockquote>
+<p>find &#x2F; -perm 777 | more</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image22.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>经核查，权限为777的文件未发现异常</p>
+</blockquote>
+<ul>
+<li>查找隐藏的文件</li>
+</ul>
+<blockquote>
+<p>ls -ar | grep “^\“</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image23.png" style="width:5.53889in;height:1.0048in" alt="descript" />
+
+<p>筛选当前目录下隐藏文件，未发现异常文件。</p>
+</blockquote>
+<p><strong>进程排查</strong></p>
+<ul>
+<li>查看进程</li>
+</ul>
+<blockquote>
+<p>top</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image58.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>执行top命令监控系统进程，系统负载、资源占用及进程状态均无异常。</p>
+</blockquote>
+<p><strong>系统信息排查</strong></p>
+<ul>
+<li>查看能够登录的帐号</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;etc&#x2F;passwd | grep -E “&#x2F;bin&#x2F;bash$“</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image59.png" style="width:5.54167in;height:1.07292in" alt="descript" />
+
+<p>查看可登录账号，结果显示root、kylin、nginx三个账号，均为系统默认或合法业务账号，无可疑登录账号。</p>
+</blockquote>
+<ul>
+<li>当前执行该命令的用户” 所配置的定时任务</li>
+</ul>
+<blockquote>
+<p>crontab -l</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image60.png" style="width:5.54167in;height:1.39583in" alt="descript" />
+
+<p>执行crontab -l查看当前用户计划任务，存在合法定时任务配置文件，无异常。</p>
+</blockquote>
+<ul>
+<li>查看系统级计划任务</li>
+</ul>
+<blockquote>
+<p>ls &#x2F;etc&#x2F;cron*</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image61.png" style="width:5.54167in;height:2.14583in" alt="descript" />
+
+<p>查看系统级计划任务检查结果，系统级 cron 相关文件及目录其中的文件，均为系统常规配置文件，无异常</p>
+</blockquote>
+<ul>
+<li>查看系统用户登录信息</li>
+</ul>
+<blockquote>
+<p>lastlog 查看系统用户登录信息</p>
+<p><img src="/images/服务器挖矿病毒排查报告/media/image62.png" style="width:5.53889in;height:4.15417in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image63.png" style="width:5.30556in;height:3.97917in" alt="descript" /></p>
+<p>查看系统用户登录信息，检查到root用户存在登录记录（最后登录时间：2025 年 12 月 19 日 19:06:16，登录端口为 pts&#x2F;0）；kylin用户存在登录记录（最后登录时间：2025 年 12 月 18 日 12:04:26，登录端口为：0），其余系统用户均显示 “从未登录过”，无异常登录记录。</p>
+<p>last 显示最近登录信息</p>
+<p><img src="/images/服务器挖矿病毒排查报告/media/image64.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image65.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image66.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image67.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image68.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image69.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image70.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image71.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image72.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image73.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image74.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image75.png" style="width:5.30556in;height:3.97917in" alt="descript" /><img src="/images/服务器挖矿病毒排查报告/media/image76.png" style="width:5.30556in;height:3.97917in" alt="descript" /></p>
+<p>执行last查看最近登录信息，结果为：主要登录用户是kylin和root（无未知用户），kylin当前处于登录状态，root存在远程登录记录，系统有多次启动记录，无异常登录行为。</p>
+<p>sudo lastb查看登录失败尝试</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image77.png" style="width:5.54167in;height:1.04167in" alt="descript" />
+
+<p>查看登录失败尝试，仅存在 2 条root用户在12月的登录失败记录，无大量恶意爆破类失败尝试，无异常。</p>
+</blockquote>
+<ul>
+<li>查看环境变量</li>
+</ul>
+<blockquote>
+<p>echo $PATH</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image78.png" style="width:5.54167in;height:0.77083in" alt="descript" />
+
+<p>查看环境变量，无异常自定义路径，符合系统安全配置规范。</p>
+</blockquote>
+<ul>
+<li>查看ssh目录</li>
+</ul>
+<blockquote>
+<p>ls -l &#x2F;etc&#x2F;ssh&#x2F;</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image79.png" style="width:5.54167in;height:1.875in" alt="descript" />
+
+<p>查看 SSH 目录，文件权限符合 SSH 安全配置规范，无未知文件或异常权限。</p>
+</blockquote>
+<ul>
+<li>检查动态链接库</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;etc&#x2F;ld.so.preload</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image80.png" style="width:5.54167in;height:0.75in" alt="descript" />
+
+<p>检查动态链接库，该文件中存在&#x2F;usr&#x2F;local&#x2F;lib&#x2F;libprocesshider.so，需进一步排查是否为恶意工具。</p>
+</blockquote>
+<ul>
+<li>系统配置环境检查</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;etc&#x2F;sysctl.conf</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image81.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>检查系统配置环境检查，文件所包含系统参数配置，均为常规安全优化配置，无异常参数或恶意配置项，符合系统安全规范。</p>
+</blockquote>
+<ul>
+<li>查看已启用的系统服务单元的命令</li>
+</ul>
+<blockquote>
+<p>systemctl list-unit-files | grep enabled</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image82.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<blockquote>
+<p>查看已启用的系统服务单元，结果显示的服务均为系统基础服务及银河麒麟系统专属服务，无异常启用的恶意服务。</p>
+</blockquote>
+<ul>
+<li>查看系统启动时自动执行脚本 &#x2F; 命令的配置文件</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;etc&#x2F;rc.d&#x2F;rc.local</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image83.png" style="width:5.53889in;height:2.07458in" alt="descript" />
+
+<blockquote>
+<p>查看系统启动自动执行脚本配置文件，该文件仅包含注释说明与默认的touch命令，无额外自启动脚本或异常命令配置。</p>
+</blockquote>
+<ul>
+<li>查看定时任务</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;etc&#x2F;crontab</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image84.png" style="width:5.53889in;height:4.15417in" alt="descript" />
+
+<p>查看定时任务，该文件仅包含环境变量配置、任务格式注释，未配置实际定时任务，无异常内容。</p>
+</blockquote>
+<p><strong>后门检查</strong></p>
+<ul>
+<li>检查socket 单元</li>
+</ul>
+<blockquote>
+<p>systemctl list-units –type&#x3D;socket</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image85.png" style="width:5.30556in;height:3.97917in" alt="descript" />
+
+<p>进行后门检查，核验发现无异常可疑 socket，未发现后门相关的通信入口。</p>
+</blockquote>
+<ul>
+<li>查找系统中设置了 SUID 权限的文件</li>
+</ul>
+<blockquote>
+<p>find &#x2F; -user root -perm -4000 -print 2&gt;&#x2F;dev&#x2F;null</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image86.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image87.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image88.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<blockquote>
+<p>查找 root 用户所有的 SUID 权限文件，经核验无可疑 SUID 文件。</p>
+</blockquote>
+<p><strong>日志排查</strong></p>
+<ul>
+<li>查看 Nginx 服务的访问日志</li>
+</ul>
+<blockquote>
+<p>cat &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image89.png" style="width:5.77222in;height:0.7176in" alt="descript" />
+
+<blockquote>
+<p>日志中记录的不同客户端 IP访问 Nginx 服务的请求信息无明显异常访问特征。</p>
+</blockquote>
+<ul>
+<li>计划任务日志</li>
+</ul>
+<blockquote>
+<p>sudo cat &#x2F;var&#x2F;log&#x2F;cron</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image90.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image91.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image92.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image93.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image94.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image95.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image96.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image97.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image98.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<img src="/images/服务器挖矿病毒排查报告/media/image99.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<blockquote>
+<p>任务日志经排查，业务定时任务能正常启动、结束，日志输出路径配置有效。系统默认定时任务能正常执行，无恶意定时任务，无异常。</p>
+</blockquote>
+<h3 id="设备处置-1"><a href="#设备处置-1" class="headerlink" title="设备处置"></a>设备处置</h3><blockquote>
+<p>删除mysql计划任务</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image100.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<blockquote>
+<p>删除相关恶意文件</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image101.png" style="width:5.77222in;height:4.32917in" alt="descript" />
+
+<h1 id="三、样本分析"><a href="#三、样本分析" class="headerlink" title="三、样本分析"></a>三、样本分析</h1><h2 id="样本概述"><a href="#样本概述" class="headerlink" title="样本概述"></a>样本概述</h2><blockquote>
+<p>文件类型: ELF 64-bit LSB executable, ARM aarch64, version 1 (SYSV)</p>
+<p>链接方式: Statically linked (静态链接)</p>
+<p>架构: ARM64 (AArch64)</p>
+<p>核心功能: 门罗币 (XMR) 挖矿工具，确认为 XMRig 的重命名版本。</p>
+</blockquote>
+<h2 id="静态分析发现"><a href="#静态分析发现" class="headerlink" title="静态分析发现"></a>静态分析发现</h2><p><strong>伪装与混淆</strong></p>
+<blockquote>
+<p>文件名伪装: 恶意程序被命名为 “https” “sh” 等，试图伪装成常见的网络协议名称，以在进程列表（如 ps 或 top 命令）中混淆视听。</p>
+<p>无加壳: 样本未加壳，可以直接通过 IDA Pro 进行反汇编和字符串分析。</p>
+<p>内置配置: 程序包含硬编码的 JSON 配置文件，即使在没有外部参数或配置文件的情况下也能独立运行。</p>
+</blockquote>
+<p><strong>配置文件加载机制</strong></p>
+<blockquote>
+<p>程序启动后（入口点 start @ 0x40319C -&gt; main @ 0x402058），会按照以下优先级尝试加载配置：</p>
+<p>外部文件: 尝试读取当前目录下的 config.json。</p>
+<p>隐藏文件: 尝试读取当前目录下的 .xmrig.json。</p>
+<p>用户配置: 尝试读取 $HOME&#x2F;.config&#x2F;xmrig.json。</p>
+<p>内置默认配置: 如果上述文件均不存在，则加载内存地址 0x8303F0 处的硬编码 JSON 配置。</p>
+</blockquote>
+<p><strong>内置挖矿配置详解</strong></p>
+<blockquote>
+<p>通过分析内置的 JSON 字符串（地址 0x8303F0），提取出关键挖矿参数：</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image18.png" style="width:5.77222in;height:6.09567in" alt="descript" />
+
+<blockquote>
+<p>矿池地址：</p>
+<p>主矿池: ssl-v.dns-aliyun.com:443</p>
+<p>伪装: 域名伪装成阿里云 DNS 服务 (dns-aliyun.com)，实际指向攻击者的矿池代理或私有矿池。</p>
+</blockquote>
+<p>备用矿池：<strong>136.244.89.53:80</strong>，即本次监测到的矿池地址</p>
+<img src="/images/服务器挖矿病毒排查报告/media/image102.png" style="width:5.77222in;height:6.45023in" alt="descript" />
+
+<blockquote>
+<p>IP 归属: 该 IP 位于海外，通过 HTTP 端口 80 通信。</p>
+<p>算法: 支持 RandomX, CryptoNight 等多种算法，程序会自动检测 CPU 指令集（如 AVX2, AES）以优化算力。</p>
+</blockquote>
+<h2 id="挖矿流程"><a href="#挖矿流程" class="headerlink" title="挖矿流程"></a>挖矿流程</h2><p><strong>初始化阶段</strong></p>
+<blockquote>
+<p>硬件检测: 程序启动时会检测 CPU 核心数、缓存大小（L2&#x2F;L3 Cache）以及是否支持大页内存（Huge Pages），以最大化挖掘效率。</p>
+<p>网络初始化: 使用 libuv 库初始化异步网络 I&#x2F;O 线程池。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image103.png" style="width:5.77222in;height:3.88271in" alt="descript" />
+
+<p><strong>协议交互</strong></p>
+<blockquote>
+<p>连接:</p>
+<p>函数 sub_458348 解析矿池 URL（stratum+tcp:&#x2F;&#x2F; 或 stratum+ssl:&#x2F;&#x2F;）。</p>
+<p>建立 TCP 连接，如果配置了 TLS，则进行 SSL 握手。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image104.png" style="width:5.77222in;height:5.41146in" alt="descript" />
+
+<blockquote>
+<p>登录:</p>
+<p>函数 sub_4440D0 构建 JSON-RPC 请求。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image105.png" style="width:5.77222in;height:1.06374in" alt="descript" />
+
+<blockquote>
+<p>发送 {“method”: “login”, “params”: {…}} 包，包含钱包地址和客户端标识。</p>
+<p>任务分发:</p>
+<p>接收矿池下发的 mining.notify 通知，获取任务 Blob。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image106.png" style="width:5.77222in;height:2.50226in" alt="descript" />
+
+<blockquote>
+<p>哈希计算:</p>
+<p>调用 RandomX 或 CryptoNight 算法函数（如 cryptonight_v8 等）对数据进行哈希运算。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image107.png" style="width:5.77222in;height:7.31101in" alt="descript" />
+
+<blockquote>
+<p>结果提交:</p>
+<p>当计算出满足难度的 Nonce 时，调用 sub_46C2A8。</p>
+<p>发送 {“method”: “mining.submit”, …} 将结果回传给矿池。</p>
+</blockquote>
+<img src="/images/服务器挖矿病毒排查报告/media/image108.png" style="width:5.77222in;height:4.10183in" alt="descript" />
+
+<h2 id="传播与威胁评估"><a href="#传播与威胁评估" class="headerlink" title="传播与威胁评估"></a>传播与威胁评估</h2><p><strong>传播能力</strong></p>
+<blockquote>
+<p>结论: 该样本本身不具备蠕虫传播能力。</p>
+<p>证据:</p>
+<p>搜索 “scan”, “exploit” , “ssh” 等关键词，未发现相关攻击代码。</p>
+<p>虽然存在 “SSH Client” 字符串，但经分析为未引用的死代码（可能是静态链接库残留）。</p>
+<p>程序逻辑仅限于：加载配置 -&gt; 连接矿池 -&gt; 挖矿 -&gt; 提交结果。</p>
+</blockquote>
+<p><strong>威胁来源</strong></p>
+<blockquote>
+<p>该程序通常作为攻击链条中的次生载荷（Payload），由蠕虫病毒、自动化攻击脚本或后门程序在成功渗透后从远程服务器下载并静默加载执行。</p>
+</blockquote>
+<h1 id="四、处置建议"><a href="#四、处置建议" class="headerlink" title="四、处置建议"></a>四、处置建议</h1><blockquote>
+<p>1. 隔离受害主机</p>
+<p>切断外网： 在防火墙上封禁受害主机的外网访问（尤其是非业务端口的出站流量）。</p>
+<p>阻断通信： 针对已知的矿池域名或 IP（通过 netstat 或 ss 命令获取），在 hosts 文件中指向 127.0.0.1。</p>
+<p>2. 终止恶意进程</p>
+<p>识别高占用： 使用 top 或 htop 按 CPU 使用率排序。</p>
+<p>定位文件： 使用 ls -l &#x2F;proc&#x2F;[PID]&#x2F;exe 查看进程对应的文件路径。</p>
+<p>强制杀掉： 执行 kill -9 [PID]。注意：某些病毒有守护进程，需同时杀掉或先暂停（kill -STOP）。</p>
+<p>3. 清理持久化项</p>
+<p>计划任务： 彻底检查 &#x2F;var&#x2F;spool&#x2F;cron&#x2F;、&#x2F;etc&#x2F;crontab 及 &#x2F;etc&#x2F;cron.d&#x2F; 下的所有文件。</p>
+<p>启动服务： 检查 &#x2F;etc&#x2F;systemd&#x2F;system&#x2F; 和 &#x2F;etc&#x2F;init.d&#x2F;，移除异常的 .service 文件。</p>
+<p>SSH 秘钥： 重点检查 ~&#x2F;.ssh&#x2F;authorized_keys，删除非本人授权的公钥，防止黑客通过后门二次进入。</p>
+<p>4. 彻底删除病毒文件</p>
+<p>清理残留： 根据步骤2获取的路径删除二进制文件，并清理 &#x2F;tmp&#x2F;、&#x2F;var&#x2F;tmp&#x2F;、&#x2F;dev&#x2F;shm&#x2F; 等常驻目录。</p>
+<p>检查隐藏文件： 注意以 . 开头的隐藏文件或具有特殊属性（如 chattr +i）的文件。</p>
+<p>5. 溯源与加固</p>
+<p>排查入口： 重点“两高一弱”，即高危端口、高危漏洞、弱口令。</p>
+<p>修改凭据： 强制修改所有系统用户密码，尤其是具备 sudo 权限的用户。</p>
+<p>强化防护： 启用 iptables 或 firewalld 仅开放必要端口，安装并运行 Rootkit 检测工具（如 chkrootkit）。</p>
+</blockquote>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/12/29/SQL%E6%B3%A8%E5%85%A5/">SQL注入</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/12/18/%E5%BA%94%E6%80%A5%E5%93%8D%E5%BA%94%E6%8C%96%E7%9F%BF/">kill -STOP <PID></a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Zimo</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%8B%E4%BB%B6%E6%A6%82%E8%BF%B0"><span class="toc-text">一、事件概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E2%80%8C"><span class="toc-text">事件基本信息‌</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E8%A1%A8%E7%8E%B0%E2%80%8C"><span class="toc-text">事件表现‌</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%88%86%E6%9E%90%E6%8E%92%E6%9F%A5"><span class="toc-text">二、分析排查</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF1%EF%BC%9A"><span class="toc-text">终端1：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E6%8E%92%E6%9F%A5"><span class="toc-text">挖矿病毒排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%BA%BF%E6%8E%92%E6%9F%A5"><span class="toc-text">系统基线排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E5%A4%84%E7%BD%AE"><span class="toc-text">设备处置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%88%E7%AB%AF2%EF%BC%9A"><span class="toc-text">终端2：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%96%E7%9F%BF%E7%97%85%E6%AF%92%E6%8E%92%E6%9F%A5-1"><span class="toc-text">挖矿病毒排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%BA%BF%E6%8E%92%E6%9F%A5-1"><span class="toc-text">系统基线排查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E5%A4%87%E5%A4%84%E7%BD%AE-1"><span class="toc-text">设备处置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%A0%B7%E6%9C%AC%E5%88%86%E6%9E%90"><span class="toc-text">三、样本分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%B7%E6%9C%AC%E6%A6%82%E8%BF%B0"><span class="toc-text">样本概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%8F%91%E7%8E%B0"><span class="toc-text">静态分析发现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%96%E7%9F%BF%E6%B5%81%E7%A8%8B"><span class="toc-text">挖矿流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E6%92%AD%E4%B8%8E%E5%A8%81%E8%83%81%E8%AF%84%E4%BC%B0"><span class="toc-text">传播与威胁评估</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%A4%84%E7%BD%AE%E5%BB%BA%E8%AE%AE"><span class="toc-text">四、处置建议</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>

