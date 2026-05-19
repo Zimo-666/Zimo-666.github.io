@@ -1,1 +1,12 @@
-dXRpbHMuanEoKCkgPT4gewogIGNvbnN0IGVscyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlDbGFzc05hbWUoJ2RzLW1kcmVuZGVyJyk7CiAgZm9yICh2YXIgaSA9IDA7IGkgPCBlbHMubGVuZ3RoOyBpKyspIHsKICAgIGNvbnN0IGVsID0gZWxzW2ldOwogICAgY29uc3Qgc3JjID0gYCR7ZWwuZ2V0QXR0cmlidXRlKCdzcmMnKX0/dD0ke25ldyBEYXRlKCkuZ2V0VGltZSgpfWA7CiAgICAKICAgIHV0aWxzLnJlcXVlc3QoZWwsIHNyYywgYXN5bmMgcmVzcCA9PiB7CiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwLnRleHQoKTsKICAgICAgZWwuaW5uZXJIVE1MID0gbWFya2VkLnBhcnNlKGRhdGEpOwogICAgfSk7CiAgfQp9KTs=
+utils.jq(() => {
+  const els = document.getElementsByClassName('ds-mdrender');
+  for (var i = 0; i < els.length; i++) {
+    const el = els[i];
+    const src = `${el.getAttribute('src')}?t=${new Date().getTime()}`;
+    
+    utils.request(el, src, async resp => {
+      const data = await resp.text();
+      el.innerHTML = marked.parse(data);
+    });
+  }
+});

@@ -1,1 +1,32 @@
-d2luZG93LmNvZGVFbGVtZW50cy5mb3JFYWNoKChjb2RlRWxlbWVudCkgPT4gewogIC8vIOWIm+W7uuWkjeWItuaMiemSrgogIGNvbnN0IGNvZGVDb3B5QnRuID0gZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgnZGl2Jyk7CiAgY29kZUNvcHlCdG4uY2xhc3NOYW1lID0gJ2NvcHktYnRuJzsKICBjb2RlQ29weUJ0bi50ZXh0Q29udGVudCA9IGN0eC5jb3B5Y29kZS5kZWZhdWx0X3RleHQ7CiAgY29kZUVsZW1lbnQuYXBwZW5kQ2hpbGQoY29kZUNvcHlCdG4pOwoKICAvLyDmt7vliqDngrnlh7vkuovku7bnm5HlkKwKICBjb2RlQ29weUJ0bi5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IGNvZGVUb0NvcHkgPSBjb2RlRWxlbWVudC5xdWVyeVNlbGVjdG9yKCdwcmUnKT8uaW5uZXJUZXh0IHx8ICcnOwogICAgaWYgKG5hdmlnYXRvci5jbGlwYm9hcmQpIHsKICAgICAgdHJ5IHsKICAgICAgICBhd2FpdCBuYXZpZ2F0b3IuY2xpcGJvYXJkLndyaXRlVGV4dChjb2RlVG9Db3B5ICsgJy8qXG4qIOacrOaWh+eUsSBaaW1vIOe8luWGme+8jOi9rOi9veWJjeivt+agh+aYjuWHuuWkhOWTpn5cbiogQFppbW8gOiBodHRwczovL3ppbW8uY2xpY2svXG4qLycpOwogICAgICAgIGNvZGVDb3B5QnRuLnRleHRDb250ZW50ID0gY3R4LmNvcHljb2RlLnN1Y2Nlc3NfdGV4dDsKICAgICAgICBjb2RlQ29weUJ0bi5jbGFzc0xpc3QuYWRkKCdzdWNjZXNzJyk7CiAgICAgICAgaHVkLnRvYXN0KGN0eC5jb3B5Y29kZS50b2FzdCwgMjUwMCk7CiAgICAgIH0gY2F0Y2ggKGVycm9yKSB7CiAgICAgICAgY29kZUNvcHlCdG4udGV4dENvbnRlbnQgPSAn5pyq6I635b6X55So5oi36K645Y+vJzsKICAgICAgICBjb2RlQ29weUJ0bi5jbGFzc0xpc3QuYWRkKCd3YXJuaW5nJyk7CiAgICAgIH0KICAgIH0gZWxzZSB7CiAgICAgIGNvZGVDb3B5QnRuLnRleHRDb250ZW50ID0gJ+a1j+iniOWZqOS4jeaUr+aMgS/pnZ5IVFRQUyc7CiAgICAgIGNvZGVDb3B5QnRuLmNsYXNzTGlzdC5hZGQoJ3dhcm5pbmcnKTsKICAgIH0KCiAgICAvLyAz56eS5ZCO5oGi5aSN6buY6K6k5paH5pysCiAgICBzZXRUaW1lb3V0KCgpID0+IHsKICAgICAgY29kZUNvcHlCdG4udGV4dENvbnRlbnQgPSBjdHguY29weWNvZGUuZGVmYXVsdF90ZXh0OwogICAgICBjb2RlQ29weUJ0bi5jbGFzc0xpc3QucmVtb3ZlKCdzdWNjZXNzJywgJ3dhcm5pbmcnKTsKICAgIH0sIDMwMDApOwogIH0pOwp9KTs=
+window.codeElements.forEach((codeElement) => {
+  // 创建复制按钮
+  const codeCopyBtn = document.createElement('div');
+  codeCopyBtn.className = 'copy-btn';
+  codeCopyBtn.textContent = ctx.copycode.default_text;
+  codeElement.appendChild(codeCopyBtn);
+
+  // 添加点击事件监听
+  codeCopyBtn.addEventListener('click', async () => {
+    const codeToCopy = codeElement.querySelector('pre')?.innerText || '';
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(codeToCopy + '/*\n* 本文由 Zimo 编写，转载前请标明出处哦~\n* @Zimo : https://zimo.click/\n*/');
+        codeCopyBtn.textContent = ctx.copycode.success_text;
+        codeCopyBtn.classList.add('success');
+        hud.toast(ctx.copycode.toast, 2500);
+      } catch (error) {
+        codeCopyBtn.textContent = '未获得用户许可';
+        codeCopyBtn.classList.add('warning');
+      }
+    } else {
+      codeCopyBtn.textContent = '浏览器不支持/非HTTPS';
+      codeCopyBtn.classList.add('warning');
+    }
+
+    // 3秒后恢复默认文本
+    setTimeout(() => {
+      codeCopyBtn.textContent = ctx.copycode.default_text;
+      codeCopyBtn.classList.remove('success', 'warning');
+    }, 3000);
+  });
+});

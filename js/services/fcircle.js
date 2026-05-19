@@ -1,1 +1,37 @@
-dXRpbHMuanEoKCkgPT4gewogICQoZnVuY3Rpb24gKCkgewogICAgY29uc3QgZWxzID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSgnZHMtZmNpcmNsZScpOwogICAgZm9yICh2YXIgaSA9IDA7IGkgPCBlbHMubGVuZ3RoOyBpKyspIHsKICAgICAgY29uc3QgZWwgPSBlbHNbaV07CiAgICAgIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogICAgICBpZiAoYXBpID09IG51bGwpIHsKICAgICAgICBjb250aW51ZTsKICAgICAgfQogICAgICBjb25zdCBkZWZhdWx0X2F2YXRhciA9IGRlZi5hdmF0YXI7CiAgICAgIC8vIGxheW91dAogICAgICB1dGlscy5yZXF1ZXN0KGVsLCBhcGksIGFzeW5jIHJlc3AgPT4gewogICAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwLmpzb24oKTsKICAgICAgICBjb25zdCBhcnIgPSBkYXRhLmFydGljbGVfZGF0YSB8fCBbXTsKICAgICAgICBjb25zdCBsaW1pdCA9IGVsLmdldEF0dHJpYnV0ZSgnbGltaXQnKTsKICAgICAgICBhcnIuZm9yRWFjaCgoaXRlbSwgaSkgPT4gewogICAgICAgICAgaWYgKGxpbWl0ICYmIGkgPj0gbGltaXQpIHsKICAgICAgICAgICAgcmV0dXJuOwogICAgICAgICAgfQogICAgICAgICAgdmFyIGNlbGwgPSAnPGRpdiBjbGFzcz0idGltZW5vZGUiIGluZGV4PSInICsgaSArICciPic7CiAgICAgICAgICBjZWxsICs9ICc8ZGl2IGNsYXNzPSJoZWFkZXIiPic7CiAgICAgICAgICBjZWxsICs9ICc8ZGl2IGNsYXNzPSJ1c2VyLWluZm8iPic7CiAgICAgICAgICBjZWxsICs9ICc8aW1nIHNyYz0iJyArIChpdGVtLmF2YXRhciB8fCBkZWZhdWx0X2F2YXRhcikgKyAnIiBvbmVycm9yPSJqYXZhc2NyaXB0OnRoaXMuc3JjPVwnJyArIGRlZmF1bHRfYXZhdGFyICsgJ1wnOyI+JzsKICAgICAgICAgIGNlbGwgKz0gJzxzcGFuPicgKyBpdGVtLmF1dGhvciArICc8L3NwYW4+JzsKICAgICAgICAgIGNlbGwgKz0gJzwvZGl2Pic7CiAgICAgICAgICBjZWxsICs9ICc8c3Bhbj4nICsgaXRlbS5jcmVhdGVkICsgJzwvc3Bhbj4nOwogICAgICAgICAgY2VsbCArPSAnPC9kaXY+JzsKICAgICAgICAgIGNlbGwgKz0gJzxhIGNsYXNzPSJib2R5IiBocmVmPSInICsgaXRlbS5saW5rICsgJyIgdGFyZ2V0PSJfYmxhbmsiIHJlbD0iZXh0ZXJuYWwgbm9mb2xsb3cgbm9vcGVuZXIgbm9yZWZlcnJlciI+JzsKICAgICAgICAgIGNlbGwgKz0gaXRlbS50aXRsZTsKICAgICAgICAgIGNlbGwgKz0gJzwvYT4nOwogICAgICAgICAgY2VsbCArPSAnPC9kaXY+JzsKICAgICAgICAgICQoZWwpLmFwcGVuZChjZWxsKTsKICAgICAgICB9KTsKICAgICAgfSk7CiAgICB9CiAgfSk7Cn0pOw==
+utils.jq(() => {
+  $(function () {
+    const els = document.getElementsByClassName('ds-fcircle');
+    for (var i = 0; i < els.length; i++) {
+      const el = els[i];
+      const api = el.dataset.api;
+      if (api == null) {
+        continue;
+      }
+      const default_avatar = def.avatar;
+      // layout
+      utils.request(el, api, async resp => {
+        const data = await resp.json();
+        const arr = data.article_data || [];
+        const limit = el.getAttribute('limit');
+        arr.forEach((item, i) => {
+          if (limit && i >= limit) {
+            return;
+          }
+          var cell = '<div class="timenode" index="' + i + '">';
+          cell += '<div class="header">';
+          cell += '<div class="user-info">';
+          cell += '<img src="' + (item.avatar || default_avatar) + '" onerror="javascript:this.src=\'' + default_avatar + '\';">';
+          cell += '<span>' + item.author + '</span>';
+          cell += '</div>';
+          cell += '<span>' + item.created + '</span>';
+          cell += '</div>';
+          cell += '<a class="body" href="' + item.link + '" target="_blank" rel="external nofollow noopener noreferrer">';
+          cell += item.title;
+          cell += '</a>';
+          cell += '</div>';
+          $(el).append(cell);
+        });
+      });
+    }
+  });
+});

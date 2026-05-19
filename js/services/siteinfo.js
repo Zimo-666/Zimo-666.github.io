@@ -1,1 +1,38 @@
-Ly8g5pys5o+S5Lu255SxQ2FyZExpbmvlrprliLbogIzmiJDvvIzljp/pobnnm67mupDnoIE6IGh0dHBzOi8vZ2l0aHViLmNvbS9MZXRlMTE0L0NhcmRMaW5rCmZ1bmN0aW9uIHNldENhcmRMaW5rKG5vZGVzKSB7CiAgLy8gSWYgdGhlIGBub2Rlc2AgZG8gbm90IGNvbnRhaW4gYSBgZm9yRWFjaGAgbWV0aG9kLCB0aGVuIHRoZSBkZWZhdWx0IGBhW2NhcmRsaW5rXWAgaXMgdXNlZAogIG5vZGVzID0gJ2ZvckVhY2gnIGluIChub2RlcyB8fCB7fSkgPyBub2RlcyA6IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJ2FbY2FyZGxpbmtdJykKICBub2Rlcy5mb3JFYWNoKChlbCkgPT4gewogICAgLy8gSWYgaXQgaXMgbm90IGEgdGFnIGVsZW1lbnQgdGhlbiBpdCBpcyBub3QgcHJvY2Vzc2VkCiAgICBpZiAoZWwubm9kZVR5cGUgIT09IDEpIHJldHVybjsKICAgIGVsLnJlbW92ZUF0dHJpYnV0ZSgnY2FyZGxpbmsnKTsKICAgIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogICAgaWYgKGFwaSA9PSBudWxsKSByZXR1cm47CiAgICBmZXRjaChhcGkpLnRoZW4oZnVuY3Rpb24ocmVzcG9uc2UpIHsKICAgICAgaWYgKHJlc3BvbnNlLm9rKSB7CiAgICAgICAgcmV0dXJuIHJlc3BvbnNlLmpzb24oKTsKICAgICAgfQogICAgICB0aHJvdyBuZXcgRXJyb3IoJ05ldHdvcmsgcmVzcG9uc2Ugd2FzIG5vdCBvay4nKTsKICAgIH0pLnRoZW4oZnVuY3Rpb24oZGF0YSkgewogICAgICB2YXIgYXV0b2ZpbGwgPSBbXTsKICAgICAgY29uc3QgYXV0b2ZpbGxTdHIgPSBlbC5nZXRBdHRyaWJ1dGUoJ2F1dG9maWxsJyk7CiAgICAgIGlmIChhdXRvZmlsbFN0cikgewogICAgICAgIGF1dG9maWxsID0gYXV0b2ZpbGxTdHIuc3BsaXQoJywnKTsKICAgICAgfQogICAgICBpZiAoZGF0YS50aXRsZSAmJiBkYXRhLnRpdGxlLmxlbmd0aCA+IDAgJiYgYXV0b2ZpbGwuaW5jbHVkZXMoJ3RpdGxlJykpIHsKICAgICAgICBlbC5xdWVyeVNlbGVjdG9yKCcudGl0bGUnKS5pbm5lckhUTUwgPSBkYXRhLnRpdGxlOwogICAgICAgIGVsLnRpdGxlID0gZGF0YS50aXRsZTsKICAgICAgfQogICAgICBpZiAoZGF0YS5pY29uICYmIGRhdGEuaWNvbi5sZW5ndGggPiAwICYmIGF1dG9maWxsLmluY2x1ZGVzKCdpY29uJykpIHsKICAgICAgICBlbC5xdWVyeVNlbGVjdG9yKCcuaW1nJykuc3R5bGUgPSAnYmFja2dyb3VuZC1pbWFnZTogdXJsKCInICsgZGF0YS5pY29uICsgJyIpOyc7CiAgICAgICAgZWwucXVlcnlTZWxlY3RvcignLmltZycpLnNldEF0dHJpYnV0ZSgnZGF0YS1iZycsIGRhdGEuaWNvbik7CiAgICAgIH0KICAgICAgbGV0IGRlc2MgPSBlbC5xdWVyeVNlbGVjdG9yKCcuZGVzYycpOwogICAgICBpZiAoZGVzYyAmJiBkYXRhLmRlc2MgJiYgZGF0YS5kZXNjLmxlbmd0aCA+IDAgJiYgYXV0b2ZpbGwuaW5jbHVkZXMoJ2Rlc2MnKSkgewogICAgICAgIGRlc2MuaW5uZXJIVE1MID0gZGF0YS5kZXNjOwogICAgICB9CiAgICB9KS5jYXRjaChmdW5jdGlvbihlcnJvcikgewogICAgICBjb25zb2xlLmVycm9yKGVycm9yKTsKICAgIH0pOwogIH0pCn0K
+// 本插件由CardLink定制而成，原项目源码: https://github.com/Lete114/CardLink
+function setCardLink(nodes) {
+  // If the `nodes` do not contain a `forEach` method, then the default `a[cardlink]` is used
+  nodes = 'forEach' in (nodes || {}) ? nodes : document.querySelectorAll('a[cardlink]')
+  nodes.forEach((el) => {
+    // If it is not a tag element then it is not processed
+    if (el.nodeType !== 1) return;
+    el.removeAttribute('cardlink');
+    const api = el.dataset.api;
+    if (api == null) return;
+    fetch(api).then(function(response) {
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error('Network response was not ok.');
+    }).then(function(data) {
+      var autofill = [];
+      const autofillStr = el.getAttribute('autofill');
+      if (autofillStr) {
+        autofill = autofillStr.split(',');
+      }
+      if (data.title && data.title.length > 0 && autofill.includes('title')) {
+        el.querySelector('.title').innerHTML = data.title;
+        el.title = data.title;
+      }
+      if (data.icon && data.icon.length > 0 && autofill.includes('icon')) {
+        el.querySelector('.img').style = 'background-image: url("' + data.icon + '");';
+        el.querySelector('.img').setAttribute('data-bg', data.icon);
+      }
+      let desc = el.querySelector('.desc');
+      if (desc && data.desc && data.desc.length > 0 && autofill.includes('desc')) {
+        desc.innerHTML = data.desc;
+      }
+    }).catch(function(error) {
+      console.error(error);
+    });
+  })
+}

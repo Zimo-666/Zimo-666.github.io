@@ -1,1 +1,33 @@
-dXRpbHMuanEoKCkgPT4gewogICQoZnVuY3Rpb24gKCkgewogICAgY29uc3QgZWxzID0gZG9jdW1lbnQuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSgnZHMtZnJpZW5kcycpOwogICAgZm9yICh2YXIgaSA9IDA7IGkgPCBlbHMubGVuZ3RoOyBpKyspIHsKICAgICAgY29uc3QgZWwgPSBlbHNbaV07CiAgICAgIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogICAgICBpZiAoYXBpID09IG51bGwpIHsKICAgICAgICBjb250aW51ZTsKICAgICAgfQogICAgICBjb25zdCBkZWZhdWx0X2F2YXRhciA9IGRlZi5hdmF0YXI7CiAgICAgIC8vIGxheW91dAogICAgICB1dGlscy5yZXF1ZXN0KGVsLCBhcGksIGFzeW5jIHJlc3AgPT4gewogICAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwLmpzb24oKTsKICAgICAgICBmb3IgKGxldCBpdGVtIG9mIChkYXRhLmNvbnRlbnQgfHwgZGF0YSkpIHsKICAgICAgICAgIHZhciBjZWxsID0gYDxkaXYgY2xhc3M9ImdyaWQtY2VsbCB1c2VyLWNhcmQiPmA7CiAgICAgICAgICBjZWxsICs9IGA8YSBjbGFzcz0iY2FyZC1saW5rIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJleHRlcm5hbCBub2ZvbGxvdyBub29wZW5lciBub3JlZmVycmVyIiBocmVmPSIke2l0ZW0uaHRtbF91cmwgfHwgaXRlbS51cmx9Ij5gOzsKICAgICAgICAgIGNlbGwgKz0gYDxpbWcgc3JjPSIke2l0ZW0uYXZhdGFyX3VybCB8fCBpdGVtLmF2YXRhciB8fCBpdGVtLmljb24gfHwgZGVmYXVsdF9hdmF0YXJ9IiBvbmVycm9yPSJqYXZhc2NyaXB0OnRoaXMucmVtb3ZlQXR0cmlidXRlKFwnZGF0YS1zcmNcJyk7dGhpcy5zcmM9XCcke2RlZmF1bHRfYXZhdGFyfVwnOyIvPmA7CiAgICAgICAgICBjZWxsICs9IGA8ZGl2IGNsYXNzPSJuYW1lIGltYWdlLW1ldGEiPmA7CiAgICAgICAgICBjZWxsICs9IGA8c3BhbiBjbGFzcz0iaW1hZ2UtY2FwdGlvbiI+JHtpdGVtLnRpdGxlIHx8IGl0ZW0ubG9naW59PC9zcGFuPmA7CiAgICAgICAgICBjZWxsICs9IGA8L2Rpdj5gOwogICAgICAgICAgaWYgKGl0ZW0ubGFiZWxzICYmIGl0ZW0ubGFiZWxzLmxlbmd0aCA+IDApIHsKICAgICAgICAgICAgbGV0IGxhYmVsID0gaXRlbS5sYWJlbHNbMF07CiAgICAgICAgICAgIGNlbGwgKz0gYDxkaXYgY2xhc3M9ImxhYmVsIiBzdHlsZT0iYmFja2dyb3VuZDojJHtsYWJlbC5jb2xvcn07Ij4ke2xhYmVsLm5hbWV9PC9kaXY+YDsKICAgICAgICAgIH0KICAgICAgICAgIGNlbGwgKz0gYDwvYT5gOwogICAgICAgICAgY2VsbCArPSBgPC9kaXY+YDsKICAgICAgICAgICQoZWwpLmZpbmQoJy5ncmlkLWJveCcpLmFwcGVuZChjZWxsKTsKICAgICAgICB9CiAgICAgICAgd2luZG93LndyYXBMYXp5bG9hZEltYWdlcyhlbCk7CiAgICAgIH0pOwogICAgfQogIH0pOwp9KTs=
+utils.jq(() => {
+  $(function () {
+    const els = document.getElementsByClassName('ds-friends');
+    for (var i = 0; i < els.length; i++) {
+      const el = els[i];
+      const api = el.dataset.api;
+      if (api == null) {
+        continue;
+      }
+      const default_avatar = def.avatar;
+      // layout
+      utils.request(el, api, async resp => {
+        const data = await resp.json();
+        for (let item of (data.content || data)) {
+          var cell = `<div class="grid-cell user-card">`;
+          cell += `<a class="card-link" target="_blank" rel="external nofollow noopener noreferrer" href="${item.html_url || item.url}">`;;
+          cell += `<img src="${item.avatar_url || item.avatar || item.icon || default_avatar}" onerror="javascript:this.removeAttribute(\'data-src\');this.src=\'${default_avatar}\';"/>`;
+          cell += `<div class="name image-meta">`;
+          cell += `<span class="image-caption">${item.title || item.login}</span>`;
+          cell += `</div>`;
+          if (item.labels && item.labels.length > 0) {
+            let label = item.labels[0];
+            cell += `<div class="label" style="background:#${label.color};">${label.name}</div>`;
+          }
+          cell += `</a>`;
+          cell += `</div>`;
+          $(el).find('.grid-box').append(cell);
+        }
+        window.wrapLazyloadImages(el);
+      });
+    }
+  });
+});

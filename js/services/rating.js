@@ -1,1 +1,142 @@
-ZnVuY3Rpb24gZ2V0UmF0aW5nS2V5KGlkKSB7CiAgcmV0dXJuIGByYXRpbmctJHtpZH1gOwp9CgpmdW5jdGlvbiBoYXNSYXRlZChpZCkgewogIHJldHVybiAhIWxvY2FsU3RvcmFnZS5nZXRJdGVtKGdldFJhdGluZ0tleShpZCkpOwp9CgpmdW5jdGlvbiBnZXRSYXRlZFZhbHVlKGlkKSB7CiAgcmV0dXJuIHBhcnNlSW50KGxvY2FsU3RvcmFnZS5nZXRJdGVtKGdldFJhdGluZ0tleShpZCkpIHx8ICcwJyk7Cn0KCmZ1bmN0aW9uIHN0b3JlUmF0aW5nKGlkLCB2YWx1ZSkgewogIGxvY2FsU3RvcmFnZS5zZXRJdGVtKGdldFJhdGluZ0tleShpZCksIHZhbHVlKTsKfQoKZnVuY3Rpb24gY2xlYXJIb3ZlcihlbCkgewogIGVsLnF1ZXJ5U2VsZWN0b3JBbGwoJy5zdGFyJykuZm9yRWFjaChzID0+IHMuY2xhc3NMaXN0LnJlbW92ZSgnaG92ZXInKSk7Cn0KCmZ1bmN0aW9uIHVwZGF0ZVByZXZpZXcoZWwsIGF2ZykgewogIGNvbnN0IHJvdW5kZWQgPSBNYXRoLmZsb29yKGF2Zyk7CiAgZWwucXVlcnlTZWxlY3RvckFsbCgnLnN0YXInKS5mb3JFYWNoKHMgPT4gewogICAgY29uc3QgdiA9IHBhcnNlSW50KHMuZGF0YXNldC52YWx1ZSk7CiAgICBzLmNsYXNzTGlzdC50b2dnbGUoJ3ByZXZpZXcnLCB2IDw9IHJvdW5kZWQpOwogIH0pOwp9CgpmdW5jdGlvbiBzZXR1cEhvdmVyRWZmZWN0KGVsKSB7CiAgY29uc3Qgc3RhcnMgPSBlbC5xdWVyeVNlbGVjdG9yQWxsKCcuc3RhcicpOwogIGlmICghc3RhcnMubGVuZ3RoKSByZXR1cm47CgogIHN0YXJzLmZvckVhY2goc3RhciA9PiB7CiAgICBjb25zdCB2YWx1ZSA9IHBhcnNlSW50KHN0YXIuZGF0YXNldC52YWx1ZSk7CgogICAgc3Rhci5hZGRFdmVudExpc3RlbmVyKCdtb3VzZWVudGVyJywgKCkgPT4gewogICAgICBzdGFycy5mb3JFYWNoKHMgPT4gewogICAgICAgIHMuY2xhc3NMaXN0LnJlbW92ZSgncHJldmlldycpOwogICAgICAgIGNvbnN0IHYgPSBwYXJzZUludChzLmRhdGFzZXQudmFsdWUpOwogICAgICAgIHMuY2xhc3NMaXN0LnRvZ2dsZSgnaG92ZXInLCB2IDw9IHZhbHVlKTsKICAgICAgfSk7CiAgICB9KTsKCiAgICBzdGFyLmFkZEV2ZW50TGlzdGVuZXIoJ21vdXNlbGVhdmUnLCAoKSA9PiB7CiAgICAgIGNsZWFySG92ZXIoZWwpOwogICAgICAvLyDmgaLlpI3lubPlnYfliIbpooTop4gKICAgICAgY29uc3QgYXZnID0gcGFyc2VGbG9hdChlbC5xdWVyeVNlbGVjdG9yKCcuYXZnJyk/LnRleHRDb250ZW50LnJlcGxhY2UoL1soKV0vZywgJycpIHx8ICcwJyk7CiAgICAgIHVwZGF0ZVByZXZpZXcoZWwsIGF2Zyk7CiAgICB9KTsKICB9KTsKfQoKZnVuY3Rpb24gY2FsY3VsYXRlQXZlcmFnZShyYXRpbmcgPSB7fSkgewogIGNvbnN0IHZhbGlkU2NvcmVzID0gT2JqZWN0LmVudHJpZXMocmF0aW5nKS5maWx0ZXIoKFtrXSkgPT4gIWlzTmFOKE51bWJlcihrKSkpOwogIGNvbnN0IHRvdGFsID0gdmFsaWRTY29yZXMucmVkdWNlKChzdW0sIFtrLCBjXSkgPT4gc3VtICsgTnVtYmVyKGspICogYywgMCk7CiAgY29uc3Qgdm90ZXMgPSB2YWxpZFNjb3Jlcy5yZWR1Y2UoKHN1bSwgWywgY10pID0+IHN1bSArIGMsIDApOwogIHJldHVybiB2b3RlcyA+IDAgPyAodG90YWwgLyB2b3RlcykudG9GaXhlZCgxKSA6ICcwLjAnOwp9Cgphc3luYyBmdW5jdGlvbiBsb2FkUmF0aW5nKGVsKSB7CiAgY29uc3QgaWQgPSBlbC5kYXRhc2V0LmlkOwogIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogIGlmICghaWQgfHwgIWFwaSkgcmV0dXJuOwoKICB0cnkgewogICAgY29uc3QgcmVzID0gYXdhaXQgZmV0Y2goYCR7YXBpfS9pbmZvP2lkPSR7ZW5jb2RlVVJJQ29tcG9uZW50KGlkKX1gKTsKICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXMuanNvbigpOwogICAgY29uc3QgcmF0aW5nID0gZGF0YS5yYXRpbmcgfHwge307CiAgICBjb25zdCBhdmcgPSBjYWxjdWxhdGVBdmVyYWdlKHJhdGluZyk7CgogICAgLy8g6K6h566X6K+E5YiG5Lq65pWwCiAgICBjb25zdCB2YWxpZFNjb3JlcyA9IE9iamVjdC5lbnRyaWVzKHJhdGluZykuZmlsdGVyKChba10pID0+ICFpc05hTihOdW1iZXIoaykpKTsKICAgIGNvbnN0IHRvdGFsVm90ZXMgPSB2YWxpZFNjb3Jlcy5yZWR1Y2UoKHN1bSwgWywgY10pID0+IHN1bSArIGMsIDApOwoKICAgIC8vIOiuvue9ruW5s+Wdh+WIhgogICAgbGV0IGF2Z0VsID0gZWwucXVlcnlTZWxlY3RvcignLmF2ZycpOwogICAgaWYgKCFhdmdFbCkgewogICAgICBhdmdFbCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgYXZnRWwuY2xhc3NOYW1lID0gJ2F2Zyc7CiAgICAgIGVsLmFwcGVuZENoaWxkKGF2Z0VsKTsKICAgIH0KICAgIGF2Z0VsLnRleHRDb250ZW50ID0gYCgke2F2Z30pYDsKCiAgICAvLyDorr7nva7or4TliIbkurrmlbAKICAgIGxldCBjb3VudEVsID0gZWwucXVlcnlTZWxlY3RvcignLmNvdW50Jyk7CiAgICBpZiAoIWNvdW50RWwpIHsKICAgICAgY291bnRFbCA9IGRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoJ3NwYW4nKTsKICAgICAgY291bnRFbC5jbGFzc05hbWUgPSAnY291bnQnOwogICAgICBlbC5hcHBlbmRDaGlsZChjb3VudEVsKTsKICAgIH0KICAgIGNvdW50RWwudGV4dENvbnRlbnQgPSBgJHt0b3RhbFZvdGVzfWA7CgogICAgdXBkYXRlUHJldmlldyhlbCwgYXZnKTsKICB9IGNhdGNoIChlKSB7CiAgICBjb25zb2xlLndhcm4oYFtyYXRpbmddIOWKoOi9veWksei0pTogaWQ9JHtpZH1gLCBlKTsKICB9Cn0KCmFzeW5jIGZ1bmN0aW9uIHN1Ym1pdFJhdGluZyhlbCwgdmFsdWUpIHsKICBjb25zdCBpZCA9IGVsLmRhdGFzZXQuaWQ7CiAgY29uc3QgYXBpID0gZWwuZGF0YXNldC5hcGk7CiAgaWYgKCFpZCB8fCAhYXBpIHx8IGhhc1JhdGVkKGlkKSkgcmV0dXJuOwoKICBzdG9yZVJhdGluZyhpZCwgdmFsdWUpOwogIGVsLmNsYXNzTGlzdC5hZGQoJ3JhdGVkJyk7CgogIHRyeSB7CiAgICBhd2FpdCBmZXRjaChgJHthcGl9L3VwZGF0ZT9pZD0ke2VuY29kZVVSSUNvbXBvbmVudChpZCl9JnZhbHVlPSR7dmFsdWV9YCwgewogICAgICBtZXRob2Q6ICdQT1NUJwogICAgfSk7CiAgICBsb2FkUmF0aW5nKGVsKTsKICB9IGNhdGNoIChlKSB7CiAgICBjb25zb2xlLndhcm4oYFtyYXRpbmddIOaPkOS6pOWksei0pTogaWQ9JHtpZH1gLCBlKTsKICB9Cn0KCmZ1bmN0aW9uIGluaXRSYXRpbmdzKCkgewogIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoJy5kcy1yYXRpbmcnKS5mb3JFYWNoKGVsID0+IHsKICAgIGNvbnN0IHsgaWQsIGFwaSB9ID0gZWwuZGF0YXNldDsKICAgIGlmICghaWQgfHwgIWFwaSkgcmV0dXJuOwoKICAgIGxvYWRSYXRpbmcoZWwpOwogICAgc2V0dXBIb3ZlckVmZmVjdChlbCk7CgogICAgaWYgKGhhc1JhdGVkKGlkKSkgewogICAgICBlbC5jbGFzc0xpc3QuYWRkKCdyYXRlZCcpOwogICAgfQoKICAgIGVsLnF1ZXJ5U2VsZWN0b3JBbGwoJy5zdGFyJykuZm9yRWFjaChzdGFyID0+IHsKICAgICAgY29uc3QgdmFsdWUgPSBzdGFyLmRhdGFzZXQudmFsdWU7CiAgICAgIHN0YXIuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoKSA9PiB7CiAgICAgICAgaWYgKCFoYXNSYXRlZChpZCkpIHN1Ym1pdFJhdGluZyhlbCwgdmFsdWUpOwogICAgICB9KTsKICAgIH0pOwogIH0pOwp9CgppZiAoZG9jdW1lbnQucmVhZHlTdGF0ZSA9PT0gJ2xvYWRpbmcnKSB7CiAgd2luZG93LmFkZEV2ZW50TGlzdGVuZXIoJ0RPTUNvbnRlbnRMb2FkZWQnLCBpbml0UmF0aW5ncyk7Cn0gZWxzZSB7CiAgaW5pdFJhdGluZ3MoKTsKfQ==
+function getRatingKey(id) {
+  return `rating-${id}`;
+}
+
+function hasRated(id) {
+  return !!localStorage.getItem(getRatingKey(id));
+}
+
+function getRatedValue(id) {
+  return parseInt(localStorage.getItem(getRatingKey(id)) || '0');
+}
+
+function storeRating(id, value) {
+  localStorage.setItem(getRatingKey(id), value);
+}
+
+function clearHover(el) {
+  el.querySelectorAll('.star').forEach(s => s.classList.remove('hover'));
+}
+
+function updatePreview(el, avg) {
+  const rounded = Math.floor(avg);
+  el.querySelectorAll('.star').forEach(s => {
+    const v = parseInt(s.dataset.value);
+    s.classList.toggle('preview', v <= rounded);
+  });
+}
+
+function setupHoverEffect(el) {
+  const stars = el.querySelectorAll('.star');
+  if (!stars.length) return;
+
+  stars.forEach(star => {
+    const value = parseInt(star.dataset.value);
+
+    star.addEventListener('mouseenter', () => {
+      stars.forEach(s => {
+        s.classList.remove('preview');
+        const v = parseInt(s.dataset.value);
+        s.classList.toggle('hover', v <= value);
+      });
+    });
+
+    star.addEventListener('mouseleave', () => {
+      clearHover(el);
+      // 恢复平均分预览
+      const avg = parseFloat(el.querySelector('.avg')?.textContent.replace(/[()]/g, '') || '0');
+      updatePreview(el, avg);
+    });
+  });
+}
+
+function calculateAverage(rating = {}) {
+  const validScores = Object.entries(rating).filter(([k]) => !isNaN(Number(k)));
+  const total = validScores.reduce((sum, [k, c]) => sum + Number(k) * c, 0);
+  const votes = validScores.reduce((sum, [, c]) => sum + c, 0);
+  return votes > 0 ? (total / votes).toFixed(1) : '0.0';
+}
+
+async function loadRating(el) {
+  const id = el.dataset.id;
+  const api = el.dataset.api;
+  if (!id || !api) return;
+
+  try {
+    const res = await fetch(`${api}/info?id=${encodeURIComponent(id)}`);
+    const data = await res.json();
+    const rating = data.rating || {};
+    const avg = calculateAverage(rating);
+
+    // 计算评分人数
+    const validScores = Object.entries(rating).filter(([k]) => !isNaN(Number(k)));
+    const totalVotes = validScores.reduce((sum, [, c]) => sum + c, 0);
+
+    // 设置平均分
+    let avgEl = el.querySelector('.avg');
+    if (!avgEl) {
+      avgEl = document.createElement('span');
+      avgEl.className = 'avg';
+      el.appendChild(avgEl);
+    }
+    avgEl.textContent = `(${avg})`;
+
+    // 设置评分人数
+    let countEl = el.querySelector('.count');
+    if (!countEl) {
+      countEl = document.createElement('span');
+      countEl.className = 'count';
+      el.appendChild(countEl);
+    }
+    countEl.textContent = `${totalVotes}`;
+
+    updatePreview(el, avg);
+  } catch (e) {
+    console.warn(`[rating] 加载失败: id=${id}`, e);
+  }
+}
+
+async function submitRating(el, value) {
+  const id = el.dataset.id;
+  const api = el.dataset.api;
+  if (!id || !api || hasRated(id)) return;
+
+  storeRating(id, value);
+  el.classList.add('rated');
+
+  try {
+    await fetch(`${api}/update?id=${encodeURIComponent(id)}&value=${value}`, {
+      method: 'POST'
+    });
+    loadRating(el);
+  } catch (e) {
+    console.warn(`[rating] 提交失败: id=${id}`, e);
+  }
+}
+
+function initRatings() {
+  document.querySelectorAll('.ds-rating').forEach(el => {
+    const { id, api } = el.dataset;
+    if (!id || !api) return;
+
+    loadRating(el);
+    setupHoverEffect(el);
+
+    if (hasRated(id)) {
+      el.classList.add('rated');
+    }
+
+    el.querySelectorAll('.star').forEach(star => {
+      const value = star.dataset.value;
+      star.addEventListener('click', () => {
+        if (!hasRated(id)) submitRating(el, value);
+      });
+    });
+  });
+}
+
+if (document.readyState === 'loading') {
+  window.addEventListener('DOMContentLoaded', initRatings);
+} else {
+  initRatings();
+}

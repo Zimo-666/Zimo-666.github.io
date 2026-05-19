@@ -1,1 +1,37 @@
-dXRpbHMuanEoKCkgPT4gewogICAgJChmdW5jdGlvbiAoKSB7CiAgICAgIGNvbnN0IGVscyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlDbGFzc05hbWUoJ2RzLWdpc2N1cycpOwogICAgICBmb3IgKHZhciBpID0gMDsgaSA8IGVscy5sZW5ndGg7IGkrKykgewogICAgICAgIGNvbnN0IGVsID0gZWxzW2ldOwogICAgICAgIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogICAgICAgIGlmIChhcGkgPT0gbnVsbCkgewogICAgICAgICAgY29udGludWU7CiAgICAgICAgfQogICAgICAgIGNvbnN0IGRlZmF1bHRfYXZhdGFyID0gZGVmLmF2YXRhcjsKICAgICAgICAvLyBsYXlvdXQKICAgICAgICB1dGlscy5yZXF1ZXN0KGVsLCBhcGksIGFzeW5jIHJlc3AgPT4gewogICAgICAgICAgY29uc3QgZGF0YSA9IGF3YWl0IHJlc3AuanNvbigpOwogICAgICAgICAgY29uc3QgbGltaXQgPSBlbC5nZXRBdHRyaWJ1dGUoJ2xpbWl0Jyk7CiAgICAgICAgICBkYXRhLmZvckVhY2goKGl0ZW0sIGkpID0+IHsKICAgICAgICAgICAgaWYgKGxpbWl0ICYmIGkgPj0gbGltaXQpIHsKICAgICAgICAgICAgICByZXR1cm47CiAgICAgICAgICAgIH0KICAgICAgICAgICAgY29tbWVudCA9IGl0ZW0uYm9keS5sZW5ndGggPiA1MCA/IGl0ZW0uYm9keS5zdWJzdHJpbmcoMCwgNTApICsgJy4uLicgOiBpdGVtLmJvZHk7CiAgICAgICAgICAgIHZhciBjZWxsID0gJzxkaXYgY2xhc3M9InRpbWVub2RlIiBpbmRleD0iJyArIGkgKyAnIj4nOwogICAgICAgICAgICBjZWxsICs9ICc8ZGl2IGNsYXNzPSJoZWFkZXIiPic7CiAgICAgICAgICAgIGNlbGwgKz0gJzxkaXYgY2xhc3M9InVzZXItaW5mbyI+JzsKICAgICAgICAgICAgY2VsbCArPSAnPGltZyBzcmM9IicgKyAoaXRlbS5hdXRob3IuYXZhdGFyVXJsIHx8IGRlZmF1bHRfYXZhdGFyKSArICciIG9uZXJyb3I9ImphdmFzY3JpcHQ6dGhpcy5zcmM9XCcnICsgZGVmYXVsdF9hdmF0YXIgKyAnXCc7Ij4nOwogICAgICAgICAgICBjZWxsICs9ICc8c3Bhbj4nICsgaXRlbS5hdXRob3IubG9naW4gKyAnPC9zcGFuPic7CiAgICAgICAgICAgIGNlbGwgKz0gJzwvZGl2Pic7CiAgICAgICAgICAgIGNlbGwgKz0gJzxzcGFuPicgKyBuZXcgRGF0ZShpdGVtLmNyZWF0ZWRBdCkudG9Mb2NhbGVTdHJpbmcoKSArICc8L3NwYW4+JzsKICAgICAgICAgICAgY2VsbCArPSAnPC9kaXY+JzsKICAgICAgICAgICAgY2VsbCArPSAnPGEgY2xhc3M9ImJvZHkiIGhyZWY9IicgKyBpdGVtLnVybCArICciIHRhcmdldD0iX2JsYW5rIiByZWw9ImV4dGVybmFsIG5vZm9sbG93IG5vb3BlbmVyIG5vcmVmZXJyZXIiPic7CiAgICAgICAgICAgIGNlbGwgKz0gY29tbWVudDsKICAgICAgICAgICAgY2VsbCArPSAnPC9hPic7CiAgICAgICAgICAgIGNlbGwgKz0gJzwvZGl2Pic7CiAgICAgICAgICAgICQoZWwpLmFwcGVuZChjZWxsKTsKICAgICAgICAgIH0pOwogICAgICAgIH0pOwogICAgICB9CiAgICB9KTsKICB9KTs=
+utils.jq(() => {
+    $(function () {
+      const els = document.getElementsByClassName('ds-giscus');
+      for (var i = 0; i < els.length; i++) {
+        const el = els[i];
+        const api = el.dataset.api;
+        if (api == null) {
+          continue;
+        }
+        const default_avatar = def.avatar;
+        // layout
+        utils.request(el, api, async resp => {
+          const data = await resp.json();
+          const limit = el.getAttribute('limit');
+          data.forEach((item, i) => {
+            if (limit && i >= limit) {
+              return;
+            }
+            comment = item.body.length > 50 ? item.body.substring(0, 50) + '...' : item.body;
+            var cell = '<div class="timenode" index="' + i + '">';
+            cell += '<div class="header">';
+            cell += '<div class="user-info">';
+            cell += '<img src="' + (item.author.avatarUrl || default_avatar) + '" onerror="javascript:this.src=\'' + default_avatar + '\';">';
+            cell += '<span>' + item.author.login + '</span>';
+            cell += '</div>';
+            cell += '<span>' + new Date(item.createdAt).toLocaleString() + '</span>';
+            cell += '</div>';
+            cell += '<a class="body" href="' + item.url + '" target="_blank" rel="external nofollow noopener noreferrer">';
+            cell += comment;
+            cell += '</a>';
+            cell += '</div>';
+            $(el).append(cell);
+          });
+        });
+      }
+    });
+  });

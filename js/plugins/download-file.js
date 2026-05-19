@@ -1,1 +1,198 @@
-Ly8g5Lyg5YWl5LiA5Liq5a2X56ym5Liy77yM6L+U5Zue5a+55bqU55qE5paH5Lu25qC85byP57G75Z6LCmZ1bmN0aW9uIGV4dFRvTWltZXMoZXh0KSB7CiAgICBsZXQgdHlwZSA9IHVuZGVmaW5lZDsKICAgIHN3aXRjaCAoZXh0KSB7CiAgICAgIC8vIOWvueW6lOWbvueJh+agvOW8j2pwZwogICAgICBjYXNlICdqcGcnOgogICAgICAgIHR5cGUgPSAnaW1hZ2UvanBlZycKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU5Zu+54mH5qC85byPcG5nCiAgICAgIGNhc2UgJ3BuZyc6CiAgICAgICAgdHlwZSA9ICdpbWFnZS9wbmcnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOWbvueJh+agvOW8j2pwZWcKICAgICAgY2FzZSAnanBlZyc6CiAgICAgICAgdHlwZSA9ICdpbWFnZS9qcGVnJwogICAgICAgIGJyZWFrOwogICAgICAgLy8g5a+55bqU5Zu+54mH5qC85byPZ2lmCiAgICAgIGNhc2UgJ2dpZic6CiAgICAgICAgdHlwZSA9J2ltYWdlL2dpZicKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU5Zu+54mH5qC85byPYm1wCiAgICAgIGNhc2UgJ2JtcCc6CiAgICAgICAgdHlwZSA9ICdpbWFnZS9ibXAnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOaWh+acrOagvOW8j3R4dAogICAgICBjYXNlICd0eHQnOgogICAgICAgIHR5cGUgPSAndGV4dC9wbGFpbicKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU6KGo5qC85qC85byPeGxzCiAgICAgIGNhc2UgJ3hscyc6CiAgICAgICAgdHlwZSA9ICdhcHBsaWNhdGlvbi92bmQubXMtZXhjZWwnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lHdvcmTmlofmoaNkb2PmoLzlvI8KICAgICAgY2FzZSAnZG9jJzoKICAgICAgICB0eXBlID0gJ2FwcGxpY2F0aW9uL21zd29yZCcKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU5paH5qGj5qC85byPcGRmCiAgICAgIGNhc2UgJ3BkZic6CiAgICAgICAgdHlwZSA9ICdhcHBsaWNhdGlvbi9wZGYnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOihqOagvOagvOW8j3hsc3gKICAgICAgY2FzZSAneGxzeCc6CiAgICAgICAgdHlwZSA9ICdhcHBsaWNhdGlvbi92bmQubXMtZXhjZWwnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOihqOagvOagvOW8j2NzdgogICAgICBjYXNlICdjc3YnOgogICAgICAgIHR5cGUgPSAndGV4dC9jc3YnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOeahOinhumikeagvOW8j+S4gOiIrOaYr01QRUctNOaIluiAhUguMjY057yW56CB55qETVA05qC85byPCiAgICAgIGNhc2UgJ21wNCc6CiAgICAgICAgdHlwZSA9ICd2aWRlby9tcDQnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOeahOinhumikeagvOW8j+S4gOiIrOaYr0FWSeagvOW8jwogICAgICBjYXNlICdhdmknOgogICAgICAgIHR5cGUgPSAndmlkZW8veC1tc3ZpZGVvJwogICAgICAgIGJyZWFrOwogICAgICAvLyDlr7nlupTnmoTop4bpopHmoLzlvI/kuIDoiKzmmK9XaW5kb3dzIE1lZGlhIFZpZGVv5qC85byPCiAgICAgIGNhc2UgJ1dpbmRvd3NNZWRpYVZpZGVvJzoKICAgICAgICB0eXBlID0gJ3ZpZGVvL3gtbXMtd212JwogICAgICAgIGJyZWFrOwogICAgICAvLyDlr7nlupTnmoTop4bpopHmoLzlvI/kuIDoiKzmmK9NT1bmoLzlvI/vvIznlLHoi7nmnpzlhazlj7jlvIDlj5HnmoQKICAgICAgY2FzZSAnbW92JzoKICAgICAgICB0eXBlID0gJ3ZpZGVvL3F1aWNrdGltZScKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU55qE6KeG6aKR5qC85byP5LiA6Iis5pivRmxhc2jop4bpopHmoLzlvI/vvIznlLFBZG9iZeWFrOWPuOW8gOWPkeeahAogICAgICBjYXNlICdmbGFzaCc6CiAgICAgICAgdHlwZSA9ICd2aWRlby94LWZsdicKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU55qE6KeG6aKR5qC85byP5LiA6Iis5pivTUtW5qC85byP77yM5byA5rqQ5YWN6LS555qE5aSa5aqS5L2T5a655Zmo5qC85byPCiAgICAgIGNhc2UgJ21rdic6CiAgICAgICAgdHlwZSA9ICd2aWRlby94LW1hdHJvc2thJwogICAgICAgIGJyZWFrOwogICAgICAvLyDlr7nlupTpn7PpopHmoLzlvI9tcDMKICAgICAgY2FzZSAnbXAzJzoKICAgICAgICB0eXBlID0gJ2F1ZGlvL21wZWcnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOmfs+mikeagvOW8j3dhdgogICAgICBjYXNlICd3YXYnOgogICAgICAgIHR5cGUgPSAnYXVkaW8vd2F2JwogICAgICAgIGJyZWFrOwogICAgICAvLyDlr7nlupTpn7PpopHmoLzlvI9mbGFjCiAgICAgIGNhc2UgJ2ZsYWMnOgogICAgICAgIHR5cGUgPSAnYXVkaW8vZmxhYycKICAgICAgICBicmVhazsKICAgICAgLy8g5a+55bqU6Z+z6aKR5qC85byPYWFjCiAgICAgIGNhc2UgJ2FhYyc6CiAgICAgICAgdHlwZSA9ICdhdWRpby9hYWMnCiAgICAgICAgYnJlYWs7CiAgICAgIC8vIOWvueW6lOmfs+mikeagvOW8j1dNQQogICAgICBjYXNlICd3bWEnOgogICAgICAgIHR5cGUgPSAnYXVkaW8veC1tcy13bWEnCiAgICAgICAgYnJlYWs7CiAgICAgIGRlZmF1bHQ6CiAgICAgICAgdHlwZSA9ICd0ZXh0L3BsYWluJwogICAgICAgIGJyZWFrOwogICAgfQogICAgcmV0dXJuIHR5cGU7CiAgfQogIAogIC8qKgogICAqIOagueaNruWtl+iKguaVsOiOt+WPluaWh+S7tuWkp+Wwj++8jOW5tui9rOaNouaIkCBLQuOAgU1C44CBR0LjgIFUQiDnrYnlvaLlvI8KICAgKiBAcGFyYW0ge251bWJlcn0gYnl0ZXMgLSDmlofku7bnmoTlrZfoioLmlbAKICAgKiBAcmV0dXJucyB7c3RyaW5nfSAtIOaWh+S7tuWkp+Wwj+eahOWtl+espuS4suihqOekuuW9ouW8jwogICAqLwogIGZ1bmN0aW9uIGZvcm1hdEZpbGVTaXplKGJ5dGVzKSB7CiAgICBjb25zdCB1bml0cyA9IFsnQicsICdLQicsICdNQicsICdHQicsICdUQicsICdQQicsICdFQicsICdaQicsICdZQiddOwogICAgbGV0IHNpemUgPSBieXRlczsKICAgIGxldCB1bml0SW5kZXggPSAwOwogIAogICAgd2hpbGUgKHNpemUgPj0gMTAyNCAmJiB1bml0SW5kZXggPCB1bml0cy5sZW5ndGggLSAxKSB7CiAgICAgIHNpemUgLz0gMTAyNDsKICAgICAgdW5pdEluZGV4Kys7CiAgICB9CiAgCiAgICAvLyDkv53nlZnkuKTkvY3lsI/mlbDvvIzlm5voiI3kupTlhaUKICAgIHNpemUgPSBNYXRoLnJvdW5kKHNpemUgKiAxMDApIC8gMTAwOwogIAogICAgcmV0dXJuIGAke3NpemV9JHt1bml0c1t1bml0SW5kZXhdfWA7CiAgfQogIAogIHZhciBmaWxlX2NvbnRlbnRzID0ge307CiAgCiAgZnVuY3Rpb24gY2FjaGVEYXRhcyh1cmwsIGRhdGEpIHsKICAgIGxldCBjb250ZW50ID0gZGF0YS5maWxlOwogICAgbGV0IGZpbGVOYW1lID0gdXJsLnNwbGl0KCIvIikuYXQoLTEpOwogICAgbGV0IGZpbGVUeXBlID0gZmlsZU5hbWUuc3BsaXQoIi4iKVsxXTsKICAgIGxldCBmaWxlTWltZVR5cGUgPSBleHRUb01pbWVzKGZpbGVUeXBlKTsKICAgIC8vIOaLv+WIsOS6jOi/m+WItuWtl+espuS4siBjb250ZW50CiAgICAvLyDlho3liKnnlKggQnVmZmVyIOi9rOS4uuWvueixoQogICAgY29uc3QgbGVuZ3RoID0gY29udGVudCA/IGNvbnRlbnQuZGF0YS5sZW5ndGggOiAwOwogICAgbGV0IGJ1ZiA9IG5ldyBBcnJheUJ1ZmZlcihsZW5ndGgpCiAgICBsZXQgdmlldyA9IG5ldyBVaW50OEFycmF5KGJ1ZikKICAgIGZvciAobGV0IGkgPSAwOyBpIDwgbGVuZ3RoOyArK2kpIHsKICAgICAgdmlld1tpXSA9IGNvbnRlbnQuZGF0YVtpXQogICAgfQogICAgLy8g5YaN6L6T5YWl5YiwIEJsb2Ig55Sf5oiQ5paH5Lu2CiAgICBsZXQgYmxvYiA9IG5ldyBCbG9iKFtidWZdLCB7dHlwZTogZmlsZU1pbWVUeXBlfSk7CiAgICBsZXQgZmlsZVNpemUgPSBmb3JtYXRGaWxlU2l6ZShibG9iLnNpemUpOwogIAogICAgbGV0IGZpbGVfY29udGVudCA9IHt9OwogICAgZmlsZV9jb250ZW50Lm5hbWUgPSBmaWxlTmFtZTsKICAgIGZpbGVfY29udGVudC5zaXplID0gZmlsZVNpemU7CiAgICBmaWxlX2NvbnRlbnQuYmxvYiA9IGJsb2I7CiAgCiAgICBmaWxlX2NvbnRlbnRzW3VybF0gPSBmaWxlX2NvbnRlbnQ7CiAgfQogIAogIGZ1bmN0aW9uIHJlbmRlckZpbGVEb20oZWwsIHVybCkgewogICAgbGV0IGZpbGVTaXplU3BhbiA9IGVsLnF1ZXJ5U2VsZWN0b3IoJy5maWxlLXNpemUnKTsKICAgIGxldCBmaWxlU2l6ZSA9IGZpbGVfY29udGVudHNbdXJsXS5zaXplOwogICAgaWYgKGZpbGVTaXplU3BhbiAmJiBmaWxlU2l6ZSkgewogICAgICBmaWxlU2l6ZVNwYW4uaW5uZXJIVE1MID0gZmlsZVNpemU7CiAgICB9CiAgfQogIAogIGZ1bmN0aW9uIGRvd25sb2FkRmlsZSh1cmwpIHsKICAgIGxldCBmaWxlID0gZmlsZV9jb250ZW50c1t1cmxdOwogICAgbGV0IGEgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdhJykKICAgIC8vIOaMh+WumueUn+aIkOeahOaWh+S7tuWQjQogICAgYS5kb3dubG9hZCA9IGZpbGUubmFtZTsKICAgIGEuaHJlZiA9IFVSTC5jcmVhdGVPYmplY3RVUkwoZmlsZS5ibG9iKQogICAgZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChhKQogICAgYS5jbGljaygpCiAgICBkb2N1bWVudC5ib2R5LnJlbW92ZUNoaWxkKGEpCiAgfQogIAogIGZ1bmN0aW9uIGRvd25sb2FkRmlsZUV2ZW50KGZpbGVEb21zKSB7CiAgICBmb3IgKGxldCBpID0gMDsgaSA8IGZpbGVEb21zLmxlbmd0aDsgKytpKSB7CiAgICAgIGxldCBmaWxlRG9tID0gZmlsZURvbXNbaV07CiAgICAgIGNvbnN0IGFwaSA9IGN0eC50YWdfcGx1Z2lucy5jaGF0LmFwaSArICc/dHlwZT1maWxlJnVybD0nOwogICAgICBjb25zdCBvYnZlcnNlciA9IG5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcigoZW50cmllcywgb2JzZXJ2ZXIpID0+IHsKICAgICAgICB1dGlscy5yZXF1ZXN0QW5pbWF0aW9uRnJhbWUoKCk9PnsKICAgICAgICAgIGVudHJpZXMuZmlsdGVyKChlbnRyeSk9PntyZXR1cm4gZW50cnkuaXNJbnRlcnNlY3Rpbmd9KS5zb3J0KChhLGIpPT5hLmludGVyc2VjdGlvblJlY3QueSAhPT0gYi5pbnRlcnNlY3Rpb25SZWN0LnkgPyBhLmludGVyc2VjdGlvblJlY3QueSAtIGIuaW50ZXJzZWN0aW9uUmVjdC55IDogYS5pbnRlcnNlY3Rpb25SZWN0LnggLSBiLmludGVyc2VjdGlvblJlY3QueCkuZm9yRWFjaCgoZW50cnksIGluZGV4KSA9PiB7CiAgICAgICAgICAgIG9ic2VydmVyLnVub2JzZXJ2ZShlbnRyeS50YXJnZXQpOwogICAgICAgICAgICBzZXRUaW1lb3V0KCgpID0+IHsKICAgICAgICAgICAgICBsZXQgdXJsID0gZW50cnkudGFyZ2V0LmdldEF0dHJpYnV0ZSgndXJsJyk7CiAgICAgICAgICAgICAgZmV0Y2goYXBpICsgdXJsKS50aGVuKGZ1bmN0aW9uKHJlc3BvbnNlKSB7CiAgICAgICAgICAgICAgICBpZiAocmVzcG9uc2Uub2spIHsKICAgICAgICAgICAgICAgICAgcmV0dXJuIHJlc3BvbnNlLmpzb24oKTsKICAgICAgICAgICAgICAgIH0KICAgICAgICAgICAgICAgIHRocm93IG5ldyBFcnJvcignTmV0d29yayByZXNwb25zZSB3YXMgbm90IG9rLicpOwogICAgICAgICAgICAgIH0pLnRoZW4oZnVuY3Rpb24oZGF0YSkgewogICAgICAgICAgICAgICAgY2FjaGVEYXRhcyh1cmwsIGRhdGEpOwogICAgICAgICAgICAgICAgcmVuZGVyRmlsZURvbShmaWxlRG9tLCB1cmwpOwogICAgICAgICAgICAgIH0pLmNhdGNoKGZ1bmN0aW9uKGVycm9yKSB7CiAgICAgICAgICAgICAgICBjb25zb2xlLmxvZyhlcnJvcik7CiAgICAgICAgICAgICAgfSk7CiAgICAgICAgICAgICAgZmlsZURvbS5hZGRFdmVudExpc3RlbmVyKCdjbGljaycsICgpPT57CiAgICAgICAgICAgICAgICAgIGRvd25sb2FkRmlsZSh1cmwpOwogICAgICAgICAgICAgIH0pOwogICAgICAgICAgICB9LCBNYXRoLm1heCgxMDAsIDE2KSooaW5kZXgrMSkpOwogICAgICAgICAgfSk7CiAgICAgICAgfSk7CiAgICAgIH0pOwogICAgICBvYnZlcnNlci5vYnNlcnZlKGZpbGVEb20pOwogICAgfQogIH0KICA=
+// 传入一个字符串，返回对应的文件格式类型
+function extToMimes(ext) {
+    let type = undefined;
+    switch (ext) {
+      // 对应图片格式jpg
+      case 'jpg':
+        type = 'image/jpeg'
+        break;
+      // 对应图片格式png
+      case 'png':
+        type = 'image/png'
+        break;
+      // 对应图片格式jpeg
+      case 'jpeg':
+        type = 'image/jpeg'
+        break;
+       // 对应图片格式gif
+      case 'gif':
+        type ='image/gif'
+        break;
+      // 对应图片格式bmp
+      case 'bmp':
+        type = 'image/bmp'
+        break;
+      // 对应文本格式txt
+      case 'txt':
+        type = 'text/plain'
+        break;
+      // 对应表格格式xls
+      case 'xls':
+        type = 'application/vnd.ms-excel'
+        break;
+      // 对应word文档doc格式
+      case 'doc':
+        type = 'application/msword'
+        break;
+      // 对应文档格式pdf
+      case 'pdf':
+        type = 'application/pdf'
+        break;
+      // 对应表格格式xlsx
+      case 'xlsx':
+        type = 'application/vnd.ms-excel'
+        break;
+      // 对应表格格式csv
+      case 'csv':
+        type = 'text/csv'
+        break;
+      // 对应的视频格式一般是MPEG-4或者H.264编码的MP4格式
+      case 'mp4':
+        type = 'video/mp4'
+        break;
+      // 对应的视频格式一般是AVI格式
+      case 'avi':
+        type = 'video/x-msvideo'
+        break;
+      // 对应的视频格式一般是Windows Media Video格式
+      case 'WindowsMediaVideo':
+        type = 'video/x-ms-wmv'
+        break;
+      // 对应的视频格式一般是MOV格式，由苹果公司开发的
+      case 'mov':
+        type = 'video/quicktime'
+        break;
+      // 对应的视频格式一般是Flash视频格式，由Adobe公司开发的
+      case 'flash':
+        type = 'video/x-flv'
+        break;
+      // 对应的视频格式一般是MKV格式，开源免费的多媒体容器格式
+      case 'mkv':
+        type = 'video/x-matroska'
+        break;
+      // 对应音频格式mp3
+      case 'mp3':
+        type = 'audio/mpeg'
+        break;
+      // 对应音频格式wav
+      case 'wav':
+        type = 'audio/wav'
+        break;
+      // 对应音频格式flac
+      case 'flac':
+        type = 'audio/flac'
+        break;
+      // 对应音频格式aac
+      case 'aac':
+        type = 'audio/aac'
+        break;
+      // 对应音频格式WMA
+      case 'wma':
+        type = 'audio/x-ms-wma'
+        break;
+      default:
+        type = 'text/plain'
+        break;
+    }
+    return type;
+  }
+  
+  /**
+   * 根据字节数获取文件大小，并转换成 KB、MB、GB、TB 等形式
+   * @param {number} bytes - 文件的字节数
+   * @returns {string} - 文件大小的字符串表示形式
+   */
+  function formatFileSize(bytes) {
+    const units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+    let size = bytes;
+    let unitIndex = 0;
+  
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+  
+    // 保留两位小数，四舍五入
+    size = Math.round(size * 100) / 100;
+  
+    return `${size}${units[unitIndex]}`;
+  }
+  
+  var file_contents = {};
+  
+  function cacheDatas(url, data) {
+    let content = data.file;
+    let fileName = url.split("/").at(-1);
+    let fileType = fileName.split(".")[1];
+    let fileMimeType = extToMimes(fileType);
+    // 拿到二进制字符串 content
+    // 再利用 Buffer 转为对象
+    const length = content ? content.data.length : 0;
+    let buf = new ArrayBuffer(length)
+    let view = new Uint8Array(buf)
+    for (let i = 0; i < length; ++i) {
+      view[i] = content.data[i]
+    }
+    // 再输入到 Blob 生成文件
+    let blob = new Blob([buf], {type: fileMimeType});
+    let fileSize = formatFileSize(blob.size);
+  
+    let file_content = {};
+    file_content.name = fileName;
+    file_content.size = fileSize;
+    file_content.blob = blob;
+  
+    file_contents[url] = file_content;
+  }
+  
+  function renderFileDom(el, url) {
+    let fileSizeSpan = el.querySelector('.file-size');
+    let fileSize = file_contents[url].size;
+    if (fileSizeSpan && fileSize) {
+      fileSizeSpan.innerHTML = fileSize;
+    }
+  }
+  
+  function downloadFile(url) {
+    let file = file_contents[url];
+    let a = document.createElement('a')
+    // 指定生成的文件名
+    a.download = file.name;
+    a.href = URL.createObjectURL(file.blob)
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+  }
+  
+  function downloadFileEvent(fileDoms) {
+    for (let i = 0; i < fileDoms.length; ++i) {
+      let fileDom = fileDoms[i];
+      const api = ctx.tag_plugins.chat.api + '?type=file&url=';
+      const obverser = new IntersectionObserver((entries, observer) => {
+        utils.requestAnimationFrame(()=>{
+          entries.filter((entry)=>{return entry.isIntersecting}).sort((a,b)=>a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+            observer.unobserve(entry.target);
+            setTimeout(() => {
+              let url = entry.target.getAttribute('url');
+              fetch(api + url).then(function(response) {
+                if (response.ok) {
+                  return response.json();
+                }
+                throw new Error('Network response was not ok.');
+              }).then(function(data) {
+                cacheDatas(url, data);
+                renderFileDom(fileDom, url);
+              }).catch(function(error) {
+                console.log(error);
+              });
+              fileDom.addEventListener('click', ()=>{
+                  downloadFile(url);
+              });
+            }, Math.max(100, 16)*(index+1));
+          });
+        });
+      });
+      obverser.observe(fileDom);
+    }
+  }
+  

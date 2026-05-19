@@ -1,1 +1,96 @@
-dXRpbHMuanEoKCkgPT4gewogIGNvbnN0IGVscyA9IEFycmF5LmZyb20oZG9jdW1lbnQuZ2V0RWxlbWVudHNCeUNsYXNzTmFtZSgnZHMtbWVtb3MnKSk7CgogIGVscy5mb3JFYWNoKGVsID0+IHsKICAgIGNvbnN0IGFwaSA9IGVsLmRhdGFzZXQuYXBpOwogICAgaWYgKCFhcGkpIHJldHVybjsKCiAgICBjb25zdCBkZWZhdWx0X2F2YXRhciA9IGVsLmdldEF0dHJpYnV0ZSgnYXZhdGFyJykgfHwgZGVmLmF2YXRhcjsKICAgIGNvbnN0IGxpbWl0ID0gZWwuZ2V0QXR0cmlidXRlKCdsaW1pdCcpOwogICAgY29uc3QgaG9zdCA9IGFwaS5tYXRjaCgvaHR0cHM6XC9cLyguKj8pXC8oLiopL2kpWzFdOwoKICAgIHV0aWxzLnJlcXVlc3QoZWwsIGFwaSwgYXN5bmMgcmVzcCA9PiB7CiAgICAgIGNvbnN0IGRhdGEgPSBhd2FpdCByZXNwLmpzb24oKTsKICAgICAgbGV0IG1lbW9zID0gdmVyc2lvbkhhbmRsZXJzLmlkZW50aWZ5KGRhdGEpOwogICAgICBpZiAobWVtb3MudmVyc2lvbiA9PT0gImZlYXR1cmUiIClyZXR1cm47CgogICAgICBjb25zdCB1c2VycyA9IGVsLmdldEF0dHJpYnV0ZSgndXNlcicpPy5zcGxpdCgiLCIpIHx8IFtdOwogICAgICBjb25zdCBoaWRlID0gZWwuZ2V0QXR0cmlidXRlKCdoaWRlJyk/LnNwbGl0KCIsIikgfHwgW107CgogICAgICBhd2FpdCBQcm9taXNlLmFsbChtZW1vcy5kYXRhLnNsaWNlKDAsIGxpbWl0IHx8IG1lbW9zLmRhdGEubGVuZ3RoKS5tYXAoaXRlbSA9PgogICAgICAgICAgY3JlYXRlTWVtb0NlbGwoaXRlbSwgbWVtb3MsIHVzZXJzLCBoaWRlLCBkZWZhdWx0X2F2YXRhciwgaG9zdCkudGhlbihjZWxsID0+ICQoZWwpLmFwcGVuZChjZWxsKSkKICAgICAgKSk7CiAgICB9KTsKCiAgICBhc3luYyBmdW5jdGlvbiBjcmVhdGVNZW1vQ2VsbChpdGVtLCBtZW1vcywgdXNlcnMsIGhpZGUsIGRlZmF1bHRfYXZhdGFyLCBob3N0KSB7CiAgICAgIGNvbnN0IHZlcnNpb25IYW5kbGVyID0gdmVyc2lvbkhhbmRsZXJzW21lbW9zLnZlcnNpb25dIHx8IHZlcnNpb25IYW5kbGVyc1siZmVhdHVyZSJdOwogICAgICByZXR1cm4gYDxkaXYgY2xhc3M9InRpbWVub2RlIj4KICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3M9ImhlYWRlciI+JHshdXNlcnMubGVuZ3RoICYmICFoaWRlLmluY2x1ZGVzKCd1c2VyJykgPyBhd2FpdCB2ZXJzaW9uSGFuZGxlci5idWlsZFVzZXIoaXRlbSwgbWVtb3MsIGRlZmF1bHRfYXZhdGFyKSA6ICcnfQogICAgICAgICAgICAgICAgICAgICAgPHNwYW4+JHt2ZXJzaW9uSGFuZGxlci5idWlsZERhdGUoaXRlbSkudG9Mb2NhbGVTdHJpbmcoKX08L3NwYW4+PC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJib2R5Ij4ke21hcmtlZC5wYXJzZShpdGVtLmNvbnRlbnQgfHwgJycpfQogICAgICAgICAgICAgICAgICAgICAgPHA+JHt2ZXJzaW9uSGFuZGxlci5idWlsZEltYWdlcyhpdGVtLCBob3N0KS5qb2luKCcnKX08L3A+CiAgICAgICAgICAgICAgICAgICAgICA8L2Rpdj48L2Rpdj5gOwogICAgfQoKICAgIC8vIE1lbW9z54mI5pys566h55CGCiAgICBjb25zdCB2ZXJzaW9uSGFuZGxlcnMgPSB7CiAgICAgICIyMi0iOiB7CiAgICAgICAgYnVpbGRVc2VyOiBhc3luYyAoaXRlbSwgbWVtb3MsIGRlZmF1bHRfYXZhdGFyKSA9PgogICAgICAgICAgICBgPGRpdiBjbGFzcz0idXNlci1pbmZvIj4ke2RlZmF1bHRfYXZhdGFyID8gYDxpbWcgc3JjPSIke2RlZmF1bHRfYXZhdGFyfSI+YCA6ICcnfTxzcGFuPiR7aXRlbS5jcmVhdG9yTmFtZX08L3NwYW4+PC9kaXY+YCwKICAgICAgICBidWlsZERhdGU6IGl0ZW0gPT4gbmV3IERhdGUoaXRlbS5jcmVhdGVkVHMgKiAxMDAwKSwKICAgICAgICBidWlsZEltYWdlczogKGl0ZW0sIGhvc3QpID0+IChpdGVtLnJlc291cmNlTGlzdCB8fCBbXSkuZmlsdGVyKHJlcyA9PiByZXMudHlwZT8uaW5jbHVkZXMoJ2ltYWdlLycpKS5tYXAocmVzID0+CiAgICAgICAgICAgIGA8cD48aW1nIHNyYz0iJHtyZXMuZXh0ZXJuYWxMaW5rIHx8IGBodHRwczovLyR7aG9zdH0vby9yLyR7cmVzLmlkfWB9Ij48L3A+YAogICAgICAgICkKICAgICAgfSwKICAgICAgIjIyKyI6IHsKICAgICAgICBidWlsZFVzZXI6IGFzeW5jIChpdGVtLCBtZW1vcywgZGVmYXVsdF9hdmF0YXIpID0+IHsKICAgICAgICAgIGNvbnN0IGNyZWF0b3JJZCA9IGl0ZW0/LmNyZWF0b3Iuc3BsaXQoJy8nKVsxXTsKICAgICAgICAgIGxldCB1c2VyID0gbWVtb3MudXNlcnMuZmluZCh1c2VyID0+IHVzZXIuaWQgPT09IHBhcnNlSW50KGNyZWF0b3JJZCkpOwogICAgICAgICAgaWYgKCF1c2VyKSB7CiAgICAgICAgICAgIGlmICghbWVtb3MucmVxdWVzdHNbY3JlYXRvcklkXSkgewogICAgICAgICAgICAgIG1lbW9zLnJlcXVlc3RzW2NyZWF0b3JJZF0gPSBmZXRjaChgJHttZW1vcy5zaXRlfS9hcGkvdjEvdXNlcnMvJHtjcmVhdG9ySWR9YCkKICAgICAgICAgICAgICAgICAgLnRoZW4ocmVzcG9uc2UgPT4gcmVzcG9uc2UuanNvbigpKQogICAgICAgICAgICAgICAgICAudGhlbihkYXRhID0+IHsKICAgICAgICAgICAgICAgICAgICBpZiAoZGF0YS51c2VybmFtZSkgewogICAgICAgICAgICAgICAgICAgICAgdXNlciA9IGRhdGE7CiAgICAgICAgICAgICAgICAgICAgICBtZW1vcy51c2Vycy5wdXNoKGRhdGEpOwogICAgICAgICAgICAgICAgICAgIH0gZWxzZSB7CiAgICAgICAgICAgICAgICAgICAgICB1c2VyID0gbnVsbDsKICAgICAgICAgICAgICAgICAgICB9CiAgICAgICAgICAgICAgICAgIH0pCiAgICAgICAgICAgICAgICAgIC5maW5hbGx5KCgpID0+IGRlbGV0ZSBtZW1vcy5yZXF1ZXN0c1tjcmVhdG9ySWRdKTsKICAgICAgICAgICAgfQogICAgICAgICAgICBhd2FpdCBtZW1vcy5yZXF1ZXN0c1tjcmVhdG9ySWRdOwogICAgICAgICAgICB1c2VyID0gbWVtb3MudXNlcnMuZmluZCh1c2VyID0+IHVzZXIuaWQgPT09IHBhcnNlSW50KGNyZWF0b3JJZCkpOwogICAgICAgICAgfQogICAgICAgICAgY29uc3QgbmFtZSA9IHVzZXIgPyB1c2VyLm5pY2tuYW1lIHx8IHVzZXIudXNlcm5hbWUgOiAnbWVtb3MnOwogICAgICAgICAgY29uc3QgYXZhdGFyVXJsID0gdXNlcj8uYXZhdGFyVXJsID8gYCR7bWVtb3Muc2l0ZX0ke3VzZXIuYXZhdGFyVXJsfWAgOiBkZWZhdWx0X2F2YXRhciB8fCAnJzsKICAgICAgICAgIHJldHVybiBgPGRpdiBjbGFzcz0idXNlci1pbmZvIj4ke2F2YXRhclVybCA/IGA8aW1nIHNyYz0iJHthdmF0YXJVcmx9Ij5gIDogJyd9PHNwYW4+JHtuYW1lfTwvc3Bhbj48L2Rpdj5gOwogICAgICAgIH0sCiAgICAgICAgYnVpbGREYXRlOiBpdGVtID0+IG5ldyBEYXRlKGl0ZW0uY3JlYXRlVGltZSksCiAgICAgICAgYnVpbGRJbWFnZXM6IChpdGVtKSA9PiAoaXRlbS5yZXNvdXJjZXMgfHwgW10pLmZpbHRlcihyZXMgPT4gcmVzLnR5cGU/LmluY2x1ZGVzKCdpbWFnZS8nKSkubWFwKHJlcyA9PgogICAgICAgICAgICBgPHA+PGltZyBzcmM9IiR7cmVzLmV4dGVybmFsTGluayB8fCBgaHR0cHM6Ly8ke2hvc3R9L28vci8ke3Jlcy5pZH1gfSI+PC9wPmAKICAgICAgICApCiAgICAgIH0sCiAgICAgICJmZWF0dXJlIjogewogICAgICAgIGJ1aWxkVXNlcjogYXN5bmMgKCkgPT4gIm1lbW9zIiwKICAgICAgICBidWlsZERhdGU6ICgpID0+IG5ldyBEYXRlKCksCiAgICAgICAgYnVpbGRJbWFnZXM6ICgpID0+IFtdCiAgICAgIH0sCiAgICAgIGlkZW50aWZ5OiAoZGF0YSkgPT4gewogICAgICAgIGxldCBtZW1vcyA9IHsgdmVyc2lvbjogImZlYXR1cmUiLCB1c2VyczogW10sIHNpdGU6IGFwaS5zcGxpdCgnL2FwaS92MScpWzBdLCByZXF1ZXN0czoge30sIGRhdGE6IFtdIH0KICAgICAgICBpZiAoQXJyYXkuaXNBcnJheShkYXRhKSkgewogICAgICAgICAgbWVtb3MudmVyc2lvbiA9ICIyMi0iOwogICAgICAgICAgbWVtb3MuZGF0YSA9IGRhdGE7CiAgICAgICAgfSBlbHNlIGlmIChkYXRhLm1lbW9zKSB7CiAgICAgICAgICBtZW1vcy52ZXJzaW9uID0gIjIyKyI7CiAgICAgICAgICBtZW1vcy5kYXRhID0gZGF0YS5tZW1vczsKICAgICAgICB9IGVsc2UgewogICAgICAgICAgbWVtb3MudmVyc2lvbiA9ICJmZWF0dXJlIjsKICAgICAgICAgIGNvbnNvbGUubG9nKCLlvZPliY1NZW1vc+eJiOacrOi/h+mrmO+8jOivt+WIsFN0ZWxsYXLnpL7ljLrlj43ppogiKTsKICAgICAgICB9CiAgICAgICAgcmV0dXJuIG1lbW9zCiAgICAgIH0KICAgIH07CiAgfSk7Cn0pOwo=
+utils.jq(() => {
+  const els = Array.from(document.getElementsByClassName('ds-memos'));
+
+  els.forEach(el => {
+    const api = el.dataset.api;
+    if (!api) return;
+
+    const default_avatar = el.getAttribute('avatar') || def.avatar;
+    const limit = el.getAttribute('limit');
+    const host = api.match(/https:\/\/(.*?)\/(.*)/i)[1];
+
+    utils.request(el, api, async resp => {
+      const data = await resp.json();
+      let memos = versionHandlers.identify(data);
+      if (memos.version === "feature" )return;
+
+      const users = el.getAttribute('user')?.split(",") || [];
+      const hide = el.getAttribute('hide')?.split(",") || [];
+
+      await Promise.all(memos.data.slice(0, limit || memos.data.length).map(item =>
+          createMemoCell(item, memos, users, hide, default_avatar, host).then(cell => $(el).append(cell))
+      ));
+    });
+
+    async function createMemoCell(item, memos, users, hide, default_avatar, host) {
+      const versionHandler = versionHandlers[memos.version] || versionHandlers["feature"];
+      return `<div class="timenode">
+                      <div class="header">${!users.length && !hide.includes('user') ? await versionHandler.buildUser(item, memos, default_avatar) : ''}
+                      <span>${versionHandler.buildDate(item).toLocaleString()}</span></div>
+                      <div class="body">${marked.parse(item.content || '')}
+                      <p>${versionHandler.buildImages(item, host).join('')}</p>
+                      </div></div>`;
+    }
+
+    // Memos版本管理
+    const versionHandlers = {
+      "22-": {
+        buildUser: async (item, memos, default_avatar) =>
+            `<div class="user-info">${default_avatar ? `<img src="${default_avatar}">` : ''}<span>${item.creatorName}</span></div>`,
+        buildDate: item => new Date(item.createdTs * 1000),
+        buildImages: (item, host) => (item.resourceList || []).filter(res => res.type?.includes('image/')).map(res =>
+            `<p><img src="${res.externalLink || `https://${host}/o/r/${res.id}`}"></p>`
+        )
+      },
+      "22+": {
+        buildUser: async (item, memos, default_avatar) => {
+          const creatorId = item?.creator.split('/')[1];
+          let user = memos.users.find(user => user.id === parseInt(creatorId));
+          if (!user) {
+            if (!memos.requests[creatorId]) {
+              memos.requests[creatorId] = fetch(`${memos.site}/api/v1/users/${creatorId}`)
+                  .then(response => response.json())
+                  .then(data => {
+                    if (data.username) {
+                      user = data;
+                      memos.users.push(data);
+                    } else {
+                      user = null;
+                    }
+                  })
+                  .finally(() => delete memos.requests[creatorId]);
+            }
+            await memos.requests[creatorId];
+            user = memos.users.find(user => user.id === parseInt(creatorId));
+          }
+          const name = user ? user.nickname || user.username : 'memos';
+          const avatarUrl = user?.avatarUrl ? `${memos.site}${user.avatarUrl}` : default_avatar || '';
+          return `<div class="user-info">${avatarUrl ? `<img src="${avatarUrl}">` : ''}<span>${name}</span></div>`;
+        },
+        buildDate: item => new Date(item.createTime),
+        buildImages: (item) => (item.resources || []).filter(res => res.type?.includes('image/')).map(res =>
+            `<p><img src="${res.externalLink || `https://${host}/o/r/${res.id}`}"></p>`
+        )
+      },
+      "feature": {
+        buildUser: async () => "memos",
+        buildDate: () => new Date(),
+        buildImages: () => []
+      },
+      identify: (data) => {
+        let memos = { version: "feature", users: [], site: api.split('/api/v1')[0], requests: {}, data: [] }
+        if (Array.isArray(data)) {
+          memos.version = "22-";
+          memos.data = data;
+        } else if (data.memos) {
+          memos.version = "22+";
+          memos.data = data.memos;
+        } else {
+          memos.version = "feature";
+          console.log("当前Memos版本过高，请到Stellar社区反馈");
+        }
+        return memos
+      }
+    };
+  });
+});

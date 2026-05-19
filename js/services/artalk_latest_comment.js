@@ -1,1 +1,34 @@
-dXRpbHMuanEoKCkgPT4gewogICAgJChmdW5jdGlvbiAoKSB7CiAgICAgIGNvbnN0IGVscyA9IGRvY3VtZW50LmdldEVsZW1lbnRzQnlDbGFzc05hbWUoJ2RzLWFydGFsaycpOwogICAgICBmb3IgKHZhciBpID0gMDsgaSA8IGVscy5sZW5ndGg7IGkrKykgewogICAgICAgIGNvbnN0IGVsID0gZWxzW2ldOwogICAgICAgIGNvbnN0IGxpbWl0ID0gcGFyc2VJbnQoZWwuZ2V0QXR0cmlidXRlKCdsaW1pdCcpKSB8fCAxMDsKICAKICAgICAgICBjb25zdCBhcGkgPSBlbC5kYXRhc2V0LmFwaSArICcmbGltaXQ9JyArIGxpbWl0OwogICAgICAgIGlmIChhcGkgPT0gbnVsbCkgewogICAgICAgICAgY29udGludWU7CiAgICAgICAgfQogICAgICAgIHV0aWxzLnJlcXVlc3QoZWwsIGFwaSwgYXN5bmMgcmVzcCA9PiB7CiAgICAgICAgICB2YXIgZGF0YSA9IGF3YWl0IHJlc3AuanNvbigpOwogICAgICAgICAgZGF0YSA9IGRhdGEuZGF0YSB8fCBbXTsKICAgICAgICAgIGRhdGEuZm9yRWFjaCgoaXRlbSwgaSkgPT4gewogICAgICAgICAgICB2YXIgY2VsbCA9ICc8ZGl2IGNsYXNzPSJ0aW1lbm9kZSIgaW5kZXg9IicgKyBpICsgJyI+JzsKICAgICAgICAgICAgY2VsbCArPSAnPGRpdiBjbGFzcz0iaGVhZGVyIj4nOwogICAgICAgICAgICBjZWxsICs9ICc8ZGl2IGNsYXNzPSJ1c2VyLWluZm8iPic7CiAgICAgICAgICAgIC8vIGNlbGwgKz0gJzxpbWcgc3JjPSJodHRwczovL2NyYXZhdGFyLmNuL2F2YXRhci8nICsgKGl0ZW0uZW1haWxfZW5jcnlwdGVkKSArICc/ZD1tcCZzPTI0MCI+JzsKICAgICAgICAgICAgY2VsbCArPSAnPHNwYW4+JyArIGl0ZW0ubmljayArICc8L3NwYW4+JzsKICAgICAgICAgICAgY2VsbCArPSAnPC9kaXY+JzsKICAgICAgICAgICAgY2VsbCArPSAnPHNwYW4+JyArIG5ldyBEYXRlKGl0ZW0uZGF0ZSkudG9Mb2NhbGVTdHJpbmcoKSArICc8L3NwYW4+JzsKICAgICAgICAgICAgY2VsbCArPSAnPC9kaXY+JzsKICAgICAgICAgICAgY2VsbCArPSAnPGEgY2xhc3M9ImJvZHkiIGhyZWY9IicgKyBpdGVtLnBhZ2VfdXJsICsgJyNhdGstY29tbWVudC0nICsgaXRlbS5pZCArICciIHRhcmdldD0iX2JsYW5rIiByZWw9ImV4dGVybmFsIG5vZm9sbG93IG5vb3BlbmVyIG5vcmVmZXJyZXIiPic7CiAgICAgICAgICAgIGNlbGwgKz0gaXRlbS5jb250ZW50X21hcmtlZDsKICAgICAgICAgICAgY2VsbCArPSAnPC9hPic7CiAgICAgICAgICAgIGNlbGwgKz0gJzwvZGl2Pic7CiAgICAgICAgICAgICQoZWwpLmFwcGVuZChjZWxsKTsKICAgICAgICAgIH0pOwogICAgICAgIH0pOwogICAgICB9CiAgICB9KTsKICB9KTsKICA=
+utils.jq(() => {
+    $(function () {
+      const els = document.getElementsByClassName('ds-artalk');
+      for (var i = 0; i < els.length; i++) {
+        const el = els[i];
+        const limit = parseInt(el.getAttribute('limit')) || 10;
+  
+        const api = el.dataset.api + '&limit=' + limit;
+        if (api == null) {
+          continue;
+        }
+        utils.request(el, api, async resp => {
+          var data = await resp.json();
+          data = data.data || [];
+          data.forEach((item, i) => {
+            var cell = '<div class="timenode" index="' + i + '">';
+            cell += '<div class="header">';
+            cell += '<div class="user-info">';
+            // cell += '<img src="https://cravatar.cn/avatar/' + (item.email_encrypted) + '?d=mp&s=240">';
+            cell += '<span>' + item.nick + '</span>';
+            cell += '</div>';
+            cell += '<span>' + new Date(item.date).toLocaleString() + '</span>';
+            cell += '</div>';
+            cell += '<a class="body" href="' + item.page_url + '#atk-comment-' + item.id + '" target="_blank" rel="external nofollow noopener noreferrer">';
+            cell += item.content_marked;
+            cell += '</a>';
+            cell += '</div>';
+            $(el).append(cell);
+          });
+        });
+      }
+    });
+  });
+  

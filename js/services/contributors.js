@@ -1,1 +1,56 @@
-dXRpbHMuanEoKCkgPT4gewogICQoZnVuY3Rpb24gKCkgewogICAgZnVuY3Rpb24gcGFyc2VHaXRodWJGaWxlQ29udHJpYnV0b3JzKGRhdGEpIHsKICAgICAgLy8g5Y676YeN6LSh54yu6ICF77yI5oyJIGxvZ2lu77yJCiAgICAgIGNvbnN0IGNvbnRyaWJ1dG9yc01hcCA9IG5ldyBNYXAoKTsKCiAgICAgIGZvciAoY29uc3QgY29tbWl0IG9mIGRhdGEpIHsKICAgICAgICBjb25zdCBhdXRob3IgPSBjb21taXQuYXV0aG9yOwogICAgICAgIGlmIChhdXRob3IpIHsKICAgICAgICAgIGNvbnN0IGxvZ2luID0gYXV0aG9yLmxvZ2luOwogICAgICAgICAgaWYgKCFjb250cmlidXRvcnNNYXAuaGFzKGxvZ2luKSkgewogICAgICAgICAgICBjb250cmlidXRvcnNNYXAuc2V0KGxvZ2luLCB7CiAgICAgICAgICAgICAgbG9naW46IGxvZ2luLAogICAgICAgICAgICAgIGF2YXRhcl91cmw6IGF1dGhvci5hdmF0YXJfdXJsLAogICAgICAgICAgICAgIGh0bWxfdXJsOiBhdXRob3IuaHRtbF91cmwsCiAgICAgICAgICAgICAgY291bnQ6IDEKICAgICAgICAgICAgfSk7CiAgICAgICAgICB9IGVsc2UgewogICAgICAgICAgICBjb250cmlidXRvcnNNYXAuZ2V0KGxvZ2luKS5jb3VudCsrOwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgfQogICAgICAvLyDovazkuLrmlbDnu4TlubbmjInmj5DkuqTmrKHmlbDmjpLluo/vvIjpmY3luo/vvIkKICAgICAgY29uc3Qgc29ydGVkQ29udHJpYnV0b3JzID0gQXJyYXkuZnJvbShjb250cmlidXRvcnNNYXAudmFsdWVzKCkpCiAgICAgICAgLnNvcnQoKGEsIGIpID0+IGIuY291bnQgLSBhLmNvdW50KTsKICAgICAgcmV0dXJuIHNvcnRlZENvbnRyaWJ1dG9yczsKICAgIH0KCiAgICBjb25zdCBlbHMgPSBkb2N1bWVudC5nZXRFbGVtZW50c0J5Q2xhc3NOYW1lKCdkcy1jb250cmlidXRvcnMnKTsKICAgIGZvciAodmFyIGkgPSAwOyBpIDwgZWxzLmxlbmd0aDsgaSsrKSB7CiAgICAgIGNvbnN0IGVsID0gZWxzW2ldOwogICAgICBjb25zdCBhcGkgPSBlbC5kYXRhc2V0LmFwaTsKICAgICAgaWYgKGFwaSA9PSBudWxsKSB7CiAgICAgICAgY29udGludWU7CiAgICAgIH0KICAgICAgY29uc3QgZGVmYXVsdF9hdmF0YXIgPSBkZWYuYXZhdGFyOwogICAgICAvLyBsYXlvdXQKICAgICAgdXRpbHMucmVxdWVzdChlbCwgYXBpLCBhc3luYyByZXNwID0+IHsKICAgICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcC5qc29uKCk7CiAgICAgICAgY29uc3QgbGlzdCA9IHBhcnNlR2l0aHViRmlsZUNvbnRyaWJ1dG9ycyhkYXRhKTsKICAgICAgICBmb3IgKGxldCBpdGVtIG9mIGxpc3QpIHsKICAgICAgICAgIHZhciBjZWxsID0gYDxkaXYgY2xhc3M9ImdyaWQtY2VsbCB1c2VyLWNhcmQiPmA7CiAgICAgICAgICBjZWxsICs9IGA8YSBjbGFzcz0iY2FyZC1saW5rIiB0YXJnZXQ9Il9ibGFuayIgcmVsPSJleHRlcm5hbCBub2ZvbGxvdyBub29wZW5lciBub3JlZmVycmVyIiBocmVmPSIke2l0ZW0uaHRtbF91cmwgfHwgaXRlbS51cmx9Ij5gOzsKICAgICAgICAgIGNlbGwgKz0gYDxpbWcgc3JjPSIke2l0ZW0uYXZhdGFyX3VybCB8fCBpdGVtLmF2YXRhciB8fCBpdGVtLmljb24gfHwgZGVmYXVsdF9hdmF0YXJ9IiBvbmVycm9yPSJqYXZhc2NyaXB0OnRoaXMucmVtb3ZlQXR0cmlidXRlKFwnZGF0YS1zcmNcJyk7dGhpcy5zcmM9XCcke2RlZmF1bHRfYXZhdGFyfVwnOyIvPmA7CiAgICAgICAgICBjZWxsICs9IGA8ZGl2IGNsYXNzPSJuYW1lIGltYWdlLW1ldGEiPmA7CiAgICAgICAgICBjZWxsICs9IGA8c3BhbiBjbGFzcz0iaW1hZ2UtY2FwdGlvbiI+JHtpdGVtLnRpdGxlIHx8IGl0ZW0ubG9naW59PC9zcGFuPmA7CiAgICAgICAgICBjZWxsICs9IGA8L2Rpdj5gOwogICAgICAgICAgY2VsbCArPSBgPC9hPmA7CiAgICAgICAgICBjZWxsICs9IGA8L2Rpdj5gOwogICAgICAgICAgJChlbCkuZmluZCgnLmdyaWQtYm94JykuYXBwZW5kKGNlbGwpOwogICAgICAgIH0KICAgICAgICB3aW5kb3cud3JhcExhenlsb2FkSW1hZ2VzKGVsKTsKICAgICAgfSk7CiAgICB9CiAgfSk7Cn0pOw==
+utils.jq(() => {
+  $(function () {
+    function parseGithubFileContributors(data) {
+      // 去重贡献者（按 login）
+      const contributorsMap = new Map();
+
+      for (const commit of data) {
+        const author = commit.author;
+        if (author) {
+          const login = author.login;
+          if (!contributorsMap.has(login)) {
+            contributorsMap.set(login, {
+              login: login,
+              avatar_url: author.avatar_url,
+              html_url: author.html_url,
+              count: 1
+            });
+          } else {
+            contributorsMap.get(login).count++;
+          }
+        }
+      }
+      // 转为数组并按提交次数排序（降序）
+      const sortedContributors = Array.from(contributorsMap.values())
+        .sort((a, b) => b.count - a.count);
+      return sortedContributors;
+    }
+
+    const els = document.getElementsByClassName('ds-contributors');
+    for (var i = 0; i < els.length; i++) {
+      const el = els[i];
+      const api = el.dataset.api;
+      if (api == null) {
+        continue;
+      }
+      const default_avatar = def.avatar;
+      // layout
+      utils.request(el, api, async resp => {
+        const data = await resp.json();
+        const list = parseGithubFileContributors(data);
+        for (let item of list) {
+          var cell = `<div class="grid-cell user-card">`;
+          cell += `<a class="card-link" target="_blank" rel="external nofollow noopener noreferrer" href="${item.html_url || item.url}">`;;
+          cell += `<img src="${item.avatar_url || item.avatar || item.icon || default_avatar}" onerror="javascript:this.removeAttribute(\'data-src\');this.src=\'${default_avatar}\';"/>`;
+          cell += `<div class="name image-meta">`;
+          cell += `<span class="image-caption">${item.title || item.login}</span>`;
+          cell += `</div>`;
+          cell += `</a>`;
+          cell += `</div>`;
+          $(el).find('.grid-box').append(cell);
+        }
+        window.wrapLazyloadImages(el);
+      });
+    }
+  });
+});
