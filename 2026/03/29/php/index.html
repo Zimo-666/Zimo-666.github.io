@@ -20,12 +20,12 @@
   <title>php - Zimo's Blogs</title>
 
   
-    <meta name="description" content="phpTrickspreg_match()换行绕过对单行匹配的开头或结尾使用 %0a 绕过。 数组绕过只能处理字符串，当传入的subject是数组时会返回false。 回溯上限绕过回溯次数默认为1000000，如果回溯次数超过这个数字，preg_match会返回 false。\ &#x2F;e代码执行（PHP&lt;7）preg_replace() &#x2F;e代码执行漏洞-CSDN博客 1preg_re">
+    <meta name="description" content="整理 PHP Web 安全与 CTF 常见考点，覆盖文件包含、反序列化、弱类型、RCE、绕过技巧与利用 payload。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="php">
 <meta property="og:url" content="https://www.zimo.click/2026/03/29/php/">
 <meta property="og:site_name" content="Zimo&#39;s Blogs">
-<meta property="og:description" content="phpTrickspreg_match()换行绕过对单行匹配的开头或结尾使用 %0a 绕过。 数组绕过只能处理字符串，当传入的subject是数组时会返回false。 回溯上限绕过回溯次数默认为1000000，如果回溯次数超过这个数字，preg_match会返回 false。\ &#x2F;e代码执行（PHP&lt;7）preg_replace() &#x2F;e代码执行漏洞-CSDN博客 1preg_re">
+<meta property="og:description" content="整理 PHP Web 安全与 CTF 常见考点，覆盖文件包含、反序列化、弱类型、RCE、绕过技巧与利用 payload。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://zimo777.oss-cn-beijing.aliyuncs.com/b_be823baceb16d088783a325d9f8d71cb.jpg">
 <meta property="article:published_time" content="2026-03-29T10:23:07.000Z">
@@ -68,7 +68,7 @@
 
 
 
-<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2026/04/22/FastJson/"><span class="title">FastJson</span></a><a class="item title" href="/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"><span class="title">Java内存马</span></a><a class="item title" href="/2026/04/04/ClassLoader/"><span class="title">ClassLoader</span></a><a class="item title" href="/2026/03/31/JAVA%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88/"><span class="title">Java安全漫谈学习笔记</span></a><a class="item title" href="/2026/03/29/CVE-2025-55182/"><span class="title">CVE-2025-55182</span></a><a class="item title" href="/2026/03/29/CAP/"><span class="title">CAP</span></a><a class="item title" href="/2026/03/29/Forgotten/"><span class="title">Forgotten</span></a><a class="item title" href="/2026/03/29/HTTP/"><span class="title">HTTP</span></a><a class="item title" href="/2026/03/29/LakeCTF25-26/"><span class="title">LakeCTF 25-26</span></a><a class="item title" href="/2026/03/29/LilacCTF-2026/"><span class="title">LilacCTF 2026</span></a></div></widget>
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2025/11/07/MVC/"><span class="title">MVC</span></a><a class="item title" href="/2026/02/04/Chunqiu/"><span class="title">春秋云镜WP（不完整版）</span></a><a class="item title" href="/2026/04/22/FastJson/"><span class="title">FastJson</span></a><a class="item title" href="/2026/04/08/%E5%86%85%E5%AD%98%E9%A9%AC/"><span class="title">Java内存马</span></a><a class="item title" href="/2026/04/04/ClassLoader/"><span class="title">ClassLoader</span></a><a class="item title" href="/2026/03/31/JAVA%E5%AE%89%E5%85%A8%E6%BC%AB%E8%B0%88/"><span class="title">Java安全漫谈学习笔记</span></a><a class="item title" href="/2026/03/29/CVE-2025-55182/"><span class="title">CVE-2025-55182</span></a><a class="item title" href="/2026/03/29/CAP/"><span class="title">CAP</span></a><a class="item title" href="/2026/03/29/Forgotten/"><span class="title">Forgotten</span></a><a class="item title" href="/2026/03/29/HTTP/"><span class="title">HTTP</span></a></div></widget>
 </div>
 
 </div></aside><div class="l_main" id="main">
@@ -670,7 +670,7 @@
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/03/29/n1-J-WP/">n1-J WP</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/03/29/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件安全</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2026/03/29/n1-J-WP/">n1-J WP</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2026/03/29/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%B8%8E%E6%B8%97%E9%80%8F/">信息收集</a></div></section></div>
 
 
 
